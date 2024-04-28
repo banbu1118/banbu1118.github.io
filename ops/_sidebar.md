@@ -33,3 +33,5 @@
 * [搭建dhcp服务器](/ops/搭建dhcp服务器.md)
 
 * [添加和删除系统引导](/ops/添加和删除系统引导.md)
+
+* [windows_iso_update](/ops/windows_iso_update.md)
