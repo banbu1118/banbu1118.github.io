@@ -50,7 +50,13 @@ systemctl enable dhcpd
 
 ### debian12 搭建dhcp服务
 
-1. debian12配置静态ip，编辑/etc/network/interfaces
+1. debian12安装isc-dhcp-server
+
+```bash
+apt install isc-dhcp-server -y
+```
+
+2. debian12配置静态ip，编辑/etc/network/interfaces
 
 ```bash
 auto ens18
@@ -60,19 +66,19 @@ netmask 255.255.255.0
 gateway 192.168.8.1
 ```
 
-2. 编辑isc-dhcp-serverd的配置文件/etc/default/isc-dhcp-server，添加网卡
+3. 编辑isc-dhcp-serverd的配置文件/etc/default/isc-dhcp-server，添加网卡
 
 ```bash
 INTERFACESv4="ens18"
 ```
 
-3. 复制实例文件到配置目录
+4. 复制实例文件到配置目录
 
 ```bash
 cp /usr/share/doc/isc-dhcp-server/examples/dhcpd.conf.example dhcpd.conf
 ```
 
-4. 编辑dhcp的配置文件/etc/dhcp/dhcp.conf
+5. 编辑dhcp的配置文件/etc/dhcp/dhcp.conf
 
 ```bash
 # A slightly different configuration for an internal subnet.
@@ -88,13 +94,13 @@ subnet 192.168.8.0 netmask 255.255.255.0 {
 # 参考文档：https://zhuanlan.zhihu.com/p/602492654
 ```
 
-5. 启动dhcp服务
+6. 启动dhcp服务
 
 ```bash
 systemctl start isc-dhcp-server
 ```
 
-6. 配置开机启动
+7. 配置开机启动
 
 ```bash
 systemctl enable isc-dhcp-server
