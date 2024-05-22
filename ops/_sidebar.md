@@ -28,7 +28,7 @@
 
 * [vgpu-licserver](/ops/vgpu-licserver.md)
 
-* [vpn快速搭建.md](/ops/vpn快速搭建.md)
+* [vpn快速搭建](/ops/vpn快速搭建.md)
 
 * [搭建dhcp服务器](/ops/搭建dhcp服务器.md)
 
