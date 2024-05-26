@@ -35,3 +35,5 @@
 * [添加和删除系统引导](/ops/添加和删除系统引导.md)
 
 * [windows_iso_update](/ops/windows_iso_update.md)
+
+* [pxe安装Linux系统](/ops/pxe安装Linux系统.md)
