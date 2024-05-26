@@ -37,3 +37,5 @@
 * [windows_iso_update](/ops/windows_iso_update.md)
 
 * [pxe安装Linux系统](/ops/pxe安装Linux系统.md)
+
+* [windows模板制作教程](/ops/windows模板制作教程/windows模板制作教程.md)
