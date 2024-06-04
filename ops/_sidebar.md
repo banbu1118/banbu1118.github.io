@@ -41,3 +41,5 @@
 * [windows模板制作教程](/ops/windows模板制作教程/windows模板制作教程.md)
 
 * [制作Debian12.5模板](/ops/制作Debian12模板.md)
+
+* [Linux更新源](/ops/Linux更新源.md)
