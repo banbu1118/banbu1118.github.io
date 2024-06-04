@@ -33,6 +33,7 @@ deb http://mirrors.ustc.edu.cn/debian bookworm-updates main contrib non-free non
 ```
 
 * 更新索引
+
 ```bash
 apt update
 ```
@@ -118,6 +119,7 @@ deb http://mirrors.ustc.edu.cn/debian bookworm-updates main contrib non-free non
 ```
 
 * 更新索引
+
 ```bash
 apt update
 ```
