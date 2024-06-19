@@ -8,6 +8,14 @@ https://msdn.itellyou.cn/
 https://next.itellyou.cn
 ```
 
+* hellowindows
+
+```
+# Windows系统下载仓储站
+https://hellowindows.cn/
+```
+
+
 * ventoy
 
 ```
