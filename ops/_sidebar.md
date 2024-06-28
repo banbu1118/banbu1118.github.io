@@ -49,3 +49,5 @@
 * [迷你云桌面方案](/ops/迷你云桌面方案/迷你云桌面方案.md)
 
 * [搭建wireguard异地组网环境](/ops/搭建wireguard异地组网环境/搭建wireguard异地组网环境.md)
+
+* [Prime95稳定性测试工具](/ops/Prime95稳定性测试工具.md)
