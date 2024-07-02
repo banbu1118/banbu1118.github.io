@@ -51,3 +51,5 @@
 * [搭建wireguard异地组网环境](/ops/搭建wireguard异地组网环境/搭建wireguard异地组网环境.md)
 
 * [Prime95稳定性测试工具](/ops/Prime95稳定性测试工具.md)
+
+* [PBS开源备份方案](/ops/PBS开源备份方案/PBS开源备份方案.md)
