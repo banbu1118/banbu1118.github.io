@@ -53,3 +53,5 @@
 * [Prime95稳定性测试工具](/ops/Prime95稳定性测试工具.md)
 
 * [PBS开源备份方案](/ops/PBS开源备份方案/PBS开源备份方案.md)
+
+* [群晖备份Hyper-V虚拟机备份方案](/ops/群晖备份Hyper-V虚拟机备份方案/群晖备份Hyper-V虚拟机备份方案.md)
