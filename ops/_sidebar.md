@@ -55,3 +55,5 @@
 * [PBS开源备份方案](/ops/PBS开源备份方案/PBS开源备份方案.md)
 
 * [群晖备份Hyper-V虚拟机备份方案](/ops/群晖备份Hyper-V虚拟机备份方案/群晖备份Hyper-V虚拟机备份方案.md)
+
+* [alist快速部署文档](/ops/alist快速部署文档/alist快速部署文档.md)
