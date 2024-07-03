@@ -57,3 +57,5 @@
 * [群晖备份Hyper-V虚拟机备份方案](/ops/群晖备份Hyper-V虚拟机备份方案/群晖备份Hyper-V虚拟机备份方案.md)
 
 * [alist快速部署文档](/ops/alist快速部署文档/alist快速部署文档.md)
+
+* [truenas快速部署文档](/ops/truenas快速部署文档/truenas快速部署文档.md)
