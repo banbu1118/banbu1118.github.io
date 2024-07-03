@@ -11,3 +11,5 @@
 * [Arch_Linux安装使用教程](/read/Arch_Linux安装使用教程.md)
 
 * [前端学习](/read/前端学习.md)
+
+* [前端基础-EveryDay](/read/前端基础-EveryDay.md)
