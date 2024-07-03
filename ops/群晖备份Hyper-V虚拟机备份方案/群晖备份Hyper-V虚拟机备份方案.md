@@ -78,7 +78,7 @@ cpu： AMD Ryzen R1600
 
 ![](./images/k8.png)
 
-<img src="./images/k9.png"  />
+![](./images/k9.png)
 
 点击”创建任务“，创建虚拟机备份任务
 
