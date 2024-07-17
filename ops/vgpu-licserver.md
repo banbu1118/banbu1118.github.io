@@ -84,7 +84,9 @@ curl.exe --insecure -L -X GET https://<dls-hostname-or-ip>/-/client-token -o "C:
 
 #检测授权信息
 #管理员执行powershell命令，获取授权状态
-& 'nvidia-smi' -q  | Select-String "License"
+cd "C:\Program Files\NVIDIA Corporation\NVSMI"
+
+.\nvidia-smi.exe -q | Select-String "License"
 ```
 
 * linux虚拟机获取授权
