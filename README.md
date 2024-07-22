@@ -16,3 +16,8 @@
   <source src="music.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
+
+<audio controls>
+  <source src="music2.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
