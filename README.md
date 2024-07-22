@@ -19,12 +19,9 @@
   Your browser does not support the audio element.
 </audio>
 
-> 泪桥
+> ![泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ/?t=13.5)
 
 <audio controls>
   <source src="music2.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
-
-
-<iframe src="//player.bilibili.com/player.html?isOutside=true&aid=706394525&bvid=BV17Q4y1t7VZ&cid=1344841314&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
