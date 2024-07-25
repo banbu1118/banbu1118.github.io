@@ -31,3 +31,24 @@
 > <span id="busuanzi_container_site_pv" style='display:none'>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style='display:none'>本站总访客数：<span id="busuanzi_value_site_uv"></span> 人</span>
 
 
+<script>
+
+    window.$docsify = {
+
+      // 页脚
+
+      footer: {
+
+       copy: '<span id="sitetime"></span> <br/> <span>Copyright &copy; 2021 &nbsp 💖 &nbsp</span>',
+
+        auth: ' <strong><a href="https://github.com/zxiaosi/doc.git" target="_blank">Mr.XiaoSi</a></strong>',
+
+        pre: '<hr/>',
+
+        style: 'font-size: 18px; text-align: center;',
+
+      },
+
+    }
+
+</script>
