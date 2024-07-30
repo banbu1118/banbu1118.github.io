@@ -13,3 +13,5 @@
 * [前端学习](/read/前端学习.md)
 
 * [前端基础-EveryDay](/read/前端基础-EveryDay.md)
+
+* [优秀开源项目资讯网站](/read/优秀开源项目资讯网站.md)
