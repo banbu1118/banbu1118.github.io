@@ -382,3 +382,29 @@ rm -rf /etc/ceph/*
 rm -rf /etc/pve/ceph.conf
 rm -rf /etc/pve/priv/ceph.*
 ```
+
+### ceph案例1
+
+```bash
+#检查集群状态
+ceph -s
+
+#用户意外拔出磁盘，重新插入磁盘后，集群出现如下警告信息
+1 daemons have recently crashed
+
+#排查最新的crash信息
+[root@node1 ~]# ceph crash ls-new
+ID                                                               ENTITY    NEW
+2022-07-05T01:21:14.829333Z_94747800-d04b-423d-98a8-d9c815e01cde  osd.0  *
+
+#如果确认该daemons告警已经恢复的话，需要手工屏蔽该告警即可
+#批量清除crash
+ceph crash archive-all
+#根据 crash-id 清除单个crash
+ceph crash archive <crash-id>
+
+#针对目前的问题，清除单个crash即可
+ceph crash archive archive 2022-07-05T01:21:14.829333Z_94747800-d04b-423d-98a8-d9c815e01cde
+```
+
+
