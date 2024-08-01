@@ -38,7 +38,6 @@ https://mirrors.ustc.edu.cn/
 
 #清华镜像站
 https://mirrors.tuna.tsinghua.edu.cn/
-
 ```
 
 * it-tools
