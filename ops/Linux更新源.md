@@ -64,3 +64,17 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 yum makecache
 ```
 
+### 3.更新rocky9源
+
+```bash
+#备份，换源
+sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.ustc.edu.cn/rocky|g' \
+    -i.bak \
+    /etc/yum.repos.d/rocky-extras.repo \
+    /etc/yum.repos.d/rocky.repo
+
+#更新缓存
+yum makecache
+```
+
