@@ -15,7 +15,7 @@
 > [盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx)
 
 <audio controls>
-  <source src="/music1.mp3" type="audio/mpeg">
+  <source src="m1.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
