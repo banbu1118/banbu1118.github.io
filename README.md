@@ -21,6 +21,8 @@
 
 > [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ/?t=13.5)
 
+> [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX/)
+
 <audio controls>
   <source src="music2.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
