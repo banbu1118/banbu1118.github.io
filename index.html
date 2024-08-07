@@ -113,7 +113,11 @@
     var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
     document.getElementById("sitetime").innerHTML = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
   }
-  siteTime();
+window.onload = function() {
+    siteTime();
+    setInterval(siteTime, 1000);
+  };
+  
 </script>
 
 </body>
