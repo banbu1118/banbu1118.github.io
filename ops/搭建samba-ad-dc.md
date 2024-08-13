@@ -74,7 +74,7 @@ docker run -d --privileged \
   -v dc1_etc:/usr/local/samba/etc \
   -v dc1_private:/usr/local/samba/private \
   -v dc1_var:/usr/local/samba/var \
-  --name samba-ad --hostname ad diegogslomp/samba-ad-dc
+  --name samba-ad --hostname ad diegogslomp/samba-ad-dc:latest
 ```
 
 * 使用samba-tool创建用户和用户组
