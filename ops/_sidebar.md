@@ -59,3 +59,5 @@
 * [alist快速部署文档](/ops/alist快速部署文档/alist快速部署文档.md)
 
 * [truenas快速部署文档](/ops/truenas快速部署文档/truenas快速部署文档.md)
+
+* [搭建samba-ad-dc](/ops/搭建samba-ad-dc.md)
