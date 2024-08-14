@@ -64,7 +64,7 @@ ff02::2 ip6-allrouters
 * 配置管理员账号，域名等信息后，创建运行容器
 
 ```bash
-#国内环境可以无法拉去镜像，请自行处理
+#国内环境可能无法拉取镜像，请自行处理
 docker run -d --privileged \
   --restart=unless-stopped --network=host \
   -e REALM='vdi.cloud.com' \
