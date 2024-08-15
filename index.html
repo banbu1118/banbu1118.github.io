@@ -99,7 +99,7 @@
     var diffMinutes = Math.floor((diff % hours) / minutes);
     var diffSeconds = Math.floor((diff % minutes) / seconds);
 
-    document.getElementById("sitetime").innerText = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
+    document.getElementById("sitetime").innerHTML = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
   }
 
   siteTime();
