@@ -133,7 +133,7 @@ usbipd bind --busid=<busid>
 
 #### 配置客户端
 
-* 下载地址：下载后管理员权限安装即可，商业客户端
+* 下载地址：[https://www.virtualhere.com/usb_client_software](https://www.virtualhere.com/usb_client_software)，商业客户端
 
 * 使用
 
