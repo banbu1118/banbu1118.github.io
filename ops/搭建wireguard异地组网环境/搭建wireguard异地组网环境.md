@@ -42,7 +42,7 @@ services:
     environment:
       # Change Language:
       # (Supports: en, ua, ru, tr, no, pl, fr, de, ca, es, ko, vi, nl, is, pt, chs, cht, it, th, hi)
-      - LANG=en
+      - LANG=chs
       # ⚠️ Required:
       # Change this to your host's public address
       - WG_HOST=192.168.1.172
