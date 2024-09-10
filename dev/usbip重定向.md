@@ -141,6 +141,11 @@ usbipd bind --busid=<busid>
 下载后管理员权限运行即可
 ```
 
+#### usb-over-ip
+
+* 下载地址：[https://www.usb-over-network.com](https://www.usb-over-network.com)，商业产品，客户端支持免费版本
+
+
 ### 四、测试
 
 经过测试，U盘，摄像头，打印机都可以重定向成功
