@@ -61,3 +61,5 @@
 * [truenas快速部署文档](/ops/truenas快速部署文档/truenas快速部署文档.md)
 
 * [搭建samba-ad-dc](/ops/搭建samba-ad-dc.md)
+
+* [nginx代理rdp网关和https服务](/ops/nginx代理rdp网关和https服务.md)
