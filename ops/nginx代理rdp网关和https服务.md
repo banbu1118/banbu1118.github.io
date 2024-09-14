@@ -16,7 +16,7 @@ nginx-full是一个更完整的nginx安装包，它包含了比nginx更多的功
 
 相比nginx，nginx-full 包含了一些额外的模块和扩展，支持更高级的功能，例如：Gzip压缩模块，SSL/TLS模块，Rewrite模块，Proxy模块，FastCGI模块，以及其他可选nginx模块。
 
-本教程需要使用stream模块和ssl模块，所需要安装nginx-full
+本教程需要使用stream模块和ssl模块，所以需要安装nginx-full
 
 * 安装nginx-full
 
