@@ -2,7 +2,8 @@
 
 * [首页](/)
 
-* [运维](/ops/ops.md)
+* 运维
+    * [Linux更新源](/ops/Linux更新源.md)
 
 * [开发](/dev/dev.md)
 
