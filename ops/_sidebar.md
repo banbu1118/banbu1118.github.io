@@ -65,3 +65,5 @@
 * [nginx代理rdp网关和https服务](/ops/nginx代理rdp网关和https服务.md)
 
 * [nginx学习教程](/ops/nginx学习教程/nginx学习教程.md)
+
+* [ventoy自动安装windows](/ops/ventoy自动安装windows.md)
