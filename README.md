@@ -12,13 +12,9 @@
 
 > 真正的大师永远都怀着一颗学徒的心
 
-> 春风不语,勾栏听曲
+> 心有山水不造作 静而不争远是非 镜中无贪念 忙里有欢喜 度四季 也渡自己 不念过往 不畏将来
 
-> [盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx)
-
-> [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ)
-
-> [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
+> 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
 
 > <span id="busuanzi_container_site_pv" style='display:none'>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style='display:none'>本站总访客数：<span id="busuanzi_value_site_uv"></span> 人</span>
 
