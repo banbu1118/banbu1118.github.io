@@ -67,3 +67,5 @@
 * [nginx学习教程](/ops/nginx学习教程/nginx学习教程.md)
 
 * [ventoy自动安装windows](/ops/ventoy自动安装windows/ventoy自动安装windows.md)
+
+* [Prometheus和Grafana学习教程](/ops/Prometheus和Grafana学习教程/Prometheus和Grafana学习教程.md)
