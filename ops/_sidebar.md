@@ -71,3 +71,5 @@
 * [Prometheus和Grafana学习教程](/ops/Prometheus和Grafana学习教程/Prometheus和Grafana学习教程.md)
 
 * [windows端口常用命令](/ops/windows端口常用命令.md)
+
+* [Linux端口常用命令](/ops/Linux端口常用命令.md)
