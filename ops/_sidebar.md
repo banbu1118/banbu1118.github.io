@@ -75,3 +75,5 @@
 * [Linux端口常用命令](/ops/Linux端口常用命令.md)
 
 * [Debian全局socks5代理](/ops/Debian全局socks5代理.md)
+
+* [Rocky全局socks5代理](/ops/Rocky全局socks5代理.md)
