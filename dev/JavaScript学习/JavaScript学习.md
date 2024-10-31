@@ -1209,3 +1209,156 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 4.7switch语句
+
+```javascript
+    <script>
+        /* 
+            根据用户输入的数字，显示对应的中文
+                1 壹
+                2 贰
+                3 叁                
+                4 肆
+                5 伍
+        */
+        let num = +prompt("请输入1-5之间的数字:");
+
+        // if (num === 1) {
+        //     alert("壹");
+        // } else if (num === 2) {
+        //     alert("贰");
+        // } else if (num === 3) {
+        //     alert("叁");
+        // } else if (num === 4) {
+        //     alert("肆");
+        // } else if (num === 5) {
+        //     alert("伍");
+        // } else {
+        //     alert("输入错误");
+        // }
+
+        /* 
+        - 执行的流程
+            switch语句在执行时，会依次将switch后的表达式和case后的表达式进行全等比较
+                如果比较结果为true，则自当前case处开始执行代码
+                如果比较结果为false，则继续比较其他case后的表达式，直到找到true为止
+                如果所有的比较都是false，则执行default后的语句
+
+        - 注意：
+            当比较结果为true时，会从当前case处开始执行代码
+                也就是说case是代码执行的起始位置
+            这就意味着只要是当前case后的代码，都会执行
+            可以使用break来避免执行其他的case
+
+        - 总结
+            switch语句和if语句的功能是重复，switch能做的事if也能做，反之亦然。
+                它们最大的不同在于，switch在多个全等判断时，结构比较清晰
+        */
+
+        //注意switch是全等判断
+        switch (num) {
+            case 1:
+                alert("壹");
+                break;
+            case 2:
+                alert("贰");
+                break;
+            case 3:
+                alert("叁");
+                break;
+            case 4:
+                alert("肆");
+                break;
+            case 5:
+                alert("伍");
+                break;
+            default:
+                alert("输入错误");
+        }
+    </script>
+```
+
+#### 4.8循环语句
+
+```javascript
+    <script>
+        /* 
+            循环语句
+                - 通过循环语句可以使指定的代码反复执行
+                - js中一共有3种循环语句：for、while、do-while
+
+                - while语句
+                    - 语法：
+                        while(条件表达式){
+                            语句...
+                        }
+                    - 执行流程
+                        while在执行时，会先对条件表达式就行判断
+                            如果结果为true，则执行循环体，然后再次判断条件表达式，继续执行循环体...
+                            如果结果为false，则退出循环
+        */
+        //当一个循环的条件表达式恒为true时，这个循环将是一个死循环，会一直执行下去，导致浏览器崩溃或浏览器卡死。
+        // while(true){
+        //     alert("哈哈")
+        //     }
+
+        /* 
+            通常写一个循环需要3个条件
+                1. 初始化条件表达式
+                    - 用来初始化变量
+                2. 循环条件表达式
+                    - 用来判断循环是否继续
+                3. 更新条件表达式
+                    - 用来修改变量的值
+        */
+
+        // //初始化条件表达式
+        // let a = 0
+
+        // //循环条件表达式
+        // while (a < 5){
+        //     console.log(a);
+
+        //     //更新条件表达式
+        //         a++
+        // }
+
+        let i = 0
+        while (true) {
+            console.log(i)
+            i++
+            if (i === 5) {
+                break
+            }
+        }
+
+        /*
+            练习：
+                假设银行存款的年利率为5%，求存1000多少年可以变成5000
+        */
+    </script>
+```
+
+#### 4.9while练习
+
+```javascript
+    <script>
+        /* 
+            假设银行存款的年利率为5%，求存1000多少年可以变成5000
+        */
+
+        //创建一个计数器，记录存款1000年后变成5000需要多少年
+        let year = 0;
+
+        //初始化余额为1000
+        let balance = 1000;
+
+        //判断表达式，当余额小于5000时，执行循环
+        while (balance < 5000) {
+            balance = balance * (1 + 0.05);
+            year++;
+        }
+        console.log(`存款1000后变成5000需要${year}年`);
+    </script>
+```
+
