@@ -6,16 +6,26 @@
  npm config get registry
 ```
 
-*   更换npm源为国内淘宝镜像
+*   更换npm源为国内镜像
 
 ```shell
-npm config set registry <https://registry.npmmirror.com/>
+#淘宝源
+npm config set registry https://registry.npmmirror.com/
+
+#清华源
+npm config set registry https://mirrors.tuna.tsinghua.edu.cn/npm/
+
+#华为源
+npm config set registry https://repo.huaweicloud.com/repository/npm/
+
+#中科大源
+npm config set registry https://mirrors.ustc.edu.cn/npm/
 ```
 
 *   还原成官方源
 
 ```shell
-npm config set registry <https://registry.npmjs.org/>
+npm config set registry https://registry.npmjs.org/
 ```
 
 ## 二、间接配置源(推荐)
