@@ -1904,3 +1904,133 @@ js可以编写到多个位置
         console.timeEnd('质数练习');
     </script>
 ```
+
+### 5、对象
+
+#### 5.1对象
+
+```javascript
+    <script>
+        /* 
+            数据类型：
+                原始值：
+                    1.数值 Number
+                    2.大整数 BigInt
+                    3.字符串 String
+                    4.布尔值 Boolean
+                    5.空值 null
+                    6.未定义 undefined
+                    7.符号 Symbol
+                
+                对象：
+                    - 对象是js中一种复合数据类型
+                        它相当于一个容器，在对象中可以存储各种不同类型的数据
+
+
+                原始值只能用来表示一些简单的数据，不能表示复杂数据
+
+                比如：现在需要在程序中表示一个人的信息
+
+        */
+        //创建对象
+        // let obj = new Object();
+
+        //省略new关键字
+        let obj = Object();
+
+        /* 
+            对象中可以存储多个各种类型的数据
+                对象中存储的数据，我们称为属性
+
+            向对象中添加属性：
+                对象.属性名 = 属性值
+
+            读取对象中属性：
+                对象.属性名
+                - 如果读取的是对象中没有的属性
+                    不会报错，而是返回undefined
+        */
+
+        obj.name = "孙悟空"
+        obj.age = 18
+        obj.gender = "男"
+
+        //修改属性
+        obj.name = "Tom sun"
+
+        //删除属性
+        delete obj.name
+
+        console.log(obj);
+    </script>
+```
+
+#### 5.2对象的属性
+
+```javascript
+    <script>
+        /* 
+            属性名
+                - 通常属性名就是一个字符串，所以属性名可以是任何值，没有什么特殊要求
+                    但是属性名很特殊，不能直接使用，需要使用[]来设置
+                    虽然如此，我们还是强烈建议属性名来按照标识符的规范来命名
+                
+                - 也可以使用符号Symbol作为属性名，来添加属性
+                    获取这种属性，也必须使用symbol来获取
+                使用symbol添加的属性，通常是不希望被外界访问的属性，可以用来隐藏一些信息
+
+                - 使用[]去操作属性时，可以使用变量
+
+            属性值：
+                - 对象的属性值可以是任意数据类型
+
+            使用typeof检查对象，返回的是object
+        */
+        let obj = Object()
+        obj.name = "孙悟空"
+
+        //不要使用保留字作为属性名
+        // obj.if = 18
+
+        //不建议这么取名
+        // obj["123@fsdfs#!"] = "你好"
+
+        let mySymbol = Symbol()
+
+        //使用Symbol作为属性名
+        obj[mySymbol] = "通过Symbol添加的属性名"
+
+        // console.log(obj["123@fsdfs#!"]);
+        // console.log(obj[mySymbol]);
+
+        obj.age = 18;
+        obj["gender"] = "男";
+
+        let str = "address"
+        obj[str] = "花果山" //等价于obj.address = "花果山"
+
+        obj.a = 123
+        obj.b = 'hello'
+        obj.c = true
+        obj.d = null
+        obj.e = undefined
+        obj.f = Symbol()
+        obj.g = 123n
+
+        //添加对象属性
+        obj.h = Object()
+
+        console.log(obj);
+        console.log(obj.age);
+        console.log(obj.gender);
+        console.log(obj.address);
+        console.log(obj[str]);
+
+        console.log(typeof obj);  //object
+
+        //检查in运算符
+        //检查obj中是否包含name属性，返回true
+        console.log("name" in obj);
+    </script>
+```
+
