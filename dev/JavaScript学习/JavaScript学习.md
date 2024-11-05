@@ -2034,3 +2034,439 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 5.3对象字面量
+
+```javascript
+    <script>
+        /* 
+            对象字面量
+                - 可以直接使用{}来创建对象
+                - 使用{}创建的对象，可以直接向对象中添加属性
+                - 语法：
+                    {
+                        属性名：属性值,
+                        [属性名]：属性值,
+                    }
+        */
+
+        // let obj = Object()
+
+        // let obj2 = {}
+        // obj2.name = "孙悟空"
+
+        let obj2 = {
+            name: "孙悟空",
+            age: 18,
+            ["gender"]: "男",
+            ["mysymbol"]: "特殊的属性",
+            hello: {
+                a: 1,
+                b: true
+            }
+        }
+        // console.log(obj);
+        console.log(typeof obj2, obj2);
+    </script>
+```
+
+#### 5.4枚举属性
+
+```javascript
+    <script>
+        /* 
+            枚举属性：将对象中所有的属性全部获取
+
+            for in语法：
+                - 语法
+                    for(let proName in 对象){
+                        ...
+                    }
+
+                - for-in的循环多执行多次，有几个属性就会执行多少次
+                    每次执行时，都会把属性名赋值给proName变量
+
+                - 注意：并不是所有属性都可以枚举，比如使用符号添加的属性无法枚举
+        */
+
+        let obj = {
+            name: "孙悟空",
+            age: 18,
+            gender: "男",
+            address: "花果山",
+            [Symbol()]: "测试的属性"   //符号属性不可枚举
+        }
+
+        for (let value in obj) {
+            //获取属性名和属性值
+            console.log(value, obj[value]);
+        }
+    </script>
+```
+
+#### 5.5可变类型
+
+```javascript
+    <script>
+        /* 
+            原始值都属于不可变类型，一旦创建就不能改变。
+            原始值包括：字符串、数字、布尔值、null、undefined。
+            在内存中不会重复创建相同的值，因此可以直接使用。
+            对于原始值来说，可以直接使用，不需要考虑引用的问题。
+        */
+        let a = 10
+        let b = 10
+        a = 12
+
+        console.log("a =", a);
+        console.log("b =", b);
+
+        /* 
+            对象属于可变类型
+            对象创建完成后，可以修改其属性
+            注意：
+                - 当对两个对象进行相等或全等比较时，比较的是对象的内存引用地址。
+                - 如果有两个变量同时指向一个对象，
+                    通过一个变量修改对象时(实质上只有一个对象，对象的内存地址没变，修改的是对象内存地址中的属性)，
+                    对另一个变量也会造成影响。
+        */
+
+        let obj = Object()
+        obj.name = "孙悟空"
+        obj.age = 18
+
+        let obj2 = Object()
+        let obj3 = Object()
+
+        // console.log("obj =", obj);
+
+        // console.log(obj2 === obj3);
+
+        let obj4 = obj
+        obj4.name = "猪八戒"
+
+        console.log("obj =", obj);
+        console.log("obj4 =", obj4);
+        console.log(obj === obj4);
+    </script>
+```
+
+#### 5.6改变量和改对象
+
+```javascript
+    <script>
+        /* 
+            - 修改对象时，如果有其他对象指向该对象，则其他对象也会受到影响
+
+            - 修改变量时，只会影响当前变量，不会影响其他变量
+
+            在使用变量存储对象时，很容易因为改变变量指向的对象而导致其他变量也发生变化，造成程序运行错误。
+                所以通常情况下，声明存储对象的变量时，最好使用 const 关键字，避免变量指向的对象被修改。
+
+            注意：
+                const只是禁止变量被重新赋值(锁定了变量的内存地址)，对对象的修改没有任何影响
+        */
+        // let obj = {
+        //     name: "孙悟空",
+        // }
+
+        const obj = {
+            name: "孙悟空",
+        }
+
+        // let obj2 = obj;
+        const obj2 = obj;
+
+        obj2.name = "猪八戒";   //修改对象
+        // obj2 = null  //修改变量
+
+        console.log(obj);
+        console.log(obj2);
+
+        const obj3 = {
+            name: "猪八戒",
+        }
+
+        obj3.name = "沙和尚"
+
+        console.log(obj3);
+    </script>
+```
+
+
+
+
+
+
+
+### 6、函数
+
+#### 6.1函数
+
+```javascript
+    <script>
+        /*
+            函数(Function)
+                - 函数也是一个对象
+                - 它具有其他对象的所有功能
+                - 函数中可以存储代码，且可以在需要时调用执行
+
+            语法：
+                function 函数名(){
+                        语句...
+                    }
+                
+            调用函数：
+                - 调用函数就是执行函数体中的代码
+                语法：
+                    函数对象()
+            
+            使用typeof检查函数，返回值是"function"
+
+        */
+        //创建函数对象
+        function fn() {
+            console.log("你好");
+            console.log("hello");
+            console.log("萨瓦迪卡");
+            console.log("阿尼哈撒有");
+            
+        }
+
+        // console.log(fn);
+
+        //调用函数
+        // fn();
+
+        console.log(typeof fn); //function
+    </script>
+```
+
+#### 6.2函数的创建方式
+
+```javascript
+    <script>
+        /* 
+            函数的定义方式：
+                1.函数声明
+                    function 函数名() {
+                        // 函数体
+                    }
+
+                2.函数表达式
+                    const 函数名 = function() {
+                        // 函数体
+                    }
+
+                3.箭头函数
+                    const 函数名 = () => {
+                        // 函数体
+                    }
+        */
+        //声明函数
+        function fn() {
+            console.log("函数声明定义的函数");
+        }
+
+        //函数表达式定义的函数
+        const fn2 = function () {
+            log("函数表达式定义的函数");
+        }
+
+        //箭头函数定义的函数
+        const fn3 = () => {
+            console.log("箭头函数定义的函数");
+        }
+
+        //如果箭头函数只有一行，可以简写成如下形式
+        const fn4 = () => console.log("箭头函数定义的函数");
+
+        console.log(typeof fn);
+        console.log(typeof fn2);
+        console.log(typeof fn3);
+        console.log(typeof fn4);
+    </script>
+```
+
+#### 6.3参数
+
+```javascript
+    <script>
+        /* 
+            定义一个可以求任意两个数的和的函数
+        */
+
+        // 方式1：使用函数声明
+        function sum() {
+            console.log(1 + 1);
+        }
+
+        // 方式2：使用函数表达式
+        const sum2 = function () {
+            console.log(1 + 1);
+        }
+
+        // 方式3：使用箭头函数
+        const sum3 = () => console.log(1 + 1);
+
+        sum(); // 输出2
+        sum2(); // 输出2
+        sum3(); // 输出2
+
+        /* 
+            形式参数：
+                - 在定义函数时，可以指定数量不等的参数
+                - 在函数中定义形参，就相当于在函数内部声明了内部变量，但是没有赋值
+                - 参数：
+                    1.如果实参和形参数量相同，则按顺序对应
+                    2.如果实参多于形参数，则多余的实参会被忽略
+                    3.如果实参少于形参数，则缺少的形参数会被赋值为undefined
+
+                - 参数的类型：
+                    - js中不会检查参数的类型，可以传递任何类型的值作为参数
+            
+            实际参数：
+                - 调用函数时，在函数()中传入数量不等的实参
+                - 实参会被传递给对应的形参
+
+            1.函数声明
+                function 函数名([参数]) {
+                    // 函数体
+                }
+
+            2.函数表达式
+                const 函数名 = function([参数]) {
+                    // 函数体
+                }
+
+            3.箭头函数
+                const 函数名 = ([参数]) => {
+                    // 函数体
+                }
+        */
+        function sum4(a, b) {
+            console.log(a + b);
+        }
+
+        sum4(1, 2); // 输出3
+        sum4(2, 3); // 输出5
+        sum4("hello", "world"); // 输出 helloworld
+        sum4(1); // 输出 NaN，因为缺少第二个参数
+    </script>
+```
+
+#### 6.4箭头函数的参数
+
+```javascript
+    <script>
+        /* 
+            
+        */
+        const fn = (a, b) => {
+            console.log("a = ", a);
+            console.log("b = ", b);
+        }
+
+        //只有一个参数时，可以省略括号
+        const fn1 = a => {
+            console.log("a = ", a);
+        }
+
+        //定义参数时，可以指定默认值
+        const fn3 = (a = 10, b = 20, c = 30) => {
+            console.log("a = ", a);
+            console.log("b = ", b);
+            console.log("c = ", c);
+        }
+
+        fn(123, 456);
+        fn1(789);
+        fn3(1, 2, 3);
+
+        //当没有传入参数时，默认值就会生效
+        fn3();
+    </script>
+```
+
+#### 6.5对象作为参数
+
+```javascript
+    <script>
+
+        function fn(a) {
+            // console.log("a = ", a);
+
+            //对象属性也可以作为参数传递给函数
+            // console.log(a.name);
+
+            a = {}
+            a.name = "猪八戒";
+            console.log(a);
+        }
+
+        //对象可以作为参数传递给函数
+        let obj = { name: "孙悟空" }
+
+        // fn(123)
+
+        //传递实参时，传递的不是变量本身，而是变量所指向的对象
+        fn(obj)
+
+        console.log(obj);
+
+        //函数每次调用时，都会创建一个新的对象，因此，函数内部的修改不会影响到外部的对象
+        function fn2(a = { name: "沙和尚" }) {
+            console.log("a = ", a);
+            a.name = "唐僧"
+            console.log("a = ", a);
+        }
+
+        fn2()   //沙和尚, 唐僧
+        fn2()   //沙和尚, 唐僧
+
+        //传递实参时，传递的不是变量本身，而是变量所指向的对象
+        let obj2 = { name: "沙和尚" }
+
+        function fn3(a = obj2) {
+            console.log("a = ", a);
+            a.name = "唐僧"
+            console.log("a = ", a);
+        }
+
+        fn3()   //沙和尚, 唐僧
+        fn3()   //唐僧, 唐僧
+    </script>
+```
+
+#### 6.6函数参数
+
+```javascript
+    <script>
+
+        function fn(a) {
+            console.log("a = ", a);
+        }
+
+        /* 
+            在js中，函数也是一个对象(一等对象)
+                别的对象能做的事，函数也可以
+        */
+
+        let obj = { name: "孙悟空" }
+
+        function fn2() {
+            console.log("我是fn2");
+        }
+
+        //把函数作为参数传递给另一个函数
+        fn(fn2)
+
+        //把匿名函数作为参数传递给另一个函数
+        fn(function () {
+            console.log("我是匿名函数");
+        })
+
+        //把箭头函数作为参数传递给另一个函数
+        fn(() => console.log("我是箭头函数"));
+    </script>
+```
+
