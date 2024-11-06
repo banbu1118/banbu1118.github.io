@@ -312,8 +312,22 @@ fog setting -> FOG Quick Registration ->  QUICKREG AUTOPOP勾选
 
 iPxe Menu Item Settings -> fog.reg ->  Default Item勾选
 
+#### 3、跨fog环境部署系统
+
+在就旧fog环境导出image的csv信息，在新fog导入。
+
+把旧环境/images路径下的image系统目录拷贝到新环境。
+
 ### 六、问题
 
 #### 1、注册或上传出错
 
 可能是fog内核不匹配，在web界面内核更新选择合适内核安装
+
+### 七、探索
+
+#### 1、fog部署iso
+
+参考教程：[https://forums.fogproject.org/topic/10944/using-fog-to-pxe-boot-into-your-favorite-installer-images](https://forums.fogproject.org/topic/10944/using-fog-to-pxe-boot-into-your-favorite-installer-images)
+
+具体步骤：[https://forums.fogproject.org/topic/10944/using-fog-to-pxe-boot-into-your-favorite-installer-images/10](https://forums.fogproject.org/topic/10944/using-fog-to-pxe-boot-into-your-favorite-installer-images/10)
