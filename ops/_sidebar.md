@@ -77,3 +77,5 @@
 * [Debian全局socks5代理](/ops/Debian全局socks5代理.md)
 
 * [Rocky全局socks5代理](/ops/Rocky全局socks5代理.md)
+
+* [fog网络克隆教程](/ops/fog网络克隆教程.md)
