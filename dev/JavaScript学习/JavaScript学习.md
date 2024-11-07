@@ -2755,7 +2755,6 @@ js可以编写到多个位置
 #### 6.14练习
 
 ```javascript
-    <title>练习</title>
     <script>
         // var a = 1
 
@@ -2835,6 +2834,265 @@ js可以编写到多个位置
         
         var a
         console.log(a);//4
+    </script>
+```
+
+#### 6.15debug
+
+```javascript
+    <script>
+        //在代码中设置断点，可以让程序暂停运行，并进入调试模式
+        //或者在浏览器中打断点，可以让程序暂停运行，并进入调试模式
+        // debugger
+
+        console.log(a); //2
+        var a = 1
+        console.log(a); //1
+
+        //提升后，赋值a为函数，此时a的值为函数，而不是函数的返回值
+        function a() {
+            alert(2)
+        }
+        console.log(a);//1
+
+        var a = 3
+        console.log(a);//3
+
+        var a = function () {
+            alert(4)
+        }
+        console.log(a);//4
+
+        var a
+        console.log(a);//4
+    </script>
+```
+
+#### 6.16立即执行函数
+
+```javascript
+    <script>
+        /*
+            在开发中应该减少在全局作用域中编写代码
+
+            所以我们的代码要尽可能编写到局部作用域中
+
+            如果使用let声明变量，可以使用{}来创建块作用域
+        */
+        // let a = 10
+        // let a = 20  // 这行代码会导致语法错误，因为变量a已经被声明过了
+
+        // var a = 10;
+        // var a = 20; // 这行代码不会导致语法错误，但是会覆盖之前的变量a的值，导致不可预测的结果
+
+        // {
+        //     let a = 10
+        // }
+
+        // {
+        //     let a = 20
+        // }
+
+        // {
+        //     var a = 10;
+        // }
+
+        // {
+        //     var a = 20; // 这行代码不会导致语法错误，但是会覆盖之前的变量a的值，导致不可预测的结果
+        // }
+
+        // function fn() {
+        //     var a = 10;
+        // }
+
+        // fn()
+
+        // function fn2() {
+        //     var a = 20;
+        // }
+
+        // fn2()
+
+        //希望只创建一个只执行一次的匿名函数
+
+        /* 
+            立即执行函数(Immediately-Invoked Function Expression, IIFE)
+                - 语法：
+                    (function () {
+                        // 这里是函数体
+                    })()
+                - 立即执行函数是一个匿名函数，并且它只会调用一次
+                - 可以利用IIFE来创建一个一次性的函数作用域，避免污染全局作用域
+        */
+        (function () {
+            let a = 10;
+            console.log(a);
+        })();
+
+        //两个立即执行函数直接要用;隔开，否则会报错
+        (function () {
+            let a = 20;
+            console.log(a);
+        })()
+    </script>
+```
+
+#### 6.17函数中this
+
+```javascript
+    <script>
+        /*
+            this
+                - 函数在执行时，js引擎每次都会传递进一个隐含的参数
+                - 这个参数就是this
+                - this会执行一个对象
+                    - this所指向的对象根据调用方式的不同而不同
+                        - 1.以函数形式调用时，this指向的是window
+                        - 2.以方法形式调用时，this指向的是调用该方法的对象
+                        ...
+                - 通过this可以在方法中调用方法的对象
+        */
+        // function fn() {
+        //     //this指向window
+        //     console.log(this);
+        // }
+
+        // fn() //本质上还是调用window.fn()
+
+        function fn2() {
+            console.log("fn打印", this);
+        }
+
+        const obj = { name: "孙悟空" }
+
+        obj.test = fn2;
+
+        const obj2 = { name: "猪八戒", test: fn2 }
+
+        // obj2.test() // 输出：fn打印 Object { name: "猪八戒", test: ƒ }
+
+        // obj.test()    // 输出：fn打印 Object { name: "孙悟空", test: ƒ }
+
+
+        //为两个对象添加一个方法，可以打印自己的名字
+        const obj3 = {
+            name: "沙和尚",
+            sayHello: function () {
+                console.log(this.name);
+            }
+        }
+        const obj4 = {
+            name: "唐僧",
+            sayHello: function () {
+                console.log(this.name);
+            }
+        }
+
+        obj3.sayHello() // 输出：沙和尚
+        obj4.sayHello() // 输出：唐僧
+    </script>
+```
+
+#### 6.18箭头函数的this
+
+```javascript
+    <title>箭头函数的this</title>
+    <script>
+        /* 
+            箭头函数：
+                ([arguments]) => 返回值
+
+            例子：
+                无参箭头函数：() => 返回值
+                一个参数的箭头函数：a => 返回值
+                多个参数的箭头函数：(a, b) => 返回值
+
+                只有一个语句的箭头函数：() => 返回值
+                只返回一个对象的箭头函数：() => ({...})
+                有多行语句的函数：() => {
+                    语句1;
+                    语句2;
+                    return 返回值;
+                }
+
+            箭头函数没有自己的this，它的this取决于外层作用域的this。
+                箭头函数的this和它的调用方式无关
+            
+        */
+        function fn() {
+            console.log("fn->", this);
+        }
+
+        const fn2 = () => {
+            console.log("fn2->", this); // 箭头函数没有自己的this，它的this取决于外层作用域的this。总是指向window
+        }
+
+        // fn()       // window
+        // fn2()      // window
+
+        const obj = {
+            name: "孙悟空",
+            // fn: fn,
+            // fn2: fn2
+            //简写为fn
+            fn,
+            fn2,
+            sayHello() {
+                console.log("hello, " + this.name);
+                // function t(){
+                //     console.log("t->", this);
+                // }
+                // t(); // window
+
+                const t2 = () => {
+                    console.log("t2->", this);
+                }
+                t2();    // 箭头函数没有自己的this，它的this取决于外层作用域的this。
+            }
+        }
+
+        // obj.fn()    // obj
+        // obj.fn2()   // window
+
+        obj.sayHello() // hello, 孙悟空
+    </script>
+```
+
+#### 6.19严格模式
+
+```javascript
+    <script>
+        /* 
+            js中运行代码的模式有两种：正常模式和严格模式。
+                - 正常模式：
+                    - 默认情况下代码都运行在正常模式，
+                        在正常模式下，语法检查不严格
+                        它的原则是：只要代码能运行，就不要报错。
+                    - 这种处理方式会导致代码运行效率较差
+                
+                - 严格模式：
+                    - 在严格模式下，代码运行时，会进行语法检查，
+                        1.它会禁止一些语法
+                        2.更容易报错
+                        3.提升了性能
+
+                - 在开发中，尽量使用严格模式
+                    这样可以将一些隐蔽的问题消灭在萌芽阶段
+                        同时也能提升代码的运行性能
+        */
+
+        "use strict";
+
+        // let a = 10;
+        // a = 10;       // 正常模式下，可以直接赋值给变量，不报错。
+        a = 10;       // 严格模式下，会报错，因为变量没有声明。
+
+        // console.log(a);
+
+        //函数的严格模式
+        function fn() {
+            "use strict";
+        }
     </script>
 ```
 
