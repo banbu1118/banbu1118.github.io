@@ -3096,3 +3096,153 @@ js可以编写到多个位置
     </script>
 ```
 
+### 7、面向对象
+
+#### 7.1面向对象
+
+```javascript
+    <script>
+        /* 
+            面向对象编程（Object-Oriented Programming，OOP）
+                - 1.程序是干嘛的？
+                    - 程序就是对现实世界的抽象(照片就是对人的抽象)
+                - 2.对象是干嘛的？
+                    - 一个事物抽象到程序中后就变成了对象
+                    - 在程序的世界中，一切皆对象
+                - 3.面向对象的编程
+                    - 程序中的所有操作都是通过对象来完成的
+                    - 做任何操作之前都要先找到对象，通过对象来完成各种操作
+        */
+
+        /* 
+            心仪的女人：王老五
+                - 一个事物通常由两部分组成：数据和功能
+                - 一个对象有两部分组成：属性和方法
+                - 事物的数据到了对象中，体现为属性
+                - 事物的功能到了对象中，体现为方法
+
+                - 数据：
+                    姓名
+                    年龄
+                    身高
+                    体重
+                
+                - 功能：
+                    睡
+                    吃
+        */
+
+        const five = {
+            //添加属性
+            name: '王老五',
+            age: 48,
+            height: 170,
+            weight: 60,
+
+            //添加方法
+            sleep() {
+                console.log(this.name + "睡觉了~");
+            },
+
+            eat() {
+                console.log(this.name + "吃了东西~");
+            }
+        }
+
+        console.log(five.name);
+        five.sleep()
+    </script>
+```
+
+#### 7.2类
+
+```javascript
+    <script>
+        /*
+            使用object创建对象的问题
+                1.无法区分出类型不同的对象
+                2.不方便批量创建对象
+
+            在js中可以通过类(class)来解决这个问题
+                1.类是创建对象的模板，可以将对象中属性和方法定义在类中
+                    定义后，就是直接通过类来创建对象
+                2.通过同一个类创建的对象，我们成为同类对象
+                    可以通过instaceof操作符来判断对象是否属于某个类
+                    如果某个对象是由某个类创建的，那么该对象称为该类的实例
+
+            语法：
+                class 类名 {}   //类名要使用大驼峰命名法
+                const 类名 = class {}
+
+            通过类来创建对象
+                new 类名()   //创建对象
+         */
+
+        // const five = {
+        //     //添加属性
+        //     name: '王老五',
+        //     age: 48,
+        //     height: 170,
+        //     weight: 60,
+
+        //     //添加方法
+        //     sleep() {
+        //         console.log(this.name + "睡觉了~");
+        //     },
+
+        //     eat() {
+        //         console.log(this.name + "吃了东西~");
+        //     }
+        // }
+
+        // const yellow = {
+        //     name: "大黄",
+        //     age: 3,
+        //     sleep() {
+        //         console.log(this.name + "睡觉了~");
+        //     },
+        //     eat() {
+        //         console.log(this.name + "吃了东西~");
+        //     }
+        // }
+
+        // console.log(yellow.name);
+        // yellow.eat();
+
+        // console.log(five);
+        // console.log(yellow);
+
+
+        //用const定义类
+        // const Person = class {}
+
+        //用class定义类
+        //用Person类专门用来创建人的对象
+        class Person {
+
+        }
+
+        //调用构造函数创建对象
+        const p1 = new Person();
+        const p2 = new Person();
+
+        //测试对象是否创建成功
+        //p1和p2都是同类对象，他们由Person类创建
+        console.log(p1);
+        console.log(p2);
+
+        //检查p1是否属于Person类的实例
+        console.log(p1 instanceof Person);  //true
+
+        //用Dog类专门用来创建狗的对象
+        class Dog {
+        }
+
+        const d1 = new Dog();
+        const d2 = new Dog();
+
+        console.log(d1);
+        console.log(d2);
+    </script>
+```
+
