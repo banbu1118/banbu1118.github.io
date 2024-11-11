@@ -3246,3 +3246,502 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 7.3属性
+
+```javascript
+    <script>
+        /* 
+            类是创建对象的模板，要创建第一件事就是创建类。
+
+            类自带严格模式，所以不需要使用"use strict"语句。
+        */
+
+        class Person {
+            /* 
+                类的代码块，默认就是严格模式            
+                    类的代码块是用来设置对象属性的，不是什么代码可以都可以写
+            */
+            name = "孙悟空"   //Person的实例属性name p1.name
+            age = 18  //实例属性，只能通过实例访问age p1.age
+
+            static test = "test"  //静态属性，只能通过类名访问 Person.test
+        }
+
+        const p1 = new Person();
+        const p2 = new Person();
+
+        console.log(p1);
+        console.log(p2);
+    </script>
+```
+
+#### 7.4方法
+
+```javascript
+    <script>
+        class Person {
+            name = "孙悟空"
+
+            // sayHello= function() {}
+
+            //实例方法，实例方法中this指向实例对象
+            sayHello() {
+                console.log('大家好，我是' + this.name);
+            }
+
+            //静态方法(类方法)，通过类来调用
+            //静态方法中this指向类对象
+            static test() {
+                console.log('我是静态方法,' + this);
+            }
+        }
+
+        const p1 = new Person()
+
+        // console.log(p1);
+
+        //实例方法调用
+        p1.sayHello()
+
+        //通过类调用
+        Person.test()
+    </script>
+```
+
+#### 7.5构造函数
+
+```javascript
+    <script>
+        /* 
+            
+        */
+        // class Person {
+        //     //当我们直接在类中指定实例属性的值时，
+        //     //意味着我们创建的所有对象的属性都是相同的。
+        //     name = "孙悟空"
+        //     age = 18
+        //     gendar = "男"
+
+        //     sayHello() {
+        //         console.log(this.name);
+        //     }
+        // }
+
+        // const p1 = new Person();
+        // const p2 = new Person();
+        // const p3 = new Person();
+
+        // console.log(p1);
+        // console.log(p2);
+        // console.log(p3);
+
+        class Person {
+            //类中可以添加一个特殊的方法constructor
+            //该方法我们称为构造函数(构造方法)
+            //构造函数在调用类创建对象时自动执行
+            constructor(a, b, c) {
+                //在构造函数中，为实例属性赋值
+                //this关键字代表当前实例对象
+                this.name = a;
+                this.age = b;
+                this.gendar = c;
+            }
+
+            sayHello() {
+                console.log(this.name);
+            }
+        }
+
+        const p1 = new Person("孙悟空", 18, "男");
+        const p2 = new Person("猪八戒", 20, "男");
+        const p3 = new Person("沙和尚", 16, "男");
+
+        console.log(p1);
+        console.log(p2);
+        console.log(p3);
+
+        p1.sayHello();
+        p2.sayHello();
+        p3.sayHello();
+    </script>
+```
+
+#### 7.6封装
+
+```javascript
+    <script>
+        /* 
+            面向对象的特点：
+                封装、继承、多态
+
+            1.封装
+                - 对象就是存储不同数据的容器
+                - 对象不仅负责存储属性，还有负责数据的安全
+                - 直接添加到对象中的属性，并不安全，因为它们可以被外部代码随意修改
+                - 如何确保数据的安全性？
+                    1.私有化数据
+                        - 将需要保护的属性设置为私有，只能在内部使用
+                    2.提供setters和getters方法来开放属性的访问权限
+                        - 属性设置私有，通过getter和setter方法操作属性带来的好处
+                            1.可以控制属性的读取权限
+                            2.可以在方法中对属性的值进行验证
+                        
+                - 封装主要用来保证数据的安全
+                - 实现封装的方式
+                    1.属性私有化
+                    2.通过getters和setters方法来控制属性的访问权限
+                        get 属性名() {
+                            return this._属性名;
+                        }
+
+                        set 属性名(value) {
+                            //对属性值进行验证
+                            if (value < 0) {
+                                console.log('属性值不能为负数');
+                                return;
+                            }
+                            this._属性名 = value;
+                        }
+        */
+
+        class Person {
+            //使用#开头定义私有属性
+            //私有属性只能在类的内部访问，外部代码无法访问
+            #address = '花果山'
+
+            //私有化属性，必须先声明属性，再定义构造函数
+            #name
+            #age
+            #gender
+
+            constructor(name, age, gender) {
+                this.#name = name;
+                this.#age = age;
+                this.#gender = gender;
+            }
+
+            sayHello() {
+                console.log(this.#name, this.#address);
+            };
+
+
+            //getter方法用来读取私有属性
+            getName() {
+                return this.#name;
+            }
+
+            //setter方法用来修改私有属性
+            setName(name) {
+                this.#name = name;
+            }
+
+            getAge() {
+                return this.#age;
+            }
+
+            setAge(age) {
+                if (age < 0) {
+                    console.log('年龄不能为负数');
+                    return;
+                }
+                this.#age = age;
+            }
+
+            //上面的getter和setter方法是旧的写法
+            //ES6提供了更简洁的写法，直接在属性前加上get和set关键字
+            get gender() {
+                return this.#gender;
+            }
+
+            set gender(gender) {
+                this.#gender = gender;
+            }
+        }
+
+        const p1 = new Person('孙悟空', 18, '男');
+
+        // p1.age = 'hello'  // 直接修改属性，不安全
+
+        p1.setName('猪八戒');
+
+        //错误的赋值，年龄不能为负数
+        p1.setAge(-19);
+
+        p1.gender = '女'; //这个时候调用的是set gender方法
+
+        console.log(p1);
+    </script>
+```
+
+#### 7.7多态
+
+```javascript
+    <script>
+        class Person {
+            constructor(name) {
+                this.name = name;
+            }
+        };
+
+        class Dog {
+            constructor(name) {
+                this.name = name;
+            }
+        }
+
+        class Test {
+        }
+
+        const dog = new Dog("旺财");
+        const person = new Person("小李");
+        const test = new Test();
+
+        // console.log(dog);
+        // console.log(person);
+
+        /* 
+            定义一个函数，这个函数将接受一个对象作为参数，它可以输出hello并打印name属性。
+
+            多态
+                - 在js中不会检查参数的类型，所以这就意味着任何数据都可以作为参数传递给函数。
+                - 要调用某个函数，无需指定的类型，只要对象满足某些条件即可
+                - 如果一个东西走路像鸭子，叫起来像鸭子，那么它就是鸭子。
+                - 多态为我们提供了灵活性
+        */
+        function sayHello(obj) {
+            //判断obj是否是Person的实例
+            // if (obj instanceof Person) {
+            console.log("hello," + obj.name);
+            // }
+        }
+
+        sayHello(dog); // 输出 "hello,旺财"
+        sayHello(person); // 输出 "hello,小李"
+
+        sayHello(test) // 输出 "hello,undefined", 因为test没有name属性
+    </script>
+```
+
+#### 7.8继承
+
+```javascript
+    <script>
+        /* 
+            继承
+                - 可以通过extends关键字来实现继承
+                - 当一个类可以继承另一个类时，就相当于另一个类中的代码复制到当前类中
+                - 继承发生时，被继承的类称为父类(超类)，继承它的类称为子类
+                - 通过继承可以减少重复的代码，并且在不修改父类代码的情况下，可以扩展子类的功能
+
+                封装 - 安全性
+                继承 - 扩展性
+                多态 - 灵活性
+        */
+
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+
+            sayHello() {
+                console.log("动物在叫~");
+            }
+        }
+
+        class Dog extends Animal {
+        }
+
+        class Cat extends Animal {
+        }
+
+
+        // class Dog {
+        //     constructor(name) {
+        //         this.name = name;
+        //     }
+
+        //     sayHello() {
+        //         console.log("汪汪汪");
+        //     }
+        // }
+
+        // class Cat {
+        //     constructor(name) {
+        //         this.name = name;
+        //     }
+
+        //     sayHello() {
+        //         console.log("喵喵喵");
+        //     }
+        // }
+
+        const dog = new Dog("旺财");
+        const cat = new Cat("汤姆");
+
+        dog.sayHello(); // 输出 "汪汪汪"
+        cat.sayHello(); // 输出 "喵喵喵"
+
+        console.log(dog);
+        console.log(cat);
+    </script>
+```
+
+#### 7.8继承
+
+```javascript
+    <script>
+        /*
+            继承
+                - 通过继承，可以在不修改一个类的情况下对其进行扩展
+                - OCP开闭原则
+                    - 程序应该对修改关闭，对扩展开放
+        */
+
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+
+            sayHello() {
+                console.log("动物在叫~");
+            }
+        }
+
+        class Dog extends Animal {
+            //在子类中，可以通过创建同名方法来重写父类的方法
+            sayHello() {
+                console.log("汪汪汪");
+            }
+        }
+
+        class Cat extends Animal {
+            //构造函数也可以重写
+            constructor(name, age) {
+                //重写构造函数时，构造函数的第一行代码必须是super()，用来调用父类的构造函数
+                super(name);    //调用父类的构造函数
+                this.age = age;  //添加属性
+            }
+            sayHello() {
+                //调用父类的sayHello方法
+                super.sayHello();   //在方法中可以使用super关键字来调用父类的方法
+                console.log("喵喵喵");
+            }
+        }
+
+        const dog = new Dog("旺财");
+        const cat = new Cat("汤姆", 5);
+
+        dog.sayHello(); // 输出 "汪汪汪"
+        cat.sayHello(); // 输出 "喵喵喵"
+
+        console.log(dog);
+        console.log(cat);
+    </script>
+```
+
+#### 7.9对象的结构
+
+```javascript
+    <script>
+        /* 
+            对象中储存的区域实际上由两个：
+                1.对象自身
+                    - 直接通过对象添加的属性
+                    - 在类中通过x = y的形式添加的属性
+
+                2.神秘的位置
+                    - 对象中还有一些内容，会储存到其他的对象里(原型对象)
+                    - 在对象中会有一个属性用来储存原型对象，这个属性叫做__proto__
+                    - 原型对象也负责为对象储存属性
+                        当我们访问对象中的属性时，会优先访问对象自身中的属性，
+                        如果没有，则会访问原型对象中的属性
+                    - 会添加到原型对象中的情况：
+                        1.在类中通过xxx(){}方式添加的方法，位于原型对象中
+                        2.主动向原型对象中添加的属性或方法
+        */
+        class Person {
+            //在类中通过x = y的形式添加的属性
+            name = '孙悟空'
+            age = 18
+
+            //直接通过对象添加的属性
+            // constructor() {
+            //     this.gender = '男';
+            // }
+
+            sayHello() {
+                console.log(`hello，我是${this.name}`);
+            }
+        }
+
+        const p = new Person();
+
+        // p.address = '北京市朝阳区'; //直接通过对象添加的属性
+
+        //优先访问对象自身中的属性
+        p.sayHello = "hello"
+
+        console.log(p.sayHello);
+    </script>
+```
+
+#### 7.10原型对象
+
+```javascript
+    <script>
+        class Person {
+            name = "孙悟空"
+            age = 18
+
+            sayHello() {
+                console.log("Hello,我是", this.name);
+            }
+        }
+
+        const p = new Person();
+
+        // console.log(p.__proto__);    //打印p的原型对象
+
+        /* 
+            访问一个对象的原型对象
+                对象.__proto__
+            
+            原型对象中的数据
+                1.对象中的数据(属性和方法)
+                2.constructor属性，指向构造函数
+
+            注意：
+                原型对象也有自己的原型对象，这样就构造了一个链条，称为原型链
+                根据对象的复杂程度，原型链的长度也不同
+                p的原型链：p对象->原型->原型->null
+                obj的原型链：obj对象->原型->null
+
+            原型链：
+                - 对象读取属性时，有优先读取自身的属性
+                    如果对象自身中没有，则读取原型对象中的属性
+                    如果原型对象中也没有，则继续读取原型对象的原型对象中的属性，直到找到Object对象的原型null为止
+                    如果依然没有找到，则返回undefined
+
+                - 作用域链，是找变量的链，找不到会报错
+                - 原型链，是找属性的链，找不到会返回undefined
+        */
+
+        //检查某个对象的原型
+        console.log(Object.getPrototypeOf(p));
+
+        //两个方法获取原型对象，Object.getPrototypeOf()和__proto__属性
+        // console.log(Object.getPrototypeOf(p) === Person.prototype);   //true
+
+        // console.log(p.constructor);
+        // console.log(p.__proto__);
+        // console.log(p.__proto__.__proto__);
+        // console.log(p.__proto__.__proto__.__proto__); //null
+
+        const obj = {}
+
+        console.log(obj);
+        console.log(obj.__proto__);
+        console.log(obj.__proto__.__proto__);
+    </script>
+```
+
