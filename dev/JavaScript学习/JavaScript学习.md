@@ -3745,3 +3745,137 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 7.11原型对象
+
+```javascript
+    <script>
+        class Person {
+            name = "孙悟空"
+            age = 18
+
+            sayHello() {
+                console.log("hello, my name is " + this.name);
+            }
+        }
+
+        class Dog {
+
+        }
+
+        const p = new Person();
+        const p2 = new Person();
+
+        const d = new Dog();
+        const d2 = new Dog();
+
+        /* 
+            所有的同类对象它们的原型对象都是同一个
+                也就意味着同类对象它们的原型对象是相同的
+
+            原型的作用：
+                原型就相当于一个公共的区域，它可以被所有该类实例访问
+                    可以将一个该类实例中，所有的公共属性和方法，都放在原型上，
+                    这样就可以让所有该类实例都可以访问到这些属性和方法。
+
+                js中继承就是通过原型来实现的
+                    当我们继承时，子类的原型就是父类的实例
+                
+            在对象中有些值是对象独有的，像属性(name,age,gender)，每个对象都有自己的属性，
+                但是有些值对于每个对象都是一样的，比如一些方法，这些方法对于每个对象都是一样的，
+                所以可以将这些方法放在原型上，这样就可以让所有该类实例都可以访问到这些方法。
+
+            尝试：
+                函数的原型链是什么样？
+                Object的原型链是什么样？
+        */
+
+        console.log(p);
+        console.log(p2);
+        console.log(p === p2);  // false
+
+        //同类对象它们的原型对象都是同一个
+        console.log(p.__proto__ === p2.__proto__);  // true
+
+        //不同类对象它们的原型对象不同
+        console.log(d.__proto__ === p2.__proto__);  //false
+
+        class Animal { }
+
+        class Cat extends Animal { }
+
+        const cat = new Cat();
+
+        console.log(cat);
+        console.log(cat.__proto__);
+        console.log(cat.__proto__.__proto__);
+        console.log(cat.__proto__.__proto__.__proto__);
+        console.log(cat.__proto__.__proto__.__proto__.__proto__);
+    </script>
+```
+
+#### 7.12如何修改原型
+
+```javascript
+    <script>
+        /* 
+            大部分情况下，我们不建议修改原型，因为这样会影响到所有实例的行为。
+                注意：
+                    千万不要通过类的实例修改原型
+                        1.通过一个对象，影响所有同类对象，这么做不合适
+                        2.修改原型得先创建实例，麻烦
+                        3.危险！！！
+
+            除了__proto__属性，还有其他方式修改原型
+                还可以用类的prototype属性改变原型，但不建议使用。
+                修改原型时，最好通过类去修改
+                好处：
+                    1.已经修改就会修改所有实例的原型
+                    2.无需创建实例，直接修改原型，更加方便
+
+            原则：
+                1.原型尽量不要手动改
+                2.要改也不要通过实例对象改
+                3.要通过.prototype属性改原型，不要直接修改__proto__属性
+                4.最好不要给prototype去赋值，因为会影响所有实例的原型
+        */
+
+        class Person {
+            name = "孙悟空"
+            age = 18
+
+            sayHello() {
+                console.log(`hello,my name is ${this.name}`);
+            }
+        }
+
+        class Dog {
+
+        }
+
+        const p = new Person();
+        const p2 = new Person();
+
+        //通过对象修改原型，向原型中添加方法，修改后所有实例都可以调用该方法
+        // p.__proto__.run = () => {
+        //     console.log(`I am running!`);
+        // }
+
+        // p.__proto__ = new Dog() //直接为对象赋值了一个新的原型
+
+        // console.log(p);
+        // console.log(p2);
+
+        // p.run() // 输出：I am running!
+        // p2.run() // 输出：I am running!
+
+        // console.log(Person.prototype);  //访问Person实例的原型
+
+        Person.prototype.fly = () => {
+            console.log(`I am flying!`);
+        }
+
+        p.fly()
+        p2.fly()
+    </script>
+```
+
