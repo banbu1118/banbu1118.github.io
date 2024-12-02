@@ -3879,3 +3879,192 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 7.13instanceof和hasown
+
+```javascript
+    <script>
+        class Animal { }
+        class Dog extends Animal { }
+        const dog = new Dog();
+
+        /* 
+            instanceof用来检查一个对象是否是某个类的实例，返回true或false。
+                - instanceof检查的是该对象的原型链是否有该类实例
+                    只要原型链上有该类实例，就返回true，否则返回false。
+
+                - 
+                    dog -> animal -> Object -> null
+                    dog -> Dog -> Animal -> Object -> null
+
+                - object是所有对象的原型，所以任何和对象object进行instanceof的操作，都会返回true。
+        */
+        // console.log(dog instanceof Dog);     // true
+        // console.log(dog instanceof Animal);  // true
+        // console.log(dog instanceof Object);  // true
+
+        const obj = new Object();
+        // console.log(obj.__proto__);
+        // console.log(Object.prototype);
+        // console.log(Object.prototype ===obj.__proto__); // true
+
+        class Person {
+            name = "孙悟空"
+            age = 18
+
+            sayHello() {
+                console.log("hello,我是" + this.name);
+            }
+        }
+        const p = new Person()
+        /* 
+            in
+                - in用来判断对象是否有某个属性，返回true或false
+                - 无论属性是在对象本身还是原型链上，都可以用in判断。
+
+            hasOwnProperty(不推荐使用了)
+                - 用法
+                    对象.hasOwnProperty(属性名)
+                    判断对象本身是否有该属性，返回true或false。
+                    注意：hasOwnProperty只判断对象本身的属性，不包括原型链上的属性。
+
+            Object.hasOwn(推荐使用)
+                - 用法
+                    Object.hasOwn(对象,属性名)
+                    判断对象本身是否有该属性，返回true或false。
+                    注意：Object.hasOwn只判断对象本身的属性，不包括原型链上的属性。
+
+        */
+        console.log("name" in p)      //true
+        console.log("sayHello" in p)    //true
+
+        console.log(p.hasOwnProperty("name"))    //true
+        console.log(p.hasOwnProperty("sayHello"))    //false
+
+        //hasprototype也在原型当中
+        console.log(p.__proto__.__proto__.hasOwnProperty("hasOwnProperty"));    //true
+
+        //Object.hasOwn
+        //用来判断对象是否有某个属性，返回true或false。
+        //注意：Object.hasOwn只判断对象本身的属性，不包括原型链上的属性。
+        console.log(Object.hasOwn(p, "name"));    //true
+    </script>
+```
+
+#### 7.14旧类
+
+```javascript
+    <script>
+        /* 
+            早期的js中，直接通过函数来定义类
+                - 一个函数直接调用xxx()，那么这个就是普通函数
+                - 一个函数如果通过new调用 new xxx()，那么这个就是构造函数
+
+
+        */
+        /* 
+            等价于 class Person {
+            
+            }
+        */
+
+        //用立即函数包裹，避免全局变量污染
+        var Person = (function () {
+            function Person(name, age) {
+                //在构造函数中，this指向实例对象
+                this.name = name;
+                this.age = age
+
+                //不推荐这么写
+                // this.sayHello = function () {
+                //     console.log("Hello, my name is " + this.name);
+                // }
+
+            }
+
+            //向原型中添加属性(方法)
+            Person.prototype.sayHello = function () {
+                console.log("Hello, my name is " + this.name);
+            }
+
+            //添加静态属性
+            Person.stateProperty = "xxx"
+
+            //添加静态方法
+            Person.staticMethod = function () {
+                console.log("静态方法");
+            }
+            return Person;
+        })();
+
+
+        const p = new Person("孙悟空", 18)
+
+        console.log(p);
+
+        var Animal = (function () {
+            function Animal() {
+
+            }
+
+            return Animal;
+        })();
+
+        var Cat = (function () {
+            function Cat() { 
+
+            }
+
+            //继承Animal
+            Cat.prototype = new Animal();
+
+            return Cat;
+        })();
+
+        var cat = new Cat();
+
+        console.log(cat);
+    </script>
+```
+
+#### 7.15new运算符
+
+```javascript
+    <script>
+        /* 
+            new运算符是创建对象时要使用的操作符。
+                - 使用new时，到底发生了什么？
+                - https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/new
+                - 当使用 new 关键字调用函数时，该函数将被用作构造函数。
+                    使用new调用函数时，将会发生这些事
+                    1.创建一个空的简单 JavaScript 对象。为方便起见，我们称之为 newInstance。
+                    2.如果构造函数的 prototype 属性是一个对象，则将 newInstance 的 [[Prototype]] 指向构造函数的 prototype 属性，
+                        否则 newInstance 将保持为一个普通对象，其 [[Prototype]] 为 Object.prototype。
+                    3.使用给定参数执行构造函数，并将 newInstance 绑定为 this 的上下文（换句话说，在构造函数中的所有 this 引用都指向 newInstance）。
+                    4.如果构造函数返回非原始值，则该返回值成为整个 new 表达式的结果。
+                        否则，如果构造函数未返回任何值或返回了一个原始值，则返回 newInstance。（通常构造函数不返回值，但可以选择返回值，以覆盖正常的对象创建过程。）
+        */
+
+        function Myclass() {
+            // var newInstance = {}
+            // obj.__proto__ = Myclass.prototype;
+
+            // return { name: "孙悟空" }
+            return 1
+        }
+
+        var mc = new Myclass();
+
+        // console.log(mc);
+
+        class Person {
+            constructor() {
+
+            }
+
+        }
+
+        new Person();
+
+    </script>
+```
+
