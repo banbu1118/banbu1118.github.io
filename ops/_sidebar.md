@@ -79,3 +79,5 @@
 * [Rocky全局socks5代理](/ops/Rocky全局socks5代理.md)
 
 * [fog网络克隆教程](/ops/fog网络克隆教程.md)
+
+* [voi快速部署教程](/ops/voi快速部署教程/voi快速部署教程.md)
