@@ -97,5 +97,8 @@ samba-tool user setpassword Administrator
 
 #修改用户密码
 samba-tool user setpassword user01
+
+#配置用户密码永不过期
+samba-tool user setexpiry user01 --noexpiry
 ```
 
