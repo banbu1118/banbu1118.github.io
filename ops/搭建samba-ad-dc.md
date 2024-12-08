@@ -91,5 +91,11 @@ samba-tool user add user01
 
 #把user01用户添加到vdiuser组
 samba-tool group addmembers vdiuser user01
+
+#修改管理员密码
+samba-tool user setpassword Administrator
+
+#修改用户密码
+samba-tool user setpassword user01
 ```
 
