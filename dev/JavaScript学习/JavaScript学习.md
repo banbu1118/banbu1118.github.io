@@ -4,7 +4,7 @@
 
 ### 1、入门
 
-#### 1.1helloworld
+#### 1.1 helloworld
 
 js例子
 
@@ -29,7 +29,7 @@ js例子
 </html>
 ```
 
-#### 1.2编写位置
+#### 1.2 编写位置
 
 js可以编写到多个位置
 
@@ -66,7 +66,7 @@ js可以编写到多个位置
 </html>
 ```
 
-#### 1.3基本语法
+#### 1.3 基本语法
 
 注释，大小写，分号，空格和换行
 
@@ -104,7 +104,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 1.4自变量和变量
+#### 1.4 自变量和变量
 
 变量的声明和赋值
 
@@ -158,7 +158,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 1.5变量的内存结构
+#### 1.5 变量的内存结构
 
 变量在被赋值时，会在内存检查这个值是否存在，如果存在，则直接引用
 
@@ -176,7 +176,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 1.6常量
+#### 1.6 常量
 
 ```javascript
     <script>
@@ -190,7 +190,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 1.7标识符
+#### 1.7 标识符
 
 ```javascript
     <script>
@@ -239,7 +239,7 @@ js可以编写到多个位置
 
 ### 2、数据类型
 
-#### 2.1数据类型_数值
+#### 2.1 数据类型_数值
 
 ```javascript
     <script>
@@ -286,7 +286,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 2.2类型检查
+#### 2.2 类型检查
 
 ```javascript
     <script>
@@ -308,7 +308,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 2.3字符串
+#### 2.3 字符串
 
 ```javascript
     <script>
@@ -355,7 +355,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 2.4其他数据类型
+#### 2.4 其他数据类型
 
 ```javascript
     <script>
@@ -435,7 +435,7 @@ js可以编写到多个位置
 
 ![](./images/2.png)
 
-#### 2.5类型转换_字符串
+#### 2.5 类型转换_字符串
 
 ```javascript
     <script>
@@ -474,7 +474,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 2.6类型转换_数值
+#### 2.6 类型转换_数值
 
 ```javascript
     <script>
@@ -522,7 +522,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 2.7类型转换_布尔值
+#### 2.7 类型转换_布尔值
 
 ```javascript
     <script>
@@ -565,7 +565,7 @@ js可以编写到多个位置
 
 ### 3、运算符
 
-#### 3.1算术运算符
+#### 3.1 算术运算符
 
 ```javascript
     <script>
@@ -618,7 +618,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.2赋值运算符
+#### 3.2 赋值运算符
 
 ```javascript
     <script>
@@ -659,7 +659,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.3一元±
+#### 3.3 一元±
 
 ```javascript
     <script>
@@ -686,7 +686,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.4自增和自减
+#### 3.4 自增和自减
 
 ```javascript
     <script>
@@ -723,7 +723,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.5逻辑运算符-非
+#### 3.5 逻辑运算符-非
 
 ```javascript
     <script>
@@ -772,7 +772,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.6逻辑运算符-与-或
+#### 3.6 逻辑运算符-与-或
 
 ```javascript
     <script>
@@ -818,7 +818,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.7关系运算符
+#### 3.7 关系运算符
 
 ```javascript
     <script>
@@ -871,7 +871,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.8相等运算符
+#### 3.8 相等运算符
 
 ```javascript
     <script>
@@ -918,7 +918,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.9条件运算符
+#### 3.9 条件运算符
 
 ```javascript
     <script>
@@ -942,7 +942,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 3.10运算符的优先级
+#### 3.10 运算符的优先级
 
 ```javascript
     <script>
@@ -964,7 +964,7 @@ js可以编写到多个位置
 
 ### 4、流程控制
 
-#### 4.1代码块
+#### 4.1 代码块
 
 ```javascript
     <script>
@@ -988,7 +988,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.2if语句
+#### 4.2 if语句
 
 ```javascript
     <script>
@@ -1034,7 +1034,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.3if-else语句
+#### 4.3 if-else语句
 
 ```javascript
     <script>
@@ -1128,7 +1128,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.4练习1
+#### 4.4 练习1
 
 ```javascript
     <script>
@@ -1153,7 +1153,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.5练习2
+#### 4.5 练习2
 
 ```javascript
     <script>
@@ -1183,7 +1183,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.6练习3
+#### 4.6 练习3
 
 ```javascript
     <script>
@@ -1209,7 +1209,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.7switch语句
+#### 4.7 switch语句
 
 ```javascript
     <script>
@@ -1278,7 +1278,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.8循环语句
+#### 4.8 循环语句
 
 ```javascript
     <script>
@@ -1339,7 +1339,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.9while练习
+#### 4.9 while练习
 
 ```javascript
     <script>
@@ -1362,7 +1362,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.10while循环
+#### 4.10 while循环
 
 ```javascript
     <script>
@@ -1402,7 +1402,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.11for循环
+#### 4.11 for循环
 
 ```javascript
     <script>
@@ -1464,7 +1464,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.11练习1-求100内所有3的倍数
+#### 4.11 练习1-求100内所有3的倍数
 
 ```javascript
     <script>
@@ -1507,7 +1507,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.12练习2-求1000以内的水仙花数
+#### 4.12 练习2-求1000以内的水仙花数
 
 ```javascript
     <script>
@@ -1560,7 +1560,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.13练习3-判断是否为质数
+#### 4.13 练习3-判断是否为质数
 
 ```javascript
     <script>
@@ -1607,7 +1607,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.14循环嵌套
+#### 4.14 循环嵌套
 
 ```javascript
     <script>
@@ -1679,7 +1679,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.15练习1-99乘法表
+#### 4.15 练习1-99乘法表
 
 ```javascript
     <style>
@@ -1711,7 +1711,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.16练习2-求100以内所有的质数
+#### 4.16 练习2-求100以内所有的质数
 
 ```javascript
     <script>
@@ -1741,7 +1741,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.17break和contine
+#### 4.17 break和contine
 
 ```javascript
     <script>
@@ -1792,7 +1792,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.18练习-性能优化1
+#### 4.18 练习-性能优化1
 
 ```javascript
     <script>
@@ -1839,7 +1839,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 4.19练习-性能优化2
+#### 4.19 练习-性能优化2
 
 ```javascript
     <script>
@@ -1907,7 +1907,7 @@ js可以编写到多个位置
 
 ### 5、对象
 
-#### 5.1对象
+#### 5.1 对象
 
 ```javascript
     <script>
@@ -1965,7 +1965,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.2对象的属性
+#### 5.2 对象的属性
 
 ```javascript
     <script>
@@ -2034,7 +2034,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.3对象字面量
+#### 5.3 对象字面量
 
 ```javascript
     <script>
@@ -2069,7 +2069,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.4枚举属性
+#### 5.4 枚举属性
 
 ```javascript
     <script>
@@ -2103,7 +2103,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.5可变类型
+#### 5.5 可变类型
 
 ```javascript
     <script>
@@ -2150,7 +2150,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.6改变量和改对象
+#### 5.6 改变量和改对象
 
 ```javascript
     <script>
@@ -2192,7 +2192,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 5.7方法
+#### 5.7 方法
 
 ```javascript
     <script>
@@ -2223,7 +2223,7 @@ js可以编写到多个位置
 
 ### 6、函数
 
-#### 6.1函数
+#### 6.1 函数
 
 ```javascript
     <script>
@@ -2264,7 +2264,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.2函数的创建方式
+#### 6.2 函数的创建方式
 
 ```javascript
     <script>
@@ -2310,7 +2310,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.3参数
+#### 6.3 参数
 
 ```javascript
     <script>
@@ -2377,7 +2377,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.4箭头函数的参数
+#### 6.4 箭头函数的参数
 
 ```javascript
     <script>
@@ -2410,7 +2410,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.5对象作为参数
+#### 6.5 对象作为参数
 
 ```javascript
     <script>
@@ -2460,7 +2460,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.6函数参数
+#### 6.6 函数参数
 
 ```javascript
     <script>
@@ -2493,7 +2493,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.7函数的返回值
+#### 6.7 函数的返回值
 
 ```javascript
     <script>
@@ -2529,7 +2529,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.8箭头函数的返回值
+#### 6.8 箭头函数的返回值
 
 ```javascript
     <script>
@@ -2554,7 +2554,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.9全局作用域和局部作用域
+#### 6.9 全局作用域和局部作用域
 
 ```javascript
     <script>
@@ -2587,7 +2587,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.10函数作用域
+#### 6.10 函数作用域
 
 ```javascript
     <title>函数作用域</title>
@@ -2612,7 +2612,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.11作用域链
+#### 6.11 作用域链
 
 ```javascript
     <script>
@@ -2647,7 +2647,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.12window对象
+#### 6.12 window对象
 
 ```javascript
     <script>
@@ -2707,7 +2707,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.13提升
+#### 6.13 提升
 
 ```javascript
     <script>
@@ -2752,7 +2752,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.14练习
+#### 6.14 练习
 
 ```javascript
     <script>
@@ -2837,7 +2837,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.15debug
+#### 6.15 debug
 
 ```javascript
     <script>
@@ -2868,7 +2868,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.16立即执行函数
+#### 6.16 立即执行函数
 
 ```javascript
     <script>
@@ -2937,7 +2937,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.17函数中this
+#### 6.17 函数中this
 
 ```javascript
     <script>
@@ -2993,7 +2993,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.18箭头函数的this
+#### 6.18 箭头函数的this
 
 ```javascript
     <title>箭头函数的this</title>
@@ -3058,7 +3058,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 6.19严格模式
+#### 6.19 严格模式
 
 ```javascript
     <script>
@@ -3098,7 +3098,7 @@ js可以编写到多个位置
 
 ### 7、面向对象
 
-#### 7.1面向对象
+#### 7.1 面向对象
 
 ```javascript
     <script>
@@ -3154,7 +3154,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.2类
+#### 7.2 类
 
 ```javascript
     <script>
@@ -3246,7 +3246,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.3属性
+#### 7.3 属性
 
 ```javascript
     <script>
@@ -3275,7 +3275,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.4方法
+#### 7.4 方法
 
 ```javascript
     <script>
@@ -3308,7 +3308,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.5构造函数
+#### 7.5 构造函数
 
 ```javascript
     <script>
@@ -3366,7 +3366,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.6封装
+#### 7.6 封装
 
 ```javascript
     <script>
@@ -3473,7 +3473,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.7多态
+#### 7.7 多态
 
 ```javascript
     <script>
@@ -3522,7 +3522,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.8继承
+#### 7.8 继承
 
 ```javascript
     <script>
@@ -3586,7 +3586,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.8继承
+#### 7.8 继承
 
 ```javascript
     <script>
@@ -3639,7 +3639,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.9对象的结构
+#### 7.9 对象的结构
 
 ```javascript
     <script>
@@ -3685,7 +3685,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.10原型对象
+#### 7.10 原型对象
 
 ```javascript
     <script>
@@ -3745,7 +3745,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.11原型对象
+#### 7.11 原型对象
 
 ```javascript
     <script>
@@ -3813,7 +3813,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.12如何修改原型
+#### 7.12 如何修改原型
 
 ```javascript
     <script>
@@ -3879,7 +3879,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.13instanceof和hasown
+#### 7.13 instanceof和hasown
 
 ```javascript
     <script>
@@ -3950,7 +3950,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.14旧类
+#### 7.14 旧类
 
 ```javascript
     <script>
@@ -4026,7 +4026,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.15new运算符
+#### 7.15 new运算符
 
 ```javascript
     <script>
@@ -4068,7 +4068,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 7.16总结
+#### 7.16 总结
 
 ```javascript
     <script>
@@ -4100,7 +4100,7 @@ js可以编写到多个位置
 
 ### 8、数组
 
-#### 8.1数组
+#### 8.1 数组
 
 ```javascript
     <script>
@@ -4163,6 +4163,194 @@ js可以编写到多个位置
         arr.length = 2; // 改变数组长度，会自动删除数组末尾元素
 
         console.log(arr);
+    </script>
+```
+
+#### 8.2 遍历数组
+
+```javascript
+    <script>
+        //任何数据类型的值都可以成为数组中的元素
+        let arr = [1, "hello", true, null, { name: "孙悟空" }, () => { }]
+
+        //创建数组时，尽量确保数组中存储的数据类型是相同的
+        arr = ["孙悟空", "猪八戒", "沙和尚", "唐僧", "白骨精"]
+        // console.log(arr);
+
+        /* 
+            遍历数组
+                - 遍历数组简单理解，就是获取数组中的每一个元素
+        */
+
+        // console.log(arr[0]);
+        // console.log(arr[1]);
+        // console.log(arr[2]);
+
+        //正常遍历数组
+        // for (let i = 0; i < arr.length; i++) {
+        //     console.log(arr[i]);
+        // }
+
+        //倒着遍历数组
+        // for (let i = arr.length - 1; i >= 0; i--) {
+        //     console.log(arr[i]);
+        // }
+
+        /* 
+            定义一个Person类，类中有两个属性name和age，分别代表人的姓名和年龄
+                然后创建几个Person对象，将其添加到一个数组中
+
+            遍历数组，并打印未成年人的信息
+        */
+
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        const personArr = [
+            new Person("孙悟空", 18),
+            new Person("沙和尚", 38),
+            new Person("猪八戒", 8),
+        ]
+
+        for(let i = 0; i < personArr.length; i++) {
+            if(personArr[i].age < 18) {
+                console.log(personArr[i].name + "只有" + personArr[i].age + "岁，是未成年");
+            }
+        }
+    </script>
+```
+
+#### 8.3 for-of语句
+
+```javascript
+    <script>
+        /* 
+            for-of语句可以用来遍历数组或者其他可迭代对象
+
+            语法：
+                for(变量 of 可迭代对象){
+                    语句...
+                }
+
+            执行流程：
+                for-of的循环体会执行多次，数组中有几个元素，循环体就会执行几次。
+                    每次执行时都会将一个元素赋值给元素
+
+        */
+
+        const arr = ["孙悟空", "猪八戒", "沙和尚", "唐僧"]
+
+        for(value of arr){
+            console.log(value);
+        }
+
+        //遍历字符串
+        for(value of "hello world"){
+            console.log(value);
+        }
+    </script>
+```
+
+#### 8.4 数组方法
+
+```javascript
+    <script>
+        /* 
+            https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+            Array.isArray()
+                - 检查一个值是否是数组
+                - 返回一个布尔值
+            
+            at()
+                - 可以根据索引获取数组中的元素
+                - at可以接收负数索引
+                - 如果索引超出范围，则返回undefined
+
+            concat()
+                - 用来连接两个或多个数组，并返回一个新数组
+                - 非破坏性方法,不会修改原数组，而是返回一个新数组
+        */
+
+        // console.log(Array.isArray([1, 2, 3])); // true
+        // console.log(Array.isArray({})); // false
+
+        const arr = ["孙悟空", "猪八戒", "沙和尚", "唐僧"]
+
+        // console.log(arr.at(1)); // "猪八戒"
+
+        // //at可以接收负数索引
+        // console.log(arr.at(-1)); // "唐僧"
+
+        // console.log(arr.at(10)); // undefined
+
+        const arr2 = ["白骨精", "蜘蛛精", "玉兔精"]
+
+        // arr3 = arr.concat(arr2);
+        arr3 = arr.concat(arr2,["牛魔王","蝙蝠精"]);    //连接多个数组
+
+        console.log(arr3);
+    </script>
+```
+
+#### 8.5 数组里的方法
+
+```javascript
+    <script>
+        const arr = ["孙悟空", "猪八戒", "沙和尚", "唐僧", "沙和尚"]
+
+        /* 
+            indexof()
+                - 获取元素在数组中第一次出现的索引，如果不存在则返回-1。
+                - 参数：
+                    1.要查询的元素
+                    2.查询的起始位置（可选，默认为0）
+                
+            lastIndexOf()
+                - 获取元素在数组中最后一次出现的索引，如果不存在则返回-1。
+                - 参数：
+                    1.要查询的元素
+                    2.查询的起始位置
+
+            join()
+                - 将一个数组中元素连接成一个字符串。
+                - 参数：
+                    1.分隔符（可选，默认为逗号）
+
+            slice()
+                - 截取数组的一部分，返回一个新数组。(非破坏性操作)
+                - 参数：
+                    1.起始索引（可选，默认为0）
+                    2.结束索引，不包括该位置（可选，默认为数组长度）
+                        - 第二个参数可以省略，表示截取到数组末尾
+                        - 索引可以是负值，表示从数组末尾向前数的位置
+                    3.如果两个参数都省略，则返回整个数组的浅拷贝。
+
+        */
+
+        // let result = arr.indexOf("沙和尚",3)    // 从索引3开始查询
+
+        // let result = arr.lastIndexOf("沙和尚")    // 从数组末尾开始查询
+        // let result = arr.lastIndexOf("沙和尚", 3)
+
+        // result = arr.lastIndexOf("白骨精")    // 没有查询到，返回-1
+
+        // result = arr.join()    // 将数组元素连接成一个字符串，默认使用逗号分隔
+        // result = arr.join("-")    // 将数组元素连接成一个字符串，使用"-"分隔
+
+        // result = arr.slice(0,2)    // 截取数组的前两个元素，返回一个新数组
+
+        // result = arr.slice(2)    // 截取数组的从索引2开始到末尾的所有元素，返回一个新数组
+
+        // result = arr.slice(-2)    // 截取数组的最后两个元素，返回一个新数组
+
+        result = arr.slice()     // 截取整个数组，返回一个新数组
+
+        console.log(result)
     </script>
 ```
 
