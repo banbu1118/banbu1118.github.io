@@ -4354,3 +4354,300 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 8.6 对象的复制
+
+```javascript
+    <script>
+        const arr = ["孙悟空", "猪八戒", "沙和尚"]
+
+        // const arr2 = arr
+
+        //这不是复制，只是创建了两个变量，指向同一个数组对象
+        // arr[0] = "唐僧" // 修改arr的第一个元素，会影响arr2的第一个元素
+
+        //复制必须产生一个新对象
+        //当调用slice()方法时，会产生一个新的数组对象，从而完成数组的复制
+        const arr3 = arr.slice()
+
+        arr[0] = "唐僧"
+
+        console.log(arr);
+        console.log(arr3);
+    </script>
+```
+
+#### 8.7 浅拷贝和深拷贝
+
+```javascript
+    <script>
+        /* 
+            浅拷贝(shallow copy)
+                - 通常对对象的拷贝都市浅拷贝
+                - 浅拷贝顾名思义，只对对象的浅层进行复制（只复制一层对象的引用，而不复制其内部的对象）
+                - 对象中存储的数据是原始值，那么拷贝的深浅不重要
+                - 浅拷贝只会对对象本身进行复制，不会复制其内部的对象
+
+            深拷贝(deep copy)
+                - 深拷贝不仅要复制对象本身，还要复制对象中的属性和元素
+                - 深拷贝会递归地复制对象中的所有子对象，直到所有子对象都被复制完毕
+                - 深拷贝会创建新的对象，并复制所有属性和元素，因此，深拷贝比浅拷贝更加耗费资源
+                - 因为性能差，通常不用深拷贝，只用浅拷贝即可
+        */
+
+        const arr = [{ name: "孙悟空" }, { name: "猪八戒" }]
+        const arr2 = arr.slice() // 浅拷贝
+
+        // 修改arr中的值
+        //浅拷贝只会复制对象引用，不会复制对象内部的属性
+        //所以arr2中的值也会随之改变
+        arr[0].name = "唐僧";
+
+        console.log(arr);
+        console.log(arr2);
+
+        //专门用来深拷贝的方法 structuredClone()
+        const arr3 = structuredClone(arr)
+
+        console.log(arr3);
+    </script>
+```
+
+#### 8.8 对象的复制
+
+```javascript
+    <script>
+        const arr = ["孙悟空", "猪八戒", "沙和尚"]
+
+        // 数组的浅拷贝
+        const arr2 = arr.slice()
+
+        // console.log(arr2 === arr);     // false
+
+        /* 
+            ...(展开运算符)
+                - 可以将一个数组中的元素展开到另一个数组中或作为函数的参数传递
+        */
+        //手动实现数组的浅拷贝
+        // const arr3 = [arr[0], arr[1], arr[2]]
+
+        //利用展开运算符实现浅拷贝，和上面手动拷贝的结果一样
+        const arr3 = [...arr]
+
+        //复制的同时修改原数组的值
+        // const arr3 = ["唐僧", ...arr, "白骨精"] //
+
+        // console.log(arr);
+        // console.log(arr3);
+
+        function sum(a, b, c) {
+            return a + b + c;
+        }
+
+        const arr4 = [10, 20, 30]
+
+        // let result = sum(arr4[0], arr4[1], arr4[2])
+
+        //简写为
+        const result = sum(...arr4)
+
+        // console.log(result);
+
+        /* 
+        
+            对象的复制
+                - Object.assign(目标对象,被复制对象)
+                - 被复制对象中的属性元素复制到目标对象，并返回目标对象
+
+            - 也可以使用展开运算符对对象进行复制
+        */
+
+        const obj = { name: "孙悟空", age: 18 }
+
+
+        // const obj2 = ({}, obj)
+
+        //把后面这个对象属性和元素复制到前面这个对象中
+        //会增加新属性，会覆盖已有属性
+        const obj2 = { address: "北京市海淀区西二旗", age: 20 }
+
+        Object.assign(obj2, obj)
+
+        // console.log(obj2);
+
+        // console.log(obj2 === obj); // false
+
+        //利用展开运算符实现对象浅拷贝
+        //会增加新属性，会覆盖已有属性,18会覆盖5,后面的25会覆盖前面的18
+        const obj3 = { address: "高老庄", age: 5, ...obj, age: 25 }
+
+        console.log(obj3);
+    </script
+```
+
+#### 8.9 数组的方法
+
+```javascript
+    <script>
+        const arr = ["孙悟空", "猪八戒", "沙和尚"]
+
+        /* 
+            push()
+                - 在数组末尾添加一个或多个元素,返回数组长度
+            pop()
+                - 删除数组末尾的元素,返回删除的元素
+            unshift()
+                - 在数组开头添加一个或多个元素,返回数组长度
+            shift()
+                - 删除数组开头的元素,返回删除的元素
+            splice()
+                - 可以删除、添加、替换数组中的元素
+                - 参数：
+                    1.删除的起始位置
+                    2.删除的元素个数（可选）
+                    3.要添加的元素（可选）
+                - 返回被删除的元素
+            reverse()
+                - 反转数组元素的顺序
+        */
+
+        let result = arr.push("唐僧") // 在数组末尾添加一个或多个元素,返回数组长度
+
+        console.log(arr);
+        // console.log(result); // 4
+
+        result = arr.pop() // 删除数组末尾的元素,返回删除的元素
+
+        console.log(arr);
+
+        result = arr.unshift("白骨精") // 在数组开头添加一个或多个元素,返回数组长度
+
+        console.log(result);    //4
+
+        console.log(arr);
+
+        result = arr.shift() // 删除数组开头的元素,返回删除的元素
+
+        console.log(result);
+
+        console.log(arr);
+
+        //删除数组中指定位置的元素，并返回被删除的元素
+        result = arr.splice(1, 1)
+
+        console.log(result); // ["猪八戒"]
+
+        console.log(arr);
+
+        //替换数组中指定位置的元素，并返回被替换的元素
+        result = arr.splice(1, 1, "牛魔王")
+
+        console.log(result); // ["沙和尚"]
+
+        console.log(arr); //增加了一个牛魔王
+
+        //增加多个元素
+        result = arr.splice(1, 0, "白龙", "玉女")
+
+        console.log(result); // []
+
+        console.log(arr); //增加了白龙和玉女
+
+        arr2 = ["a", "b", "c", "d"]
+
+        //反转数组元素的顺序
+        arr2.reverse()
+
+        console.log(arr2);
+
+        /*
+            有如下一个数组
+                arr = [1,2,1,3,2,4,5,5,6,7]
+
+            编写代码，去除数组中重复的元素，并返回一个新的数组。
+        */
+    </script>
+```
+
+#### 8.10 数组去重
+
+```javascript
+    <script>
+
+        /*
+            有如下一个数组
+                arr = [1,2,1,3,2,4,5,5,6,7]
+
+            编写代码，去除数组中重复的元素，并返回一个新的数组。
+        */
+
+        arr = [1, 2, 1, 3, 2, 2, 4, 5, 5, 6, 7]
+
+        // console.log(arr.length); // 10
+
+        //分别获取数组中元素
+        for (i = 0; i < arr.length; i++) {
+            //获取当前值后面的所有值
+            for (j = i + 1; j < arr.length; j++) {
+                //判断两个值是否相等
+                if (arr[i] == arr[j]) {
+                    //出现了重复的元素，删除后面的元素
+                    arr.splice(j, 1);
+
+                    /* 
+                        当arr[i]和arr[j]相等时，删除arr[j]，j+1位置的元素会自动前移一位，成为j，
+                        就不会比较这个元素和其他元素了，就漏掉了
+
+                        解决办法，当删除一个元素后，j--，让j指向下一个元素，继续比较
+                    */
+                    j--;
+                }
+
+            }
+        }
+
+        console.log(arr);
+    </script>
+```
+
+#### 8.11 数组去重
+
+```javascript
+    <script>
+        /*
+            有如下一个数组
+                arr = [1,2,1,3,2,4,5,5,6,7]
+
+            编写代码，去除数组中重复的元素，并返回一个新的数组。
+        */
+
+        arr = [1, 2, 1, 3, 2, 2, 4, 5, 5, 6, 7]
+
+        // //获取数组中元素
+        // for (let i = 0; i < arr.length; i++) {
+        //     const index = arr.indexOf(arr[i], i + 1)
+        //     if (index !== -1) {
+        //         //出现重复元素
+        //         arr.splice(index, 1)
+        //         i--
+        //     }
+        // }
+
+        // console.log(arr)
+
+        const newArr = []
+        for (let ele of arr) {
+            if (newArr.indexOf(ele) === -1) {
+                newArr.push(ele)
+            }
+        }
+        console.log(newArr)
+
+        /*
+            有一个数组
+            [9,1,3,2,8,0,5,7,6,4]
+
+            编写代码，排序（升序）
+        */
+    </script>
+```
+
