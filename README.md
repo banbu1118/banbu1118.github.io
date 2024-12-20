@@ -10,7 +10,7 @@
 
 > 这是一个简单的博客，记录了日常工作学习的总结
 
-> `lt's My Duty`
+> [`lt's My Duty`](https://www.youtube.com/watch?v=21BDAPg403M)
 
 > 真正的大师永远都怀着一颗学徒的心
 
