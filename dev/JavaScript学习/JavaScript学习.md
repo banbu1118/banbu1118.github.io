@@ -4982,3 +4982,236 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 8.18 闭包简介
+
+```javascript
+    <script>
+        /*
+           创建一个函数，第一次调用时，打印1，第二次调用时打印2，第三次调用时打印3，以此类推。
+
+           可以利用函数，来隐藏不希望被外部访问到的变量。
+
+           闭包：
+              所谓闭包就是能访问函数作用域变量的函数。
+
+           什么时候使用闭包？
+              当我们需要隐藏一些不希望被别人访问的内容时，就可以使用闭包。
+            
+            构成闭包的条件：
+              1. 函数嵌套
+              2. 内部函数引用了外部函数的变量
+              3. 内部函数作为返回值返回
+            
+         */
+        // let sum = 0
+        // function fn() {
+        //     sum++
+        //     console.log(sum)
+
+        // }
+        // fn
+
+        //闭包
+        function outer() {
+            let num = 0 //let位于函数作用域中，只能在函数内部使用
+
+            return () => {
+                num++
+                console.log(num);
+            }
+        }
+
+        const newFn = outer()
+
+        // console.log(newFn);
+
+        newFn() // 1
+        newFn() // 2
+        newFn() // 3
+    </script>
+```
+
+#### 8.19 闭包的原理
+
+```javascript
+    <script>
+        let a = "全局变量a"
+        /* 
+            函数的外层作用域，在函数作用域创建时就已经确当了，和调用位置无关
+
+			闭包利用的就是词法作用域，函数的作用域在函数定义的时候就已经确定了
+        */
+        function fn() {
+            console.log(a);
+        }
+
+        function fn2() {
+            let a = "fn2中的a"
+            fn();
+        }
+
+        // fn2(); // 输出 "全局变量a"
+
+        function fn3() {
+            let a = "fn3中的a"
+            function fn4() {
+                console.log(a);
+            }
+            return fn4();
+        }
+
+        let fn4 = fn3();
+        fn4(); // 输出 "fn3中的a"
+    </script>
+```
+
+#### 8.20 闭包的注意事项
+
+```javascript
+    <script>
+        function outer() {
+            let someVariable = "someValue"
+
+            return function () {
+                console.log(someVariable)
+            }
+        }
+
+        // let myFunc = outer()
+        // myFunc() // "someValue"
+
+        /* 
+            闭包的声明周期：
+                1. 闭包在外部函数调用时产生，外部函数每次调用每次都会产生一个全新的闭包
+                2. 在内部函数丢失时销毁（内部函数被垃圾回收了，闭包才会消失）
+            
+            注意事项：
+                闭包主要是用来隐藏不希望被外部访问的变量
+                    这就意味着闭包需要占用一定的内存空间，·如果过多的闭包被创建，会导致内存占用过多，影响程序的运行效率
+
+                相较于类，闭包比较浪费内存空间（类可以使用原型，而闭包不能）
+                    需要执行次数较少时，使用闭包
+                    需要大量创建实例时，使用类
+        */
+
+        function outer2() {
+            let num = 0
+            return () => {
+                num++
+                console.log(num)
+            }
+        }
+
+        const fn1 = outer2()    //独立的闭包
+        const fn2 = outer2()    //独立的闭包
+        fn1() // 1
+        fn1() // 2
+
+        fn2() // 1
+        fn2() // 2
+
+        //赋予null，让闭包销毁
+        // fn1 = null
+        // fn2 = null
+    </script>
+```
+
+#### 8.21 递归
+
+```javascript
+    <script>
+        /* 
+            递归：
+                - 调用自身的函数称为递归
+                - 递归的作用和循环是基本一致的 
+        */
+
+        //想创建一个函数，用来求任意数的阶乘
+        /* 
+           1! = 1
+           2! = 1 * 2 = 2
+           3! = 1 * 2 * 3 = 6
+           4! = 1 * 2 * 3 * 4 = 24
+          ...
+           n! = 1 * 2 * 3 *... * n = n * (n-1) * (n-2) *... * 2 * 1
+
+           如何用递归来解决这个问题呢？
+                5! = 5 * 4!
+                4! = 4 * 3!
+                3! = 3 * 2!
+                2! = 2 * 1!
+                1! = 1
+
+            递归的核心思想就是将一个问题分解成更小的子问题，然后递归地解决这些子问题，最后再合并这些子问题的结果得到原问题的解。
+
+            编写递归的条件：
+                1. 基线条件-递归的终止条件
+                2. 递归条件-如何对问题就行分解
+
+            递归的作用和循环是一致的，不同点在于，递归的思路比较清晰，循环的性能更好
+                在开发中，一般的问题都可以用循环，少用递归
+                只在一些使用循环比较麻烦的情况下，才会使用递归
+        */
+
+        //用for循环来求阶乘
+        function jieChen(num) {
+            //创建一个变量，用来保存结果
+            let result = 1;
+            //创建一个循环，用来求阶乘
+            for (let i = 2; i <= num; i++) {
+                result *= i;
+            }
+            //返回结果
+            return result;
+        }
+
+        // let result = jieChen(3)
+        // console.log(result);
+
+        //用递归来求阶乘
+        function jieChen2(num) {
+            //基线条件
+            //如果num等于1，则返回1
+            if (num === 1) {
+                return 1;
+            }
+            //递归条件
+            //否则，返回num乘以jieChen2(num-1)
+            return num * jieChen2(num - 1);
+        }
+
+        let result2 = jieChen2(3);
+        console.log(result2);
+    </script>
+```
+
+#### 8.22 递归练习
+
+```javascript
+    <script>
+        /* 
+            一对兔子出生后两个月每个月都能生一对兔子
+                - 要求编写一个函数，可以用来计算第n个月有多少兔子
+            1   2   3   4   5   6   7   8
+            1   1   2   3   5   8   13  21
+            - 规律：当前数等于前两个数之和
+            斐波拉且数列
+        */
+        //求斐波拉数列第n项
+        function fib(n) {
+            //确定基线
+            if (n < 3) {
+                return 1;
+            }
+
+            //递归条件
+            //第n个数= 第n-1个数+第n-2个数
+            return fib(n - 1) + fib(n - 2);
+        }
+
+        //求兔子数量
+        result = fib(8);
+        console.log(result);
+    </script>
+```
+
