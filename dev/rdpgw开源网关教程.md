@@ -330,3 +330,10 @@ password:s:123456
 gatewayusername:s:WIN-ID68U3TKHD6\administrator
 ```
 
+#### 5.3 使用wfreerdp连接
+
+wfreerdp下载链接：[https://ci.freerdp.com/job/freerdp-nightly-windows/](https://ci.freerdp.com/job/freerdp-nightly-windows/)
+
+```
+wfreerdp.exe Default.rdp /p:123456
+```
