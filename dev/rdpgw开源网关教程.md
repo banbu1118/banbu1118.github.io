@@ -337,3 +337,9 @@ wfreerdp下载链接：[https://ci.freerdp.com/job/freerdp-nightly-windows/](htt
 ```
 wfreerdp.exe Default.rdp /p:123456
 ```
+
+#### 5.4 启用rfx优化参数
+
+```
+.\wfreerdp.exe /v:192.168.1.232 /u:administrator /p:123456 /f /sound:latency:200 -window-drag /rfx
+```
