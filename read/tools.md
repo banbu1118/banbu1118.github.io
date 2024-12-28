@@ -52,3 +52,10 @@ https://mirrors.tuna.tsinghua.edu.cn/
 #it工具集
 https://it-tools.tech/
 ```
+
+* Quick Reference
+
+```
+#专门为开发人员设计的快速参考工具，旨在帮助开发人员在工作中快速查阅各种编程相关的知识
+https://quickref.me/zh-CN/
+```
