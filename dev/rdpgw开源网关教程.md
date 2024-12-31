@@ -344,7 +344,11 @@ wfreerdp.exe Default.rdp /p:123456
 .\wfreerdp.exe /v:192.168.1.232 /u:administrator /p:123456 /f /sound:latency:200 -window-drag /rfx
 ```
 
-#### 5.5 双屏显示
+#### 5.5 xfreerdp下载
+
+xfreerdp下载链接：[https://ci.freerdp.com/job/freerdp-nightly-binaries/lastStableBuild/](https://ci.freerdp.com/job/freerdp-nightly-binaries/lastStableBuild/)
+
+#### 5.6 双屏显示
 
 ```
 xfreerdp3 /v:192.168.1.232 /u:administrator /p:123456 /f /rfx /cert:ignore -window-drag /multimon /dynamic-resolution +monitors:0,1
