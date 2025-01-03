@@ -5215,3 +5215,274 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 8.23 数组的方法
+
+```javascript
+    <script>
+        let arr = ["a", "c", "e", "f", "d", "b"]
+        arr = [2, 3, 1, 9, 0, 4, 5, 8, 7, 6, 10]
+        /* 
+            sort()
+                - sort用来对数组进行排序(会改变原数组)
+                - sort默认会将数组升序排列
+                    注意：sort总会按照Unicode编码排序，所有直接通过sort对数字排序，可能会得到一个不正确的结果
+                - 参数：
+                    - 可以传递一个回调函数作为参数，来指定排序规则
+                    - (a, b) => a - b 升序排列
+                    - (a, b) => b - a 降序排列
+
+            forEach()
+                - 用来遍历数组
+                - 它需要一个回调函数作为参数，这个回调函数会被调用多次
+                    数组中有几个元素，回调函数就会调用几次
+                    每次调用都会把数组的数据作为参数传递给回调函数
+                - 回调函数有3个参数：
+                    element: 当前正在处理的元素
+                    index: 当前元素的索引
+                    array: 被遍历的数组
+
+            filter()
+                - 将数组中符合条件的元素保存到一个新数组中返回
+                - 需要一个回调函数作为参数，会为每个元素调用回调函数，并根据条件决定是否返回该元素
+                - 非破坏性方法，不会改变原数组
+
+            map()
+                - 根据当前数组生成一个新数组
+                - 需要一个回调函数作为参数
+                - 回调函数有3个参数：
+                    回调函数的返回值会成为新数组的元素
+                - 非破坏性方法，不会改变原数组
+
+            reduce()
+                - 可以用来将一个数组中的元素合并成一个值
+                - 参数
+                    1.回调函数，通过回调函数来指定合并的规则
+                    2.初始值，可选，默认为数组中的第一个元素
+
+        */
+
+        // console.log(arr);
+
+        // arr.sort();
+
+        // arr.sort((a, b) => a - b)
+        arr.sort((a, b) => b - a)
+
+        // console.log(arr);
+
+        arr = ["孙悟空", "猪八戒", "沙和尚", "唐僧"]
+        // arr.forEach((element, index, array) => {
+        //     console.log(element, index, array);
+
+        // })
+
+        // arr.forEach((element, index) => { console.log(index, element); })
+
+        arr = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        //获取数组中所有的偶数
+        // let result = arr.filter(Element => Element % 2 === 0)
+        // let result = arr.filter(Element => Element % 2 !== 0)    //获取数组中所有的奇数
+        let result = arr.filter(Element => Element > 5)    //获取数组中大于5的元素
+        // console.log(result)
+
+        // result = arr.map(ele => ele * 2)    //将数组中的元素都乘以2
+
+        arr = ["孙悟空", "猪八戒", "沙和尚"]
+
+        result = arr.map(ele => "<li>" + ele + "</li>")
+
+        arr = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        //arr数组求和
+        result = arr.reduce((a, b) => a + b, 10)
+
+        console.log(result)
+    </script>
+```
+
+#### 8.24 可变参数
+
+```javascript
+    <script>
+        function fn() {
+            /* 
+                arguments
+                    - arguments是函数中又一个隐含参数
+                    - arguments是一个类数组对象(伪数组对象)
+                        和数组相似，可以通过索引来读取元素，也可以通过for循环来遍历，但是它不是一个数组对象，不能调用数组的方法
+                    - arguments用来存储函数的实参
+                        无论用户是否定义形参，实参都会存储到arguments当中
+                        可以通过该对象直接访问实参
+
+            */
+            // console.log(arguments[1]);
+            // console.log(Array.isArray(arguments));  //false，所以arguments不是数组对象
+
+            // for (let i = 0; i < arguments.length; i++) {
+            //     console.log(arguments[i]);
+
+            // }
+
+            // for (let v of arguments) {
+            //     console.log(v);
+            // }
+
+            // arguments.forEach(ele => console.log(ele))  //报错，不是数组，不能调用数组的方法
+
+        }
+
+        // fn(1, 10, 33)
+
+
+        //定义一个函数，求任意个数字的和|
+        function sum() {
+            //通过arguments，可以更加灵活不受参数数量限制的更加灵活的创建函数
+            let result = 0;
+            for (let num of arguments) {
+                result += num;
+            }
+            return result;
+        }
+
+        // sum(1)  //1
+        // sum(1, 10)  //11
+        // sum(1, 10, 33)  //44
+
+        /* 
+            可变参数，可以将参数指定为可变参数
+                - 可变参数可以接收任意数量的实参，并将他们统一存储到数字中
+                - 可变参数的作用和arguments基本一致，但是也有一些不同点
+                    1.可变参数的名字可以自己指定
+                    2.可变参数就是一个数组，可以直接使用数组的方法
+                    3.可变参数可以配合其他参数一起使用
+        */
+        function fn2(...args) {
+            console.log(args);
+        }
+
+        function sum2(...args) {
+            return args.reduce((a, b) => a + b, 0);     //指定一个0作为初始值，可以避免数组为空的情况
+        }
+
+        //a,b先接收前两个参数，...args接收剩余参数
+        //当可变参数和其他参数一起使用时，必须放在最后一个位置
+        function fn3(a, b, ...args) {
+            // for (let v of arguments) {
+            //     console.log(v);
+            // }
+            console.log(args);
+        }
+
+        fn3(123, 456)
+    </script>
+```
+
+#### 8.25 函数
+
+```javascript
+    <script>
+        /* 
+            根据函数调用方式的不同，this的值会指向不同的对象。
+                1.以函数形式调用，this就是window。
+                2.以方法形式调用，this就是调用该方法的对象。
+                3.以构造函数形式调用，this就是新创建的对象。
+                4.箭头函数没有this，它只会捕获其所在函数的作用域中的this。
+                5.通过call()和apply()方法调用函数时，他们的第一个参数将会成为this。
+                6.通过bind()返回的新函数，this由bind第一个参数决定(无法修改，锁死)
+         */
+        function fn() {
+            console.log("函数执行了吗~", this);
+
+        }
+
+        const obj = {
+            fn,
+            name: "孙悟空"
+        }
+
+        /* 
+            调用函数除了函数()外，还可以通过其他的方式来调用函数
+                比如，我们可以通过调用call()和apply()方法来调用函数
+                    函数.call()
+                    函数.apply()
+                    - call和apply除了调用函数，还可以用来指定函数中的this
+                    - call和apply的第一个参数，将会成为函数的this
+                    - 通过call方法调用函数时，函数的实参直接在第一个参数后一个一个的列出来
+                    - 通过apply方法调用函数时，函数的实参必须是一个数组，数组中的元素将会作为函数的实参
+        */
+
+        // fn.call(obj)
+        // fn.apply()
+
+        function fn2(a, b) {
+            console.log("a=", a, "b=", b, this);
+
+        }
+        // fn2(123, 456)
+        // fn2.call(obj, "hello", true)
+        fn2.apply(obj, ["hello", true])
+    </script>
+```
+
+#### 8.26 bind
+
+```javascript
+    <script>
+        /* 
+
+            根据函数调用方式的不同，this的值会指向不同的对象。
+                1.以函数形式调用，this就是window。
+                2.以方法形式调用，this就是调用该方法的对象。
+                3.以构造函数形式调用，this就是新创建的对象。
+                4.箭头函数没有this，它只会捕获其所在函数的作用域中的this。
+                5.通过call()和apply()方法调用函数时，他们的第一个参数将会成为this。
+                6.通过bind()返回的新函数，this由bind第一个参数决定(无法修改，锁死)
+
+
+            bind()是函数的方法，可以用来创建一个新的函数
+                - bind可以为新函数绑定this
+                - bind可以为新函数绑定参数
+
+            箭头函数没有自身的this，它的this由外层作用域的this决定
+                也无法通过call,apply,bind方法修改this
+                箭头函数也没有arguments
+
+        */
+
+        function fn(a, b, c) {
+            console.log("fn执行了~", this);
+            console.log(a, b, c);
+
+        }
+
+        const obj = { name: "孙悟空" }
+
+        const newFn = fn.bind(obj, 10)  // 绑定this为obj，并传入第一个参数10,第一个参数不能修改，锁死
+
+        // newFn()
+
+        const arrowFn = () => {
+            console.log("箭头函数执行了~", this);
+        }
+
+        // arrowFn.call(obj)
+
+        const newArrowFn = arrowFn.bind(obj)
+
+        newArrowFn()
+
+        class MyClass {
+            fn = () => {
+                console.log(this);
+
+            }
+        }
+
+        const mc = new MyClass()
+
+        // mc.fn()
+        // mc.fn.call(obj)
+    </script>
+```
+
