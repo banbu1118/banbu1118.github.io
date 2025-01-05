@@ -5692,3 +5692,117 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 9.5 map
+
+```javascript
+    <script>
+        /* 
+            map
+                - map用来存储键值对结构的数据(ket-value pairs)
+                - object中存储的数据可以认为是键值对的结构
+                - map和object的区别在于：
+                    - object中属性名只能是字符串或符号，如果传递了其他类型的属性名
+                        js会自动将其转换为字符串
+                    - map中键可以是任意值，包括对象、函数、数组等
+                    - map中的键值对可以动态添加、删除、修改
+        */
+
+        const obj2 = {}
+        const obj = {
+            name: '张三',
+            age: 20,
+            gender: '男',
+            [Symbol('id')]: 123,
+            [obj2]: 'obj2'
+        }
+
+        /* 
+            创建map
+                - new Map()
+            
+            属性和方法
+                - map.size: 返回map中键值对的数量
+                - map.set(key, value): 设置键值对
+                - map.get(key): 根据键获取值
+                - map.has(key): 判断是否存在键
+                - map.delete(key): 根据键删除键值对
+                - map.clear(): 清空map
+        */
+
+        //创建一个map
+        const map = new Map();
+
+        //向map中添加键值对
+        map.set('name', '李四')
+        map.set(obj2, "哈哈")
+        map.set(null, "嘻嘻")
+
+        console.log(map)
+
+        //获取map中的值
+        console.log(map.get("name"));
+        console.log(map.get(obj2));
+        console.log(map.get(null));
+
+        //删除map中的键值对
+        map.delete(obj2)
+
+        //判断map中是否存在键
+        console.log(map.has(null));
+
+        //清空map
+        map.clear()
+        console.log(map)
+    </script>
+```
+
+#### 9.6 map-2
+
+```javascript
+    <script>
+        /* 
+
+        */
+        const map = new Map();
+
+        map.set("name", "孙悟空")
+        map.set("age", 18)
+        map.set({}, "呵呵")
+
+        //将map转化为数组
+        // const arr = Array.from(map) // [["name", "孙悟空"], ["age", 18], [{}, "呵呵"]]
+
+        //展开运算符
+        const arr = [...map] // [["name", "孙悟空"], ["age", 18], [{}, "呵呵"]]
+        // console.log(arr);
+
+        const map2 = new Map([["name", "猪八戒"], ["age", 16], [{}, () => { }]])
+
+        // console.log(map2);
+
+        //遍历map
+        // for(const entry of map){
+        //     const [key, value] = entry;
+        //     console.log(entry, key, value);
+        // }
+
+        //直接解构
+        // for(const [key, value] of map){
+        //     console.log(key, value);
+        // }
+
+        // map.forEach((value, key, map) => {
+        //     console.log(key, value, map);
+        // })
+
+        /* 
+            map.keys()  获取map所有key
+            map.values()     获取map所有value
+        */
+
+        for (const key of map.keys()) {
+            console.log(key);
+        }
+    </script>
+```
+
