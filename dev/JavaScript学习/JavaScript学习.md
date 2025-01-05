@@ -5486,3 +5486,209 @@ js可以编写到多个位置
     </script>
 ```
 
+### 9、内建对象
+
+#### 9.1 解构赋值
+
+```javascript
+    <script>
+        /* 
+            结构赋值
+         */
+        const arr = ["孙悟空", "猪八戒", "沙和尚"]
+        let a, b, c
+
+        // a = arr[0]
+        // b = arr[1]
+        // c = arr[2]
+
+        // [a, b, c] = ["孙悟空", "猪八戒", "沙和尚"]
+
+        // 结构赋值的简写
+        // [a, b, c] = arr
+
+
+        // let [d, e, f, g] = [1, 2, 3]   //声明同时解构 1 2 3 undefined
+
+        // [d, e, f, g = 10] = [1, 2, 3]   //给g赋默认值 10
+        // [d, e] = [1, 2, 3]   //只解构 1 2
+        [n1, n2, ...n3] = [1, 2, 3, 7] //解构数组时，...表示剩余元素，n3是一个数组
+
+        // console.log(n1, n2, n3)
+
+        function fn() {
+            return ["二郎神", "猪八戒"]
+        }
+
+        // let [name1, name2] = fn()
+        // console.log(name1, name2)
+
+        //可以通过解构赋值来快速交换两个变量的值
+        let a1 = 10
+        let a2 = 20
+
+            // let temp = a1
+            // a1 = a2
+            // a2 = temp
+
+            ;[a1, a2] = [a2, a1]    //开头添加;表示这行单独执行
+
+        // console.log("a1 =", a1);
+        // console.log("a2 =", a2);
+
+        const arr2 = ["孙悟空", "猪八戒"]
+            // console.log(arr2);
+
+            ;[arr2[0], arr2[1]] = [arr2[1], arr2[0]]
+
+        // console.log(arr2)
+
+        /* 
+            数组中可以存储任意类型的数据，也可以存数组
+                如果一个数组中的元素还是数组，则这个数组我就称为是二维数组
+        */
+        //    const arr3 = [[1,2,3],[3,4,5]]
+
+        //    console.log(arr3[0][1]); //访问数组中数组的元素
+
+        const arr3 = [["孙悟空", 18, "男"], ["猪八戒", 28, "男"]]
+
+        //遍历二维数组
+        // for (let stu of arr3) {
+        //     for (let val of stu) {
+        //         console.log(val);
+        //     }
+        // }
+
+        let [[name, age, gender], obj] = arr3
+        console.log(name, age, gender, obj) //孙悟空 18 男 (3) ['猪八戒', 28, '男']
+    </script>
+```
+
+#### 9.2 对象的解构
+
+```javascript
+    <script>
+        const obj = { name: '孙悟空', age: 20, gender: '男' }
+
+        // let  name = obj.name
+        // let  age = obj.age
+        // let  gender = obj.gender
+
+        //对象的解构用{}
+        // let { name, age, gender } = obj;    //声明变量同时解构对象赋值
+
+        let name, age, gender;    //先声明变量
+        ({ name, age, gender } = obj);    //再解构对象赋值，注意前后添加括号
+
+        // console.log(name, age, gender);
+
+        let { address } = obj
+        // console.log(address)     //没有的属性，返回undefined
+
+        // let { name: a, age: b, gender: c, add = "花果山" } = obj   //别名赋值,add为默认值
+        let { name: a, age: b, gender: c, add: d = "花果山" } = obj   //别名赋值,add为默认值,如果d没有值，则赋值默认值"花果山"
+
+        console.log(a, b, c, d);
+    </script>
+```
+
+#### 9.3 对象的序列化
+
+```javascript
+    <script>
+        /* 
+            对象的序列化
+                - js的对象使用时都是存在于内存中
+                - 序列化是将对象转换为一个可以存储的格式
+                    在js中的序列化通常是将一个对象转换为字符串
+                - 序列化的用途（对象转换为字符串有什么用）：
+                    - 对象转换为字符串后，可以将字符串在不同的语言之间传递|
+                        甚至人直接可以对字符串进行读写操作，使得js对象可以跨越平台
+                    - 用途：
+                        1.作为数据交换的格式
+                        2.用来编写配置文件
+                - 如何进行序列化
+                    - 在js中有一个工具类，JSON(javaScript Object Notation)  js对象表示法
+                    - js对象序列化后会转换为一个字符串，这个字符串就是json格式
+                
+                - 也可以手动编写json字符串，然后将其转换为对象
+                    很多软件的配置文件就是用json格式存储的
+                - 编写json的注意事项：
+                    1.json字符串有两种类型
+                        json对象{}
+                        json数组[]
+                    2.json字符串的属性名必须使用双引号""
+                    3.json中可以使用的属性值(元素)
+                        - 数字 number
+                        - 字符串 string
+                        - 布尔值    boolean
+                        - null      
+                        - 对象       object
+                        - 数组  array
+                    4.json的格式和js对象的格式基本上一致
+                        注意，json字符串中如果属性是最后一个，则不需要加逗号
+
+        */
+        const obj = {
+            name: "孙悟空",
+            age: 18
+        }
+
+        //将obj转换为json字符串
+        //JSON.stringify()可以将一个对象转换为json字符串
+        const str = JSON.stringify(obj);
+
+        console.log(obj);
+        console.log(str);
+
+        //将json字符串转换为对象
+        //JSON.parse()可以将一个json字符串转换为一个对象
+        const obj2 = JSON.parse(str);
+
+        console.log(obj2);
+
+        const str2 = '{"name":"猪八戒","age":26}'
+
+        console.log(str2);
+
+        const obj3 = JSON.parse(str2);
+
+        console.log(obj3);
+
+        const str3 = '{}'   //空对象
+        const str4 = '[]'   //空数组
+        const str5 = '["hello",true,null,{"name":"张无忌"},[1,2,3],666]'
+        console.log(JSON.parse(str3));
+        console.log(JSON.parse(str4));
+        console.log(JSON.parse(str5));
+
+    </script>
+```
+
+#### 9.4 json深复制
+
+```javascript
+    <script>
+        const obj = {
+            name: "孙悟空",
+            friend: {
+                name: "猪八戒",
+            }
+        }
+
+        //对obj进行浅复制
+        const obj2 = Object.assign({}, obj);
+
+        //对obj进行深复制
+        const obj3 = structuredClone(obj);
+
+        //利用json完成深复制
+        // const str = JSON.stringify(obj);
+        // const obj4 = JSON.parse(str);
+
+        //把上面两步合并成一步
+        const obj5 = JSON.parse(JSON.stringify(obj));
+    </script>
+```
+
