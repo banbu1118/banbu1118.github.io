@@ -5692,7 +5692,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 9.5 map
+#### 9.5 Map
 
 ```javascript
     <script>
@@ -5756,7 +5756,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 9.6 map-2
+#### 9.6 Map-2
 
 ```javascript
     <script>
@@ -5803,6 +5803,262 @@ js可以编写到多个位置
         for (const key of map.keys()) {
             console.log(key);
         }
+    </script>
+```
+
+#### 9.7 Set
+
+```javascript
+    <script>
+        /* 
+            set
+                -set用来创建集合
+                - 它的功能和数组类似，不同点在于set不能存储重复的值
+
+            使用方式：
+                创建
+                    - new Set() 创建一个空的set
+                    - new Set(item ...)
+
+                方法
+                    - add(item) 添加元素
+                    - delete(item) 删除元素
+                    - has(item) 判断元素是否存在
+                    - clear() 清空set
+                    - size 获取set的长度
+        */
+       // 创建一个空的set
+        const set = new Set();
+
+        // 添加元素
+        set.add(10)
+        set.add("孙悟空")
+        set.add(10) // 重复的元素不会被添加
+
+        // 删除元素
+        // set.delete(10)
+
+        // 判断元素是否存在
+        // console.log(set.has(10)); // false
+
+        // 遍历set
+        // for(let item of set){
+        //     console.log(item);
+        // }
+
+        // 转换成数组
+        const arr = [...set]
+        // console.log(arr);
+
+        //数组去重
+        const arr2 = [1,2,3,2,1,3,5,6,2,4,5,6,7,8,9,5,10]
+        const set2 = new Set(arr2)
+        const arr3 = [...set2]
+        console.log(arr3);
+
+        // console.log(set);
+    </script>
+```
+
+#### 9.8 Math
+
+```javascript
+    <script>
+        /* 
+            Math
+                - Math 一个工具类
+                - Math 中为我们提供了一些常用的数学计算的常量和方法
+                - 常量
+                    Math.PI 圆周率
+                    Math.E 自然常数
+                - 方法
+                    Math.abs(x) 返回 x 的绝对值
+                    Math.min()   返回所有参数中的最小值
+                    Math.max()   返回所有参数中的最大值
+                    Math.pow(x,y) 返回 x 的 y 次方
+                    Math.sqrt(x)  返回 x 的平方根
+
+                    Math.round(x) 四舍五入
+                    Math.floor(x) 向下取整
+                    Math.ceil(x)  向上取整
+                    Math.trunc(x) 去除小数部分，返回整数部分
+
+                    Math.random() 返回 0-1 之间的伪随机数
+        */
+
+        // 常量PI
+        console.log(Math.PI);
+
+        // 常量E
+        console.log(Math.E);
+
+        //绝对值
+        let resul = Math.abs(-10);
+
+        // 最小值
+        resul = Math.min(1, 2, 3, 4, 5);
+
+        // 最大值
+        resul = Math.max(1, 2, 3, 4, 5);
+
+        // 平方根
+        resul = Math.sqrt(16);  // 4
+
+        // x的y次方
+        resul = Math.pow(2, 3);  // 2***3=8
+
+        // 四舍五入
+        resul = Math.round(3.5);  // 4
+
+        // 向下取整
+        resul = Math.floor(3.1);  // 3
+
+        // 向上取整
+        resul = Math.ceil(3.1);  // 4
+
+        // 去除小数部分，返回整数部分
+        resul = Math.trunc(3.5);  // 3
+
+        // 随机数
+        resul = Math.random();  // 0-1 之间的随机数
+        resul = Math.random() * 100;  // 0-100 之间的随机数
+
+        //随机整数
+        resul = Math.floor(Math.random() * 100);  // 0-99 之间的随机整数
+        resul = Math.floor(Math.random() * 1000);   // 0-999 之间的随机整数
+        resul = Math.floor(Math.random() * 10 + 1);   // 1-10 之间的随机整数
+
+        console.log(resul);
+
+        //得到一个两数之间的随机数
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        //得到一个两数之间的随机整数
+        function getRandomInt(min, max) {
+            const minCeiled = Math.ceil(min);
+            const maxFloored = Math.floor(max);
+            return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // 不包含最大值，包含最小值
+        }
+
+        //得到一个两数之间的随机整数，包括两个数在内
+        function getRandomIntInclusive(min, max) {
+            const minCeiled = Math.ceil(min);
+            const maxFloored = Math.floor(max);
+            return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); // 包含最小值和最大值
+        }
+    </script>
+```
+
+#### 9.9 Date
+
+```javascript
+    <script>
+        /* 
+            Date
+                - 在js中所有的和时间相关的数据都由Date对象来表示
+                - 对象的方法
+                    - getFullYear() 获取年份
+                    - getMonth() + 1 获取月份（从0开始，需要加1）
+                    - getDate() 获取日期
+                    - getHours() 获取小时
+                    - getMinutes() 获取分钟
+                    - getSeconds() 获取秒
+                    - getMilliseconds() 获取毫秒
+
+                    - getTime() 获取时间戳，从1970年1月1日00:00:00 UTC+00:00开始到现在的毫秒数
+                        计算机底层都是采用的时间戳
+
+                    - Date.now() 获取当前时间戳，与对象.getTime()相同
+
+        */
+        let d = new Date(); // 获取当前时间  Tue Jan 07 2025 01:17:02 GMT+0800 (中国标准时间)
+
+        //可以在Date()的构造函数中，传递一个表示时间的字符串
+        //字符串格式： 月/日/年 时:分:秒 时区
+        //其他格式：年-月-日 时:分:秒 时区
+        // d = new Date("10/20/1998 12:22:33")//Tue Oct 20 1998 12:22:33 GMT+0800 (中国标准时间)
+        d = new Date("2021-10-10 12:00:00")
+
+        d = new Date()
+
+        //获取年份
+        result = d.getFullYear()
+
+        //获取月份
+        result = d.getMonth() + 1
+
+        //获取日期
+        result = d.getDate()
+
+        //获取小时
+        result = d.getHours()
+
+        //获取分钟
+        result = d.getMinutes()
+
+        //获取秒
+        result = d.getSeconds()
+
+        //获取毫秒
+        result = d.getMilliseconds()
+
+        // console.log(result);
+
+        //推荐使用这种格式创建日期对象
+        d = new Date(2016, 0, 1, 13, 45, 33)  // Fri Jan 01 2016 13:45:33 GMT+0800 (中国标准时间)
+
+        d = new Date()
+
+        //返回当前日期的时间戳
+        //从1970年1月1日00:00:00 UTC+00:00开始到现在的毫秒数
+        result = d.getTime() //返回时间戳，单位是毫秒
+
+        //直接获取时间戳
+        result = Date.now() //返回时间戳，单位是毫秒
+
+        console.log(result);
+    </script>
+```
+
+#### 9.10 日期的格式化
+
+```javascript
+    <script>
+        const d = new Date();
+
+        //把日期转化为本地字符串格式
+        let result = d.toLocaleDateString();    //2025/1/7
+
+        result = d.toLocaleTimeString();    //01:52:36
+
+        result = d.toLocaleString();        //2025/1/7 01:52:48
+
+        /* 
+            toLocalString()
+                - 可以将一个日期转化为本地时间格式的字符串。
+                - 参数：
+                    1.描述语言和国家地区的字符串
+                        zh-CN 中文-中国
+                        zh-HK 中文-香港
+                        zh-TW 中文-台湾
+                        en-US 英文-美国
+                    2.需要一个对象作为参数，在对象中可以通过对象的属性来设置语言和时区。
+                        datestyle: "full" 日期的风格
+                        timestyle: "short" 时间的风格
+                            full long medium short
+                        hour12: true/false 是否使用12小时制
+                            false true
+                        weekday: "long" 星期的名称
+                            long short narrow
+                        year:"numeric" 年份的格式
+                            2-digit numeric
+        */
+        // result = d.toLocaleString("zh-CN", { dateStyle: "full", timeStyle: "medium", hour12: false})
+        // result = d.toLocaleString({ weekday: "narrow" })
+        result = d.toLocaleString({ year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" })
+        console.log(result);
     </script>
 ```
 
