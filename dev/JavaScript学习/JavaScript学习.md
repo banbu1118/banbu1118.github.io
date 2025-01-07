@@ -6062,3 +6062,266 @@ js可以编写到多个位置
     </script>
 ```
 
+#### 9.11 包装类
+
+```javascript
+    <script>
+        /* 
+            在js中，除了直接创建原始值外，也可以创建原始值的对象
+                通过new String()可以创建String类型的对象
+                通过new Number()可以创建Number类型的对象
+                通过new Boolean()可以创建Boolean类型的对象
+                    - 但是千万不要这么做
+
+            包装类：
+                js中一共有5个包装类
+                    String -> 字符串包装成String对象
+                    Number -> 数字包装成Number对象
+                    Boolean -> 布尔值包装成Boolean对象
+                    BigInt -> 大整数包装成BigInt对象
+                    Symbol -> 符号包装成Symbol对象
+
+                - 通过包装类，可以将一个原始值包装成一个对象
+                    当我们对一个原始值调用方法或属性时，js解释器会临时将原始值包装成对应的对象
+                        然后调用这个对象的属性或方法
+
+            - 由于原始值会被临时转化为对应的对象，这就意味着对象中的方法都可以直接通过原始值来调用
+
+        */
+        // let str = new String("hello");
+        // let num = new Number(10);
+        // let bool = new Boolean(true);
+        // let bool2 = new Boolean(true)
+
+        // alert(bool === bool2)
+
+        let str = "hello";
+        str.name = "哈哈"
+
+        console.log(str.name);
+
+        let num = 10;
+        num = num.toString();
+        console.log(num);    // "10"
+    </script>
+```
+
+#### 9.12 字符串的方法
+
+```javascript
+    <script>
+        /* 
+            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+
+            字符串：
+                - 字符串其本质就是一个字符数组
+                - "hello" -> ["h", "e", "l", "l", "o"]
+                - 字符串的很多方法都和数组类似
+                - 属性和方法：
+                    - str.length：返回字符串的长度
+                    - str.charAt(index)：返回指定索引处的字符，老方法，不推荐使用
+                        - 不支持负数索引
+                    - str.at(index)：返回指定索引处的字符，新方法，推荐使用
+                        - 支持负数索引
+                    - str.concat(str2, str3,...)：返回一个新的字符串，该字符串是将多个字符串连接后的结果
+                    - str.includes(str2)：判断字符串是否包含指定字符串，返回布尔值
+                    - str.indexOf(str2)：返回指定字符串第一次出现的索引，如果没有找到，返回-1
+                    - str.lastIndexOf(str2)：返回指定字符串最后一次出现的索引，如果没有找到，返回-1
+                    - str.endsWith(str2)：判断字符串是否以指定字符串结尾，返回布尔值
+                    - str.startsWith(str2)：判断字符串是否以指定字符串开头，返回布尔值
+                    - str.padStart(length, padString)：返回一个新的字符串，该字符串是原字符串在左侧填充指定字符后的结果
+                    - str.padEnd(length, padString)：返回一个新的字符串，该字符串是原字符串在右侧填充指定字符后的结果
+                    - str.repeat(count)：返回一个新的字符串，该字符串是原字符串重复指定次数后的结果
+                    - str.replace(str1, str2)：返回一个新的字符串，该字符串是原字符串中所有出现的str1替换为str2后的结果
+                    - str.replaceAll(str1, str2)：返回一个新的字符串，该字符串是原字符串中所有出现的str1替换为str2后的结果，与replace的区别是replaceAll是全局替换，而replace只替换第一个出现的str1
+                    - str.slice(start, end)：返回一个新的字符串，该字符串是原字符串从start开始到end结束的切片结果
+                    - str.substring(start, end)：返回一个新的字符串，该字符串是原字符串从start开始到end结束的切片结果
+                    - str.split(separator, limit)：返回一个数组，该数组是原字符串按照separator切割后的结果，如果limit指定了，则最多返回limit个元素
+                    - str.toLowerCase()：将字符串转换为小写，返回新的字符串
+                    - str.toUpperCase()：将字符串转换为大写，返回新的字符串
+                    - str.trim()：去除字符串两端的空格，返回新的字符串
+                    - str.trimLeft()：去除字符串左侧的空格，返回新的字符串
+                    - str.trimRight()：去除字符串右侧的空格，返回新的字符串
+
+        */
+        let str = "hello"
+        // console.log(str.length);
+        // console.log(str[0]);
+
+        // for(let char of str){
+        //     console.log(char);
+        // }
+
+        // console.log(str.at(0));
+
+        str = "hello hello how are you"
+
+        //13表示从第13个字符开始查找
+        // console.log(str.includes("how", 13));
+
+        // console.log(str.indexOf("hello"));  // 0
+        // console.log(str.lastIndexOf("hello")); // 13
+        // console.log(str.indexOf("hhh")); // -1
+
+        // console.log(str.endsWith("you")); // true
+        // console.log(str.startsWith("hello")); // true
+
+        str = "100"
+
+        //第二个参数表示填充的字符，默认为空格
+        // console.log(str.padStart(5, "0")); // "00100", 字符串长度不够时，在左侧填充0
+        // console.log(str.padEnd(5, "0")); // "10000", 字符串长度不够时，在右侧填充0
+        // console.log(str.padStart(6, "-"));   // "----100", 字符串长度不够时，在左侧填充-
+
+        // console.log(str.repeat(3)); // "100100100", 重复字符串
+
+        str = "hello hello how are you"
+
+        // let result = str.replace("hello", "abc")    // 替换一个字符串, 返回abc hello how are you
+        // result = str.replaceAll("hello", "abc")   // 替换所有字符串, 返回abc abc how are you
+
+        result = str.slice(12, 15)    // 截取字符串
+        result = str.substring(12, 15)    // 截取字符串
+
+        // console.log(result);
+
+        str = "abc@bcd@cde@def@jqk"
+
+        // console.log(str.split("@"))    // ["abc", "bcd", "cde", "def", "jqk"]
+
+        str = "abcdABCD"
+
+        // console.log(str.toLowerCase()); // "abcdabcd"
+        // console.log(str.toUpperCase()); // "ABCDABCD"
+
+        str = "   a  b  c    "
+
+        console.log(str.trim());    // "a  b  c",去除前后空格
+        console.log(str.trimLeft());    // "a  b  c    ",去除左侧空格
+        console.log(str.trimRight());    // "   a  b  c",去除右侧空格
+    </script>
+```
+
+#### 9.13 正则表达式
+
+```javascript
+    <script>
+        /* 
+            正则表达式
+                - 用来定义一个规则
+                - 通过这个规则，计算机是否符合规则
+                    或者将字符串中符合规则的部分提取出来
+                - 正则表达式也是js中的一个对象
+                    所以要使用正则表达式，必须先创建正则表达式对象
+        */
+
+        // 通过构造函数创建正则表达式对象
+        //new RegExp()可以接收两个参数，1. 正则表达式字符串，2. 匹配模式
+        let reg = new RegExp("a", "i");
+
+        // 通过字面量创建正则表达式对象
+        reg = /a/i;    // 等价于new RegExp("a","i")
+
+        reg = /\w/
+
+        reg = new RegExp("\\w")   // 等价于 /\w/
+
+        // console.log(reg);
+
+        //检查一个字符串中是否有a
+        reg = new RegExp("a")
+
+        //通过正则表达式来检查一个字符串是否符合规则
+        let str = "a"
+
+        //用reg检查str是否符合规则
+        let result = reg.test(str)   // true
+
+        result = reg.test("b")   // false
+        result = reg.test("abc")     // true
+        result = reg.test("ABC")     // false
+
+        console.log(result);
+    </script>
+```
+
+#### 9.14 正则表达式语法
+
+```javascript
+    <script>
+        /* 
+            正则表达式语法
+                1.在正则表达式中大部分字符都可以直接写
+                2. | 表示或
+                3. \ 表示转义字符
+                4. [] 表示匹配字符集
+                    [a-z] 表示匹配 a-z 范围内的任意小写字母
+                    [0-9] 表示匹配任意数字
+                    [a-zA-Z] 表示匹配 a-z 或 A-Z 范围内的任意字母
+                    [a-zA-Z0-9] 表示匹配 a-z 或 A-Z 或 0-9 范围内的任意字符
+                5. ^ 表示除了
+                    [^x] 表示匹配除了 x 范围内的任意字符
+                6. . 表示除了换行符外的任意字符
+                7. 其他字符集
+                    \w 任意的单词字符 等价于 [a-zA-Z0-9_]
+                    \W 除了单词字符，等价于 [^a-zA-Z0-9_]的取反
+                    \d 任意的数字字符 等价于 [0-9]
+                    \D 除了数字字符，等价于 [^0-9]的取反
+                    \s 任意的空白字符 等价于 [\f\n\r\t\v]
+                    \S 除了空白字符，等价于 [^\f\n\r\t\v]的取反
+                    \b 单词边界
+                    \B 非单词边界
+                8. 开头和结尾
+                    ^ 匹配字符串的开头
+                    $ 匹配字符串的结尾
+         */
+
+        let re = /abc|bcd/ // 匹配 abc 或 bcd
+        re = /[ab]/ // 匹配 a 或 b
+        re = /[a-z]/ // 匹配 a-z 范围内的任意小写字母
+        re = /[^a-z]/ // 匹配除了 a-z 范围内的任意字符
+        re = /./ // 匹配除了换行符外的任意字符
+        re = /\./ // 匹配 .
+        re = /\w/ // 匹配任意的单词字符
+        re = /^/ // 匹配字符串的开头
+        re = /^a/ // 匹配以 a 开头的字符串
+        re = /$/ // 匹配字符串的结尾
+        re = /a$/ // 匹配以 a 结尾的字符串
+        re = /^abc$/ // 匹配 abc 字符串，完全匹配
+        re = /^a$/ // 匹配 a 字符串，完全匹配
+
+        let result = re.test('a')
+
+        console.log(result)
+    </script>
+```
+
+#### 9.15 正则表达式语法
+
+```javascript
+    <script>
+        /* 
+            量词
+                {m} 匹配m次
+                {m,} 至少匹配m次
+                {m,n} 匹配m到n次
+                + 匹配1次或多次，等价于{1,}
+                * 匹配0次或多次，等价于{0,}
+                ? 匹配0次或1次，等价于{0,1}
+        */
+        let re = /a{3}/ // 匹配a出现3次的字符串
+        re = /^a{3}$/ // 匹配a出现3次的字符串，并且字符串的开头和结尾都为a
+        re = /^[a-z]{3}$/ // 匹配3个小写字母，完全匹配
+        re = /^[a-z]{1,}$/ // 匹配1到多个小写字母，至少1个
+        re = /^[a-z]{1,3}$/ // 匹配1到3个小写字母，至少1个，最多3个
+        re = /^ba+$/ // 匹配b后面跟着1个或多个a的字符串
+        re = /^ba*$/ // 匹配b后面跟着0个或多个a的字符串
+        re = /^ba?$/ // 匹配b后面跟着0个或1个a的字符串
+
+        let result = re.test("b")
+
+        console.log(result);
+
+    </script>
+```
+
