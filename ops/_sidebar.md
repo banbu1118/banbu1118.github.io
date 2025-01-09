@@ -87,3 +87,5 @@
 * [限制域用户登录域成员计算机](/ops/限制域用户登录域成员计算机.md)
 
 * [caddy-http-https代理](/ops/caddy-http-https代理.md)
+
+* [Linux虚拟机配置静态ip](/ops/Linux虚拟机配置静态ip.md)
