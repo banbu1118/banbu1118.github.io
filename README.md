@@ -16,6 +16,8 @@
 
 > 为天地立心，为生民立命，为往圣继绝学，为万世开太平？
 
+> `光锥之内皆是命运 光锥之外皆是虚妄`
+
 > 心有山水不造作 静而不争远是非 镜中无贪念 忙里有欢喜 度四季 也渡自己 不念过往 不畏将来
 
 > 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
