@@ -18,6 +18,8 @@
 
 > `光锥之内皆命运，射程之内皆真理`
 
+> 天下熙熙，皆为利来；天下攘攘，皆为利往
+
 > 心有山水不造作 静而不争远是非 镜中无贪念 忙里有欢喜 度四季 也渡自己 不念过往 不畏将来
 
 > 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
