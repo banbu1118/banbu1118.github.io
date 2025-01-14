@@ -6296,7 +6296,7 @@ js可以编写到多个位置
     </script>
 ```
 
-#### 9.15 正则表达式语法
+#### 9.15 正则表达式语法-2
 
 ```javascript
     <script>
@@ -6323,5 +6323,372 @@ js可以编写到多个位置
         console.log(result);
 
     </script>
+```
+
+#### 9.16 正则表达式语法-3
+
+```javascript
+    <script>
+        /* 
+            re.exec(str)
+                - 获取字符串中符合正则表达式的内容
+        */
+        let str = "abcaecafcahc"
+
+        //提取出str中axc格式的内容
+        //i 忽略大小写
+        //g 全局匹配
+        let re = /(a)([a-z])(c)/ig
+
+        let result = re.exec(str)
+
+        // console.log(result);
+
+        while (result) {
+            console.log(result[0], result[1], result[2], result[3]);
+            result = re.exec(str);
+        }
+
+        /*
+            dajsdh13715678903jasdlakdkjg13457890657djashdjka13811678908sdadadasd
+        */
+    </script>
+```
+
+#### 9.17 正则表达式练习
+
+```javascript
+    <script>
+        /*
+            匹配手机号码
+            dajsdh13715678903jasdlakdkjg13457890657djashdjka13811678908sdadadasd
+
+            先用自己的语言把规则描述出来
+                1   3     501789087
+                1 [3-9]   [0-9]{9}
+            
+        */
+
+        // let re = /1[3-9]\d{9}/g
+        let re = /(1[3-9]\d)\d{4}(\d{4})/g
+
+        let str = "dajsdh13715678903jasdlakdkjg13457890657djashdjka13811678908sdadadasd"
+
+        let result
+        while (result = re.exec(str)) {
+            // console.log(result[0],result[1],result[2])
+            console.log(result[1] + "****" + result[2]);
+
+        }
+
+        //完全匹配规则
+        re = /^1[3-9]\d{9}$/
+
+        console.log(re.test("13456789042"));
+    </script>
+```
+
+#### 9.18 字符串正则匹配
+
+```javascript
+    <script>
+        /* 
+            split()
+                - 可以根据正则表达式来对一个字符串进行拆分
+            search()
+                - 可以去搜索符合正则表达式的内容第一次在字符串中出现的位置
+            replace()
+                - 根据正则表达式替换字符串的内容
+            match()
+                - 根据正则表达式去匹配字符串中要求的内容
+            matchAll()
+                - 必须设置g参数
+                - 根据正则表达式去匹配字符串中所有符合要求的内容，返回的是一个迭代器
+        */
+        let str = "a@b@c@d"
+
+        let result = str.split("@")
+
+        str = "孙悟空abc猪八戒adc沙和尚"
+
+        result = str.split(/a[bd]c/) //可以把拆分为['孙悟空', '猪八戒', '沙和尚']
+
+        str = "dajsdh13715678903jasdlakdkjg13457890657djashdjka13811678908sdadadasd"
+
+        result = str.search("abc")
+
+        result = str.search(/1[3-9]\d{9}/)
+
+        result = str.replace(/1[3-9]\d{9}/g, "哈哈哈") //加上g表示全局替换，不加g表示只替换第一个匹配项
+
+        result = str.match(/1[3-9]\d{9}/g) //返回所有匹配项
+
+        result = str.matchAll(/1[3-9]\d{9}/g) //返回所有匹配项，返回的是一个迭代器
+
+        // 迭代器的用法,直接用
+        for (let item of result) {
+            // console.log(item)
+            console.log(item[0]);    // 索引0匹配手机号
+        }
+
+        // console.log(result);
+    </script>
+```
+
+#### 9.19 垃圾回收
+
+```javascript
+    <script>
+        /* 
+            垃圾回收机制(Garbage Collection)：
+                - 和生活一样，生活时间长了以后会产生生活垃圾
+                    程序运行时，也会产生程序垃圾
+                - 在程序的世界，什么是垃圾？
+                    - 如果一个对象没有任何变量对其引用，那么这个对象就是一个垃圾
+                    - 垃圾对象的存在，会严重影响程序的运行效率，所以需要进行垃圾回收机制
+                    - 在js中，垃圾回收机制是自动进行的，不需要手动操作
+                    - 对于垃圾回收来说，我们唯一要做的事，就是把不用的变量设置为null，让垃圾回收机制来回收它
+                    
+        */
+        let obj = { name: "孙悟空" }
+
+        // obj = null // 手动将obj变量设置为null，此时obj旧变量的{ name: "孙悟空" }，可以被回收
+
+        let obj2 = obj
+
+        obj = null //obj2还在引用{ name: "孙悟空" }，所以不会被回收
+
+        //如果不用某个对象了，就将其设置为null，让垃圾回收机制来回收它
+        obj2 = null
+    </script>
+```
+
+## 二、DOM
+
+### 1、DOM简介
+
+#### 1.1 DOM
+
+DOM，全称Document Object Model，中文翻译为文档对象模型。
+
+DOM属于Web API的一部分。Web API中定义了非常多的对象，通过这些对象可以完成对网页的各种操作（添加删除元素、发送请求、操作浏览器等）。 
+
+DOM中的D意为Document，即文档。所谓文档就是指整个网页，换言之，DOM是用来操作网页的。
+
+O意为Object，即对象。DOM将网页中的每一部分内容都转换为了对象，div有div的对象，input有input的对象，甚至一段文本，一段注释也有其所对应的对象。 
+
+转换为对象干什么？还记得面向对象吗？转换对象以后，我们就可以以面向对象的方式去操作网页，想要操作哪个元素就获取哪个元素的对象，然后通过调用其方法或属性完成各种操作。
+
+M意为Model，即模型。模型用来表示对象之间的关系，也就是父子元素、祖先后代、兄弟元素等，明确关系后我们便可以通过任意一个对象去获取其他的对象。
+
+#### 1.2 节点
+
+在DOM标准下，网页中的每一个部分都会转换为对象。
+
+这些对象有一个共同的称呼——节点（Node）。
+
+一个页面将会由多个节点构成，虽然都称为节点，但是它们却有着不同的类型：文档节点，元素节点， 文本节点， 属性节点。。。
+
+每一个节点都有其不同的作用，文档节点表示整个网页，元素节点表示某个标签，文本节点表示网页中的文本内容，属性节点表示标签中的各种属性。如果从对象的结构上来讲，这些对象都有一个共同的父类Node。总的来说，都是属于节点，但是具体类型不同。 
+
+#### 1.3 关系
+
+- 祖先 —— 包含后代元素的元素是祖先元素
+
+- 后代 —— 被祖先元素包含的元素是后代元素
+
+- 父 —— 直接包含子元素的元素是父元素
+
+- 子 —— 直接被父元素包含的元素是子元素
+
+- 兄弟 —— 拥有相同父元素的元素是兄弟元素
+
+#### 1.4 如何使用DOM
+
+面向对象的编程语言，无非就是两个步骤：
+
+1.找对象
+
+2.搞对象
+
+所以使用DOM我们首先要先拿到一个DOM对象，然后以该对象为切入点来完成各种操作。
+
+### 2、dom代码
+
+#### 2.1 hello_world
+
+```javascript
+<body>
+    <button id="btn">点我一下</button>
+
+    <script>
+        /* 
+            要使用dom来操作网页，我们需要浏览器先给我一个对象
+                才能完成各种操作
+            
+            浏览器为我们提供了一个document对象，它是一个全局变量可以直接使用
+                document代表的是整个网页
+        */
+    //    console.log(document);
+
+    //获取btn对象
+    const btn = document.getElementById("btn")
+
+    // console.log(btn);
+    //修改btn中的文字
+    btn.innerText = "Click ME"
+       
+    </script>
+</body>
+```
+
+#### 2.2 document对象
+
+```javascript
+<body>
+    <a href="#"></a>
+    <script>
+        /*
+            document对象：
+                - document对象表示的是整个网页
+                - document对象的原型链
+                    HTMLDocument -> Document -> Node -> EventTarget -> Object -> null
+                - 凡是在原型链上存在的属性和方法，都可以在document对象上使用
+                - 部分属性
+                    document.documentElement：返回网页的根元素（html）
+                    document.body：返回网页的body元素
+                    document.title：返回网页的标题
+                    document.head：返回网页的head元素
+                    document.linsk：返回当前页面的URL
+                    ...
+        */
+        console.log(document.links);
+
+    </script>
+</body>
+```
+
+#### 2.3 元素节点
+
+```javascript
+<body>
+    <button id="btn">点我一下</button>
+    <span class="s1">我是span</span>
+    <span class="s1">我是span</span>
+    <span class="s1">我是span</span>
+    <span class="s1">我是span</span>
+    <span class="s1">我是span</span>
+
+    <div>我是div</div>
+    <div>我是div</div>
+    <div>我是div</div>
+    <div>我是div</div>
+    <div>我是div</div>
+
+    <form>
+        <input type="text" name="username">
+
+        <input type="radio" name="gender" value="male">男
+        <input type="radio" name="gender" value="female">女
+
+    </form>
+    <script>
+        /* 
+            元素节点(element node)
+                - 在网页中，每一个标签都是一个元素节点
+                - 如何获取元素节点对象？
+                    1.通过document对象来获取元素节点对象
+                    2.通过document对象来创建元素节点对象
+                - 通过document对象来获取已有的元素节点对象
+                    document.getElementById()
+                        - 根据id来获取一个元素节点对象
+                    document.getElementsByClass()
+                        - 根据class来获取一组元素节点对象
+                        - 返回的是一个类数组对象
+                        - 该方法返回的结果是一个实时更新的集合
+                            当网页中新添加元素时，集合会自动更新
+                    document.getElementsByTagName()
+                        - 根据标签名来获取一组元素节点对象
+                        - 返回的是可以实时更新的集合
+                        - document.getElementsByTagName("*")
+                            - 获取页面所有元素节点对象
+                    document.getElementsByName()
+                        - 根据name属性来获取一组元素节点对象
+                        - 返回一个实时更新的集合
+                        - 主要用于表单项
+                    document.querySelectorAll()
+                        - 根据选择器去页面中查询元素
+                        - 会返回一个类数组，不会实时更新
+                    document.querySelector()
+                        - 根据选择器去页面中查询第一个符合条件的元素
+
+                创建一个元素节点对象
+                    document.createElement()
+                        - 根据标签名来创建一个元素节点对象
+        */
+        const btn = document.getElementById("btn");
+        const spans = document.getElementsByClassName("s1");
+        const divs = document.getElementsByTagName("div");
+        const genderInput = document.getElementsByName("gender");
+        const divs2 = document.querySelectorAll("div");
+        const div = document.querySelector("div");
+
+        const h2 = document.createElement("h2");
+
+        //    console.log(spans);
+
+        // for (let i = 0; i < spans.length; i++) {
+        //     // alert(spans[i])
+        //     spans[i].innerHTML = "哈哈哈" + i
+        // }
+
+    </script>
+</body>
+```
+
+#### 2.4 元素的属性和方法
+
+```javascript
+<body>
+    <div id="box1">
+        我是box1
+        <span class="s1">我是s1</span>
+        <span class="s1">我是s1</span>
+    </div>
+
+    <span class="s1">我是s1</span>
+
+    <script>
+
+        /* 
+            div元素的原型链
+                HTMLDivElement->HTMLElement->Element->Node->....
+
+            通过元素节点对象获取其他节点的方法
+                element.childNodes 获取元素的子节点(会包含空白的子节点)，不推荐用这个方法
+                element.children    获取元素的子元素节点(不包含空白的子节点)
+                element.firstChild  获取元素的第一个子节点，不推荐用这个方法
+                element.lastChild   获取元素的最后一个子节点，不推荐用这个方法
+                element.nextSibling 获取元素的下一个兄弟节点，不推荐用这个方法
+                element.nextElementSibling 获取元素的下一个元素兄弟节点
+                element.previousElementSibling 获取元素的上一个元素兄弟节点
+                element.parentNode  获取元素的父节点
+                element.parentElement 获取元素的父元素节点
+                element.tagName     获取元素的标签名
+        */
+        const box1 = document.getElementById("box1");
+
+        const spans = box1.getElementsByTagName("span");
+
+        const spans2 = box1.getElementsByClassName("s1");
+
+        const cns = box1.childNodes
+
+        const children = box1.children
+
+        console.log(children.length);
+    </script>
+
+</body>
 ```
 
