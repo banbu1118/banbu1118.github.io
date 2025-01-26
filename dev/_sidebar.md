@@ -11,3 +11,5 @@
 * [npm换源](/dev/npm换源.md)
 
 * [rdpgw开源网关教程](/dev/rdpgw开源网关教程.md)
+
+* [Proxmox api调试](/dev/Proxmox-api调试/Proxmox-api调试.md)
