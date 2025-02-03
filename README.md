@@ -20,7 +20,7 @@
 
 > 权力不能私有，财产不能公有，否则人类就进入灾难之门
 
-> 警惕将灵魂装进算法的牢笼,当所有选择都变成数据推导的最优解时,人性的光辉将比任何服务器熄灭得更加彻底 — `Deep Seek R1`
+> 警惕将灵魂装进算法的牢笼，当所有选择都变成数据推导的最优解时，人性的光辉将比任何服务器熄灭得更加彻底 — `Deep Seek R1`
 
 > 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
 
