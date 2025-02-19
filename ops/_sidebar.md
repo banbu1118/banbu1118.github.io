@@ -89,3 +89,5 @@
 * [caddy-http-https代理](/ops/caddy-http-https代理.md)
 
 * [Linux虚拟机配置静态ip](/ops/Linux虚拟机配置静态ip.md)
+
+* [v2raya搭建透明代理](/ops/v2raya搭建透明代理/v2raya搭建透明代理.md)
