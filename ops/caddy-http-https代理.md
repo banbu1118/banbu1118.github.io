@@ -76,7 +76,7 @@ chmod -R 775 /share
 修改`/etc/caddy/Caddyfile`配置文件
 
 ```bash
-192.168.8.107:443 {
+https://192.168.8.107:443 {
         # 启用 HTTP/3
         tls {
                 protocols tls1.3
@@ -93,7 +93,6 @@ chmod -R 775 /share
                 precompressed gzip br zstd
         }
 }
-
 ```
 
 #### 4、配置服务
