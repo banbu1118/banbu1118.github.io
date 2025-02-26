@@ -91,3 +91,5 @@
 * [Linux虚拟机配置静态ip](/ops/Linux虚拟机配置静态ip.md)
 
 * [v2raya搭建透明代理](/ops/v2raya搭建透明代理/v2raya搭建透明代理.md)
+
+* [制作Ubuntu deepseek模板](/ops/制作Ubuntu-deepseek模板/制作Ubuntu-deepseek模板.md)
