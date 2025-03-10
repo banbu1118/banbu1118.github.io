@@ -93,3 +93,5 @@
 * [v2raya搭建透明代理](/ops/v2raya搭建透明代理/v2raya搭建透明代理.md)
 
 * [制作Ubuntu deepseek模板](/ops/制作Ubuntu-deepseek模板/制作Ubuntu-deepseek模板.md)
+
+* [vnc教程](/ops/vnc教程.md)
