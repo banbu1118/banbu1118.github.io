@@ -1709,3 +1709,644 @@ https://192.168.1.94:8006/api2/json/cluster/ha/status/manager_status
 
 ![](./images/149.png)
 
+### 十七、集群任务
+
+#### 17.1 任务信息
+
+```
+https://192.168.1.94:8006/api2/json/cluster/jobs
+```
+
+![](./images/150.png)
+
+#### 17.2 认证任务信息
+
+```
+https://192.168.1.94:8006/api2/json/cluster/jobs/realm-sync
+```
+
+![](./images/151.png)
+
+#### 17.3 获取ream同步任务
+
+ Read realm-sync job definition. 
+
+```
+HTTP:   	GET /api2/json/cluster/jobs/realm-sync/{id}
+```
+
+#### 17.4 创建ream同步任务
+
+Create new realm-sync job. 
+
+```
+HTTP:   	POST /api2/json/cluster/jobs/realm-sync/{id}
+```
+
+#### 17.5更新ream同步任务
+
+Update realm-sync job definition. 
+
+```
+HTTP:   	PUT /api2/json/cluster/jobs/realm-sync/{id}
+```
+
+#### 17.6 删除ream同步任务
+
+Delete realm-sync job definition. 
+
+```
+HTTP:   	DELETE /api2/json/cluster/jobs/realm-sync/{id}
+```
+
+#### 17.7 查看计划任务
+
+Returns a list of future schedule runtimes. 
+
+```
+HTTP:   	GET /api2/json/cluster/jobs/schedule-analyze
+```
+
+### 十八、集群资源映射
+
+节点启用iommu才能做资源映射
+
+此功能适合做显卡资源映射usb资源映射
+
+#### 18.1 查看资源类型
+
+```
+https://192.168.1.94:8006/api2/json/cluster/mapping
+```
+
+![](./images/152.png)
+
+#### 18.2 查看pci资源
+
+List PCI Hardware Mapping 
+
+```
+HTTP:   	GET /api2/json/cluster/mapping/pci
+```
+
+#### 18.3 创建pci资源
+
+Create a new hardware mapping. 
+
+```
+HTTP:   	POST /api2/json/cluster/mapping/pci
+```
+
+#### 18.4 获取pci映射
+
+Get PCI Mapping.
+
+```
+HTTP:   	GET /api2/json/cluster/mapping/pci/{id}
+```
+
+#### 18.5 更新pci映射
+
+Update a hardware mapping. 
+
+```
+HTTP:   	PUT /api2/json/cluster/mapping/pci/{id}
+```
+
+#### 18.6 删除pci映射
+
+Remove Hardware Mapping. 
+
+```
+HTTP:   	DELETE /api2/json/cluster/mapping/pci/{id}
+```
+
+#### 18.7 查看usb资源
+
+List USB Hardware Mappings 
+
+```
+HTTP:   	GET /api2/json/cluster/mapping/usb
+```
+
+#### 18.8 usb资源
+
+Create a new hardware mapping.
+
+```
+HTTP:   	POST /api2/json/cluster/mapping/usb
+```
+
+#### 18.9 获取usb映射
+
+Get USB Mapping.
+
+```
+HTTP:   	GET /api2/json/cluster/mapping/usb/{id}
+```
+
+#### 18.10 更新usb映射
+
+Update a hardware mapping. 
+
+```
+HTTP:   	PUT /api2/json/cluster/mapping/usb/{id}
+```
+
+#### 18.11 删除usb映射
+
+Remove Hardware Mapping. 
+
+```
+HTTP:   	DELETE /api2/json/cluster/mapping/usb/{id}
+```
+
+### 十九、集群指标服务器
+
+这个api用来查询集群的性能指标信息，可以用来做图表展示
+
+#### 19.1 指标索引
+
+```
+https://192.168.1.94:8006/api2/json/cluster/metrics
+```
+
+![](./images/153.png)
+
+#### 19.2 查看指标索引服务器
+
+```
+https://192.168.1.94:8006/api2/json/cluster/metrics/server
+```
+
+![](./images/154.png)
+
+#### 19.3 读取指标索引服务器
+
+Read metric server configuration.
+
+```
+HTTP:   	GET /api2/json/cluster/metrics/server/{id}
+```
+
+#### 19.4 创建指标索引服务器
+
+Create a new external metric server config
+
+```
+HTTP:   	POST /api2/json/cluster/metrics/server/{id}
+```
+
+#### 19.5 更新指标索引服务器
+
+Update metric server configuration. 
+
+```
+HTTP:   	PUT /api2/json/cluster/metrics/server/{id}
+```
+
+#### 19.6 删除指标索引服务器
+
+Remove Metric server. 
+
+```
+HTTP:   	DELETE /api2/json/cluster/metrics/server/{id}
+```
+
+#### 19.7 实时导出数据
+
+Retrieve metrics of the cluster.
+
+```
+HTTP:   	GET /api2/json/cluster/metrics/export
+```
+
+### 二十、消息通知
+
+待定，应该用不到这个功能
+
+### 二十一、集群复制
+
+不懂这个功能怎么使用
+
+#### 21.1 查看复制任务
+
+```
+https://192.168.1.94:8006/api2/json/cluster/replication
+```
+
+![](./images/155.png)
+
+#### 21.2 创建新复制任务
+
+Create a new replication job 
+
+```
+HTTP:   	POST /api2/json/cluster/replication
+```
+
+#### 21.3 读取复制任务配置
+
+Read replication job configuration. 
+
+```
+HTTP:   	GET /api2/json/cluster/replication/{id}
+```
+
+#### 21.4 更新复制任务配置
+
+Update replication job configuration. 
+
+```
+HTTP:   	PUT /api2/json/cluster/replication/{id}
+```
+
+#### 21.5 删除复制任务配置
+
+Mark replication job for removal.
+
+```
+HTTP:   	DELETE /api2/json/cluster/replication/{id}
+```
+
+### 二十二、sdn软件自定义网络
+
+如果要使用dhcp，需要在每个节点安装dnsmasq
+
+```bash
+apt update
+apt install dnsmasq
+# disable default instance
+systemctl disable --now dnsmasq
+```
+
+如果要使用sdn路由集成，需要在每个节点安装frr-pythontools
+
+```bash
+apt update
+apt install frr-pythontools
+```
+
+#### 22.1 sdn索引
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn
+```
+
+![](./images/156.png)
+
+#### 22.2 重载sdn
+
+修改完sdn后，需要重载sdn让其生效
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn
+```
+
+![](./images/157.png)
+
+#### 22.3 查看区域
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones
+```
+
+![](./images/158.png)
+
+#### 22.4 创建区域
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones
+```
+
+![](./images/159.png)
+
+#### 22.5 读取区域配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones/simple
+```
+
+![](./images/160.png)
+
+#### 22.6 更新区域配置
+
+改成pve1节点
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones/simple
+```
+
+![](./images/161.png)
+
+取消dhcp
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones/simple
+```
+
+![](./images/162.png)
+
+#### 22.7 删除区域
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/zones/simple
+```
+
+![](./images/163.png)
+
+#### 22.8 查看Vnets
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets
+```
+
+![](./images/164.png)
+
+#### 22.9 新建Vnets
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets
+```
+
+![](./images/165.png)
+
+#### 22.10 读取Vnet配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnets
+```
+
+![](./images/166.png)
+
+#### 22.11 更新Vnet配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnets
+```
+
+![](./images/167.png)
+
+#### 22.12 删除Vnets配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnets
+```
+
+![](./images/168.png)
+
+#### 22.13 查看子网
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnet/subnets
+```
+
+![](./images/169.png)
+
+#### 22.14 创建子网
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnet/subnets
+```
+
+![](./images/170.png)
+
+#### 22.15 查看子网配置
+
+这里的ksimple-10.0.0.0-24名称，可以使用查看子网api获取
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnet/subnets/ksimple-10.0.0.0-24
+```
+
+![](./images/171.png)
+
+#### 22.16 更新子网配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnet/subnets/ksimple-10.0.0.0-24
+```
+
+![](./images/172.png)
+
+#### 22.17 删除子网配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/sdn/vnets/svnet/subnets/ksimple-10.0.0.0-24
+```
+
+![](./images/173.png)
+
+#### 22.18 ips-create
+
+Create IP Mapping in a VNet 
+
+```
+HTTP:   	POST /api2/json/cluster/sdn/vnets/{vnet}/ips
+```
+
+#### 22.19 ips-update
+
+Update IP Mapping in a VNet 
+
+```
+HTTP:   	PUT /api2/json/cluster/sdn/vnets/{vnet}/ips
+```
+
+#### 22.20 ips-delete
+
+ Delete IP Mappings in a VNet 
+
+```
+HTTP:   	DELETE /api2/json/cluster/sdn/vnets/{vnet}/ips
+```
+
+....集群sdn功能待测，不是很了解，暂时用不上
+
+### 二十三、集群状态
+
+#### 23.1获取集群日志
+
+```
+https://192.168.1.94:8006/api2/json/cluster/log
+```
+
+![](./images/174.png)
+
+#### 23.2 获取可用ip
+
+当你在 PVE 创建 VM 或 CT 时，每个实例都需要一个唯一的 **VM ID**（整数，例如 `100`, `101`, `102`）。
+
+这个 API 可以自动返回 **下一个可用的 ID**，避免手动查找或重复分配。 
+
+```
+https://192.168.1.94:8006/api2/json/cluster/nextid
+```
+
+![](./images/175.png)
+
+#### 23.3 获取集群选项配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/options
+```
+
+![](./images/176.png)
+
+#### 23.4  更新集群选项配置
+
+```
+https://192.168.1.94:8006/api2/json/cluster/options
+```
+
+![](./images/177.png)
+
+#### 23.5 获取集群资源
+
+```
+https://192.168.1.94:8006/api2/json/cluster/resources
+```
+
+![](./images/178.png)
+
+#### 23.6 获取集群状态
+
+```
+https://192.168.1.94:8006/api2/json/cluster/status
+```
+
+![](./images/179.png)
+
+#### 23.7 获取集群任务
+
+```
+https://192.168.1.94:8006/api2/json/cluster/tasks
+```
+
+![](./images/180.png)
+
+### 二十四、资源池
+
+#### 24.1 查看资源池
+
+```
+https://192.168.1.94:8006/api2/json/pools
+```
+
+![](./images/181.png)
+
+#### 24.2 创建资源池
+
+```
+https://192.168.1.94:8006/api2/json/pools
+```
+
+![](./images/182.png)
+
+#### 24.3 更新资源池
+
+```
+https://192.168.1.94:8006/api2/json/pools/kpool
+```
+
+![](./images/183.png)
+
+#### 24.4 删除资源池
+
+```
+https://192.168.1.94:8006/api2/json/pools/kpool
+```
+
+![](./images/184.png)
+
+#### 24.5 获取资源池内容
+
+```
+https://192.168.1.94:8006/api2/json/pools/kpool
+```
+
+![](./images/185.png)
+
+#### 24.6 更新资源池内容
+
+```
+https://192.168.1.94:8006/api2/json/pools/kpool
+```
+
+![](./images/186.png)
+
+### 二十五、存储
+
+#### 25.1 存储索引
+
+```
+https://192.168.1.94:8006/api2/json/storage
+```
+
+![](./images/187.png)
+
+#### 25.2 添加存储
+
+此处以添加smb/cifs为例
+
+```
+https://192.168.1.94:8006/api2/json/storage
+```
+
+![](./images/188.png)
+
+#### 25.3 读取存储配置
+
+```
+https://192.168.1.94:8006/api2/json/storage/kk
+```
+
+![](./images/189.png)
+
+#### 25.4 更新存储配置
+
+```
+https://192.168.1.94:8006/api2/json/storage/kk
+```
+
+![](./images/190.png)
+
+#### 25.5 删除存储
+
+```
+https://192.168.1.94:8006/api2/json/storage/kk
+```
+
+![](./images/191.png)
+
+### 二十六、api
+
+#### 26.1 api详情
+
+```
+https://192.168.1.94:8006/api2/json/version
+```
+
+![](./images/192.png)
+
+### 二十七、虚拟机配置静态ip和dns
+
+网卡名称改完英文
+
+- 配置静态ip
+
+```
+https://192.168.1.94:8006/api2/json/nodes/pve1/qemu/101/agent/exec
+```
+
+![](./images/193.png)
+
+- 配置静态dns
+
+```
+https://192.168.1.94:8006/api2/json/nodes/pve1/qemu/101/agent/exec
+```
+
+![](./images/194.png)
+
+### 二十八、
