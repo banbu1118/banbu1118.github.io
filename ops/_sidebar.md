@@ -97,3 +97,5 @@
 * [vnc教程](/ops/vnc教程.md)
 
 * [docker-smb部署](/ops/docker-smb部署.md)
+
+* [Debian12部署samba](/ops/Debian12部署samba.md)
