@@ -353,3 +353,65 @@ xfreerdp下载链接：[https://ci.freerdp.com/job/freerdp-nightly-binaries/last
 ```
 xfreerdp3 /v:192.168.1.232 /u:administrator /p:123456 /f /rfx /cert:ignore -window-drag /multimon /dynamic-resolution +monitors:0,1
 ```
+
+#### 5.7 wfreerdp 开源网关连接
+
+rdpgw.rdp配置文件
+
+```
+screen mode id:i:2
+session bpp:i:32
+compression:i:1
+keyboardhook:i:2
+displayconnectionbar:i:1
+disable wallpaper:i:1
+disable full window drag:i:1
+allow desktop composition:i:0
+allow font smoothing:i:0
+disable menu anims:i:1
+disable themes:i:0
+disable cursor setting:i:0
+bitmapcachepersistenable:i:1
+full address:s:192.168.1.61
+audiomode:i:2
+audiocapturemode:i:1
+redirectprinters:i:0
+redirectsmartcard:i:0
+redirectcomports:i:0
+redirectsmartcards:i:0
+redirectclipboard:i:1
+redirectposdevices:i:0
+autoreconnection enabled:i:1
+authentication level:i:0
+prompt for credentials:i:1
+negotiate security layer:i:1
+remoteapplicationmode:i:0
+alternate shell:s:
+shell working directory:s:
+gatewayhostname:s:192.168.1.60:9443
+gatewayusagemethod:i:1
+gatewaycredentialssource:i:4
+gatewayprofileusagemethod:i:1
+precommand:s:
+promptcredentialonce:i:1
+drivestoredirect:s:
+use multimon:i:0
+desktopwidth:i:1920
+desktopheight:i:1080
+winposstr:s:0,3,0,0,800,600
+videoplaybackmode:i:1
+connection type:i:7
+networkautodetect:i:1
+bandwidthautodetect:i:1
+enableworkspacereconnect:i:0
+redirectwebauthn:i:1
+gatewaybrokeringtype:i:0
+use redirection server name:i:0
+rdgiskdcproxy:i:0
+kdcproxyname:s:
+enablerdsaadauth:i:0
+```
+
+```
+PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456
+```
