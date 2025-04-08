@@ -415,3 +415,14 @@ enablerdsaadauth:i:0
 ```
 PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456
 ```
+
+#### 5.8 xfreerdp3 开源网关连接
+
+先安装freerdp3，再切换到按对应目录连接
+
+```
+root@debian:/opt/freerdp-nightly/bin# pwd
+/opt/freerdp-nightly/bin
+root@debian:/opt/freerdp-nightly/bin# ./xfreerdp3  /u:administrator /p:123456 /g:192.168.1.60:9443 /cert:ignore /v:192.168.1.61 /f
+```
+
