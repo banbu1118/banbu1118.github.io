@@ -335,7 +335,7 @@ gatewayusername:s:WIN-ID68U3TKHD6\administrator
 wfreerdp下载链接：[https://ci.freerdp.com/job/freerdp-nightly-windows/](https://ci.freerdp.com/job/freerdp-nightly-windows/)
 
 ```
-wfreerdp.exe Default.rdp /p:123456
+wfreerdp.exe Default.rdp /u:administrator /p:123456
 ```
 
 #### 5.4 启用rfx优化参数
