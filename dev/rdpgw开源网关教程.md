@@ -413,7 +413,7 @@ enablerdsaadauth:i:0
 ```
 
 ```
-PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456
+PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456 /f +fonts +aero +themes /window-drag /menu-anims -gfx -compression +gdi:sw /bpp:32
 ```
 
 #### 5.8 xfreerdp3 开源网关连接
