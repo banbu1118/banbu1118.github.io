@@ -487,3 +487,88 @@ use gfx:i:0
 ```
 PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456 /cert:ignore /sound:latency:200 /gfx /v:192.168.1.63
 ```
+
+#### 5.10 windows虚拟机60帧
+
+资料来源：[https://github.com/Upinel/BetterRDP](https://github.com/Upinel/BetterRDP)
+
+这是UpinelBetterRDP.reg配置文件的内容，双击执行即可
+
+```
+Windows Registry Editor Version 5.00
+
+;  +----------------------------------------------------------------------+
+;  | Upinel/BetterRDP                                                     |
+;  +----------------------------------------------------------------------+
+;  | This source file is subject to version 2.0 of the Apache license,    |
+;  | that is bundled with this package in the file LICENSE, and is        |
+;  | available through the world-wide-web at the following url:           |
+;  | http://www.apache.org/licenses/LICENSE-2.0.html                      |
+;  | If you did not receive a copy of the Apache2.0 license and are unable|
+;  | to obtain it through the world-wide-web, please send a note to       |
+;  | license@swoole.com so we can mail you a copy immediately.            |
+;  +----------------------------------------------------------------------+
+;  | Author: Nova Upinel Chow  <dev@upinel.com>                           |
+;  +----------------------------------------------------------------------+
+
+;BetterRDP Optimization Settings
+;Backup your current registry settings before applying this file.
+
+;Allow GPU and RemoteFx during RDP sessions.
+;Ensure RDP is using graphics acceleration for a better visual experience.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
+"SelectTransport"=dword:00000000
+"fEnableVirtualizedGraphics"=dword:00000001
+"fEnableRemoteFXAdvancedRemoteApp"=dword:00000001
+"MaxCompressionLevel"=dword:00000002
+"VisualExperiencePolicy"=dword:00000001
+"GraphicsProfile"=dword:00000002
+"bEnumerateHWBeforeSW"=dword:00000001
+"AVC444ModePreferred"=dword:00000001
+"AVCHardwareEncodePreferred"=dword:00000001
+
+;Optimize the capture frame rate for RDP sessions to achieve 60 FPS.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
+"VGOptimization_CaptureFrameRate"=dword:0000003c
+
+;Optimize the compression ratio for improved image quality over RDP.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
+"VGOptimization_CompressionRatio"=dword:00000002
+"ImageQuality"=dword:00000003
+
+;Sets the flow control for Display vs Channel Bandwidth.
+;Tailor the bandwidth settings for RemoteFX devices, including controllers.
+;Source:https://www.reddit.com/r/killerinstinct/comments/4fcdhy/an_excellent_guide_to_optimizing_your_windows_10/
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TermDD]
+"FlowControlDisable"=dword:00000001
+"FlowControlDisplayBandwidth"=dword:0000010
+"FlowControlChannelBandwidth"=dword:0000090
+"FlowControlChargePostCompression"=dword:00000000
+
+;Increase system responsiveness by adjusting foreground vs background tasks priority.
+;Source:https://www.reddit.com/r/killerinstinct/comments/4fcdhy/an_excellent_guide_to_optimizing_your_windows_10/
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile]
+"SystemResponsiveness"=dword:00000000
+
+;Sets the interval for desktop composition (DWM) - 60 FPS.
+;Source: https://support.microsoft.com/en-us/help/2885213/frame-rate-is-limited-to-30-fps-in-windows-8-and-windows-server-2012-r
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations]
+"DWMFRAMEINTERVAL"=dword:0000000f
+
+;Remove artificial latency delays in RDP.
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp]
+"InteractiveDelay"=dword:00000000
+
+;Disable bandwidth throttling to potentially improve network performance.
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
+"DisableBandwidthThrottling"=dword:00000001
+
+;Enabling Large MTU packets can improve network performance.
+"DisableLargeMtu"=dword:00000000
+
+; This setting is optional and affects the display driver model used in RDP sessions.
+; Uncomment the following lines if you wish to use XDDM drivers on Nvidia cards.
+; Note: May not be beneficial for AMD cards or certain configurations.
+;[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
+;"fEnableWddmDriver"=dword:00000001
+```
