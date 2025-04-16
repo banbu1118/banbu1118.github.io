@@ -430,7 +430,7 @@ root@debian:/opt/freerdp-nightly/bin# ./xfreerdp3  /u:administrator /p:123456 /g
 
 GFX图形管道（Graphics Pipeline）是微软从 Windows 8、Windows Server 2012 开始逐步引入的一种全新的远程桌面图像传输机制，之后在Windows 10和Windows Server 2016及更高版本中逐渐成为主流
 
-rdpgw.rdp\p配置文件
+rdpgw.rdp配置文件
 
 ```
 screen mode id:i:2
