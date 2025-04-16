@@ -426,3 +426,64 @@ root@debian:/opt/freerdp-nightly/bin# pwd
 root@debian:/opt/freerdp-nightly/bin# ./xfreerdp3  /u:administrator /p:123456 /g:192.168.1.60:9443 /cert:ignore /v:192.168.1.61 /f
 ```
 
+#### 5.9 wfreerdp3 gfx参数（推荐）
+
+GFX图形管道（Graphics Pipeline）是微软从 Windows 8、Windows Server 2012 开始逐步引入的一种全新的远程桌面图像传输机制，之后在Windows 10和Windows Server 2016及更高版本中逐渐成为主流
+
+rdpgw.rdp\p配置文件
+
+```
+screen mode id:i:2
+use multimon:i:0
+desktopwidth:i:1920
+desktopheight:i:1080
+session bpp:i:32
+winposstr:s:0,1,750,249,1550,849
+compression:i:0
+keyboardhook:i:2
+audiocapturemode:i:1
+videoplaybackmode:i:0
+connection type:i:6
+displayconnectionbar:i:1
+disable wallpaper:i:0
+allow font smoothing:i:1
+allow desktop composition:i:1
+disable full window drag:i:1
+disable menu anims:i:1
+disable themes:i:0
+disable cursor setting:i:0
+bitmapcachepersistenable:i:1
+full address:s:192.168.1.61
+server port:i:3389
+audiomode:i:0
+redirectprinters:i:0
+redirectcomports:i:0
+redirectsmartcards:i:0
+redirectclipboard:i:1
+redirectposdevices:i:0
+redirectdirectx:i:1
+autoreconnection enabled:i:1
+authentication level:i:2
+prompt for credentials:i:0
+remoteapplicationmode:i:0
+alternate shell:s:
+shell working directory:s:
+gatewayhostname:s:192.168.1.60:9443
+gatewayusagemethod:i:1
+gatewaycredentialssource:i:4
+gatewayprofileusagemethod:i:1
+promptcredentialonce:i:1
+gatewaybrokeringtype:i:0
+use redirection server name:i:0
+rdgiskdcproxy:i:0
+kdcproxyname:s:
+redirectwebauthn:i:1
+drivestoredirect:s:
+enablerdsaadauth:i:0
+gdi rendering:i:0
+use gfx:i:0
+```
+
+```
+PS C:\Users\kk\Desktop> .\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456 /cert:ignore /sound:latency:200 /gfx /v:192.168.1.63
+```
