@@ -572,3 +572,163 @@ Windows Registry Editor Version 5.00
 ;[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]
 ;"fEnableWddmDriver"=dword:00000001
 ```
+
+#### 5.11 wfreerdp 优化rdp文件
+
+默认禁用，使用 +window-drag 启用。拖动窗口会造成大量的图形更新（每次移动窗口一个像素，屏幕上很大一部分区域都需要更新）。为了解决这个问题，服务器可以在拖动窗口时绘制其轮廓，并在拖动完成后绘制完整的窗口。
+
+这是优化后的rdp文件
+
+```
+screen mode id:i:2
+use multimon:i:0
+desktopwidth:i:1024
+desktopheight:i:768
+session bpp:i:32
+winposstr:s:0,3,0,0,800,600
+compression:i:0
+keyboardhook:i:2
+audiocapturemode:i:1
+videoplaybackmode:i:0
+connection type:i:6
+displayconnectionbar:i:1
+disable wallpaper:i:0
+allow font smoothing:i:1
+allow desktop composition:i:1
+disable full window drag:i:1
+disable menu anims:i:1
+disable themes:i:0
+disable cursor setting:i:0
+bitmapcachepersistenable:i:1
+full address:s:192.168.1.63
+server port:i:3389
+audiomode:i:0
+redirectprinters:i:0
+redirectcomports:i:0
+redirectsmartcards:i:0
+redirectclipboard:i:1
+redirectposdevices:i:0
+redirectdirectx:i:1
+autoreconnection enabled:i:1
+authentication level:i:2
+prompt for credentials:i:0
+remoteapplicationmode:i:0
+alternate shell:s:
+shell working directory:s:
+gatewayhostname:s:192.168.1.60:9443
+gatewayusagemethod:i:1
+gatewaycredentialssource:i:4
+gatewayprofileusagemethod:i:1
+promptcredentialonce:i:1
+use redirection server name:i:0
+rdgiskdcproxy:i:0
+kdcproxyname:s:
+drivestoredirect:s:*
+usbdevicestoredirect:s:
+use gfx:i:0
+multi touch:i:0
+GDI rendering:i:0
+servertoclientclipboard:i:1
+clienttoserverclipboard:i:1
+```
+
+#### 5.12 wfreerdp自动连接脚本
+
+新建一个rdp文件夹，里面存放3个文件
+
+```
+PS C:\Users\kk> cd .\Desktop\rdp\
+PS C:\Users\kk\Desktop\rdp> ls
+
+
+    目录: C:\Users\kk\Desktop\rdp
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         2025/4/18      0:00           2392 rdpgw.rdp
+-a----         2025/4/16     22:26            425 rdp_connect.bat
+-a----         2025/3/26     21:33        8781824 wfreerdp.exe
+```
+
+rdpgw.rdp是上面的优化过的配置文件
+
+wfreerdp.exe是下载的程序
+
+这是rdp_connect.bat连接脚本的内容
+
+```
+@echo off
+set CURRENT_DIR=%~dp0
+cd /d "%CURRENT_DIR%"
+.\wfreerdp.exe .\rdpgw.rdp /u:administrator /p:123456 /cert:ignore /sound:latency:200 /gfx +compression /v:192.168.1.63
+```
+
+#### 5.13 开源网关配置文件不启用功能性参数
+
+开源网关配置文件和rdp文件重复，例如：同时开启磁盘重定向，虚拟机映射的磁盘会重复，建议禁用开源网关的磁盘重定向
+
+```
+root@debian:~/appdata/opt/rdpgw# cat rdpgw.yaml
+Server:
+  Authentication:
+    - ntlm
+
+  BasicAuthTimeout: "5"
+
+  #启用本地证书
+  Tls: "enable"
+  CertFile: server.pem
+  KeyFile: key.pem
+
+  #要连接主机的ip
+  Hosts:
+    - "192.168.1.61:3389"
+    - "192.168.1.62:3389"
+    - "192.168.1.63:3389"
+  #连接时，在上诉Hosts中查询
+  HostSelection: "unsigned"
+
+  SessionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  SessionEncryptionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+
+AuthSocket: /tmp/rdpgw-auth.sock
+
+Caps:
+  #SmartCardAuth: false
+  SmartCardAuth: false
+
+  #禁用身份身份令牌验证，启动其他方式认证（比如用户名和密码）
+  TokenAuth: false
+
+  #空闲超时自动断开（分钟）
+  IdleTimeout: 120
+
+  #启用粘贴板
+  EnableClipboard: true
+
+  #启用驱动器映射功能
+  EnableDrive: false
+
+  #启动打印机共享功能
+  EnablePrinter: false
+
+  #启用即插即用（PnP）设备支持
+  EnablePnp: false
+
+  #启用端口映射功能
+  EnablePort: false
+
+Client:
+  defaults: "/etc/rdpgw/default.rdp"
+  #用户格式，可以改为{{ username }}@vdi.cloud.com
+  UsernameTemplate: "{{ username }}"
+  SplitUserDomain: "false"
+
+Security:
+  PAATokenSigningKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  UserTokenEncryptionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  EnableUserToken: "true"
+  VerifyClientIp: "true"
+root@debian:~/appdata/opt/rdpgw#
+```
