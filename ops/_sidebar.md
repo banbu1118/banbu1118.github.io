@@ -100,4 +100,4 @@
 
 * [Debian12部署samba](/ops/Debian12部署samba.md)
 
-* [Debian自动配置脚本](/ops/Debian自动配置脚本.md)
+* [Debian12自动配置脚本](/ops/Debian12自动配置脚本.md)
