@@ -101,3 +101,5 @@
 * [Debian12部署samba](/ops/Debian12部署samba.md)
 
 * [Debian12自动配置脚本](/ops/Debian12自动配置脚本.md)
+
+* [RDP修改端口脚本](/ops/RDP修改端口脚本.md)
