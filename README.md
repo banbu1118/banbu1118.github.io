@@ -1,9 +1,3 @@
-<!--
-<div style="display: flex; align-items: center;">
-    <img src="logo.png" alt="Alt text" style="width: 150px; height: 150px;">
-    <span style="font-size: 75px; margin-left: 1em;">Banbu1118's Blog</span>
-</div>
--->
 <h1><font color=#FF0000>B</font><font color=#EF0010>a</font><font color=#DF0020>n</font><font color=#CF0030>b</font><font color=#BF0040>u</font><font color=#AF0050>1</font><font color=#9F0060>1</font><font color=#8F0070>1</font><font color=#7F0080>8</font><font color=#6F0090>'</font><font color=#5F00A0>s</font><font color=#4F00B0> </font><font color=#3F00C0>B</font><font color=#2F00D0>l</font><font color=#1F00E0>o</font><font color=#0F00F0>g</font></h1>
 
 > 欢迎大家访问我的博客
