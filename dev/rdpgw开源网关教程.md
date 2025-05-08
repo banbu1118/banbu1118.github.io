@@ -12,6 +12,8 @@ Github地址：[https://github.com/bolkedebruin/rdpgw](https://github.com/bolked
 
 构建好的镜像，国内可下载：[https://share.weiyun.com/4ycr5XAn](https://share.weiyun.com/4ycr5XAn)
 
+pxvdi官网rdpgw教程：[https://docs.pxvdi.lierfang.com/zong-kong-mo-shi/gw/rdpgw.html](https://docs.pxvdi.lierfang.com/zong-kong-mo-shi/gw/rdpgw.html)
+
 ### 二、构建docker镜像
 
 国内网络不行，推荐在阿里云或者腾讯云组一台国外服务器临时构建一下
