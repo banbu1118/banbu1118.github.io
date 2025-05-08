@@ -184,6 +184,70 @@ Security:
   VerifyClientIp: "true"
 ```
 
+host可以换种写法，使用any模式
+
+```yaml
+Server:
+  Authentication:
+    - ntlm
+
+  BasicAuthTimeout: "5"
+
+  #启用本地证书
+  Tls: "enable"
+  CertFile: server.pem
+  KeyFile: key.pem
+
+  #要连接主机的ip
+  Hosts:
+    - localhost:3389
+
+  #连接时，在上诉Hosts中查询
+  HostSelection: any
+
+  SessionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  SessionEncryptionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+
+AuthSocket: /tmp/rdpgw-auth.sock
+
+Caps:
+  #SmartCardAuth: false
+  SmartCardAuth: false
+
+  #禁用身份身份令牌验证，启动其他方式认证（比如用户名和密码）
+  TokenAuth: false
+
+  #空闲超时自动断开（分钟）
+  IdleTimeout: 120
+
+  #启用粘贴板
+  EnableClipboard: true
+
+  #启用驱动器映射功能
+  EnableDrive: false
+
+  #启动打印机共享功能
+  EnablePrinter: false
+
+  #启用即插即用（PnP）设备支持
+  EnablePnp: false
+
+  #启用端口映射功能
+  EnablePort: false
+
+Client:
+  defaults: "/etc/rdpgw/default.rdp"
+  #用户格式，可以改为{{ username }}@vdi.cloud.com
+  UsernameTemplate: "{{ username }}"
+  SplitUserDomain: "false"
+
+Security:
+  PAATokenSigningKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  UserTokenEncryptionKey: "GENERATE A 32 CHAR KEY" # CHANNGE
+  EnableUserToken: "true"
+  VerifyClientIp: "true"
+```
+
 #### 3.4 创建用户账号文件
 
 此配置记录了虚拟机的账号密码
