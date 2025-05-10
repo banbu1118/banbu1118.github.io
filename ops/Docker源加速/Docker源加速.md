@@ -149,4 +149,3 @@ docker save -o ubuntu.tar ubuntu:1.3
 ```bash
 docker load -i ubuntu.tar
 ```
-
