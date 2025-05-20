@@ -1340,7 +1340,7 @@ package.json 是包的配置文件，每个包都必须要有 package.json
 
 package.json 内容示例：
 
-```
+```json
 {
     "name": "01_npm",
     "version": "1.0.0",
