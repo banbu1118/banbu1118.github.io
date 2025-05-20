@@ -265,7 +265,7 @@ ws.end();
 
 * 视频录制
 
-> 当 需要持久化保存数据 的时候，应该想到 文件写入
+> 当需要持久化保存数据的时候，应该想到文件写入
 
 ### 3.2 文件读取
 
@@ -1919,6 +1919,8 @@ app.listen(3000, () => {
 
 #### 4. 获取路由参数
 
+ `:id` 意味着这个位置可以匹配任何内容，这个内容称为路由参数 
+
 ```javascript
 app.get('/:id.html', (req, res) => {
 res.send('商品详情, 商品 id 为' + req.params.id);
@@ -2162,7 +2164,7 @@ console.log('3000 端口启动....');
 
 #### 1. 什么是模板引擎
 
-模板引擎是分离 用户界面和业务数据 的一种技术
+模板引擎是分离用户界面和业务数据的一种技术
 
 #### 2. 什么是 EJS
 
@@ -2215,4 +2217,1182 @@ console.log(html);
 ```javascript
 <%- code %>
 ```
+
+## 九、mongoDB
+
+### 9.1 简洁
+
+#### 1. mongoDB是什么
+
+MongoDB 是一个基于分布式文件存储的数据库，官方地址 https://www.mongodb.com/
+
+#### 2. 数据库是什么
+
+数据库（DataBase）是按照数据结构来组织、存储和管理数据的 应用程序
+
+#### 3. 数据库的作用
+
+数据库的主要作用就是 管理数据 ，对数据进行 增（c）、删（d）、改（u）、查（r）
+
+#### 4. 数据库管理数据的特点
+
+相比于纯文件管理数据，数据库管理数据有如下特点：
+
+1. 速度更快
+
+2. 扩展性更强
+
+3. 安全性更强
+
+#### 5. 为什么选择 Mongodb
+
+操作语法与 JavaScript 类似，容易上手，学习成本低
+
+### 9.2 核心概念
+
+Mongodb 中有三个重要概念需要掌握
+
+- 数据库（database） 数据库是一个数据仓库，数据库服务下可以创建很多数据库，数据库中可以存放很多集合
+
+- 集合（collection） 集合类似于 JS 中的数组，在集合中可以存放很多文档
+
+- 文档（document） 文档是数据库中的最小单位，类似于 JS 中的对象
+
+![](./images/18.png)
+
+JSON 文件示例：
+
+```json
+{
+"accounts": [
+{
+"id": "3-YLju5f3",
+"title": "买电脑",
+"time": "2023-02-08",
+"type": "-1",
+"account": "5500",
+"remarks": "为了上网课"
+},
+{
+"id": "3-YLju5f4",
+"title": "请女朋友吃饭",
+"time": "2023-02-08",
+"type": "-1",
+"account": "214",
+"remarks": "情人节聚餐"
+},
+{
+"id": "mRQiD4s3K",
+"title": "发工资",
+"time": "2023-02-19",
+"type": "1",
+"account": "4396",
+"remarks": "终于发工资啦!~~"
+}
+],
+"users":[
+{
+"id": 1,
+"name": "zhangsan",
+"age": 18
+},
+{
+"id": 2,
+"name": "lisi",
+"age": 20
+},
+{
+"id": 3,
+"name": "wangwu",
+"age": 22
+}
+]
+}
+```
+
+大家可以通过 JSON 文件来理解 Mongodb 中的概念
+
+- 一个 JSON 文件 好比是一个 数据库 ，一个 Mongodb 服务下可以有 N 个数据库
+
+- JSON 文件中的 一级属性的数组值 好比是 集合
+
+- 数组中的对象好比是 文档
+
+- 对象中的属性有时也称之为 字段
+
+### 9.3 下载安装与启动
+
+下载地址： https://www.mongodb.com/try/download/community
+
+建议选择 zip 类型， 通用性更强
+
+配置步骤如下:
+
+1> 将压缩包移动到 C:\Program Files 下，然后解压
+
+2> 创建 C:\data\db 目录，mongodb 会将数据默认保存在这个文件夹
+
+3> 以 mongodb 中 bin 目录作为工作目录，启动命令行
+
+4> 运行命令 mongod
+
+![](./images/19.png)
+
+看到最后的 waiting for connections 则表明服务 已经启动成功
+
+然后可以使用 mongo 命令连接本机的 mongodb 服务
+
+![](./images/20.png)
+
+> 注意：
+>
+> - 为了方便后续方便使用 mongod 命令，可以将 bin 目录配置到环境变量 Path 中
+>
+> - 千万不要选中服务端窗口的内容 ，选中会停止服务，可以 敲回车 取消选中
+
+### 9.4 命令行交互
+
+#### 1. 数据库命令
+
+##### (1) 显示所有的数据库
+
+```
+show dbs
+```
+
+##### (2) 切换到指定的数据库，如果数据库不存在会自动创建新数据库
+
+```
+use 数据库名
+```
+
+##### (3) 显示当前所在的数据库
+
+```
+db
+```
+
+##### (4) 删除当前数据库
+
+```
+use 数据库名
+db.dropDatabase()
+```
+
+#### 2. 集合命令
+
+##### (1) 创建集合
+
+```
+db.createCollection('集合名称')
+```
+
+##### (2) 显示当前数据库中的所有集合
+
+```
+show collections
+```
+
+##### (3) 删除某个集合
+
+```
+db.集合名.drop()
+```
+
+##### (4) 重命名集合
+
+```
+db.集合名.renameCollection('newName')
+```
+
+#### 3. 文档命令
+
+##### (1) 插入文档
+
+```
+db.集合名.insert(文档对象);
+```
+
+##### (2) 查询文档
+
+```
+db.集合名.find(查询条件)
+```
+
+##### (3) 更新文档
+
+```
+db.集合名.update(查询条件,新的文档)
+db.集合名.update({name:'张三'},{$set:{age:19}})
+```
+
+##### (4) 删除文档
+
+```
+db.集合名.remove(查询条件)
+```
+
+#### 4. 应用场景
+
+##### (1) 新增
+
+- 用户注册
+
+- 发布视频
+
+— 发布商品
+
+- 发朋友圈
+
+- 发评论
+
+- 发微博
+
+- 发弹幕
+- .......
+
+##### (2) 删除
+
+- 删除评论
+
+- 删除商品
+
+- 删除文章
+
+- 删除视频
+
+- 删除微博
+
+- ......
+
+##### (3) 更新
+
+- 更新个人信息
+
+- 修改商品价格
+
+- 修改文章内容
+
+- .....
+
+##### (4) 查询
+
+- 商品列表
+
+- 视频列表
+
+- 朋友圈列表
+
+- 微博列表
+
+- 搜索功能
+
+- ......
+
+### 9.5.Mongoose
+
+#### 1. 介绍
+
+Mongoose 是一个对象文档模型库，官网 http://www.mongoosejs.net/
+
+#### 2. 作用
+
+方便使用代码操作 mongodb 数据库
+
+#### 3. 使用流程
+
+```javascript
+//安装mongoose
+
+//导入mongoose模块
+const mongoose = require('mongoose');
+
+//连接数据库
+mongoose.connect('mongodb://127.0.0.1:27017/bilibili')
+
+//设置回调
+
+// 设置连接成功的回调（推荐 async/await）
+mongoose.connection.once('open', async () => {
+    console.log('数据库连接成功');
+
+    // 创建文档的结构对象
+    const BookSchema = new mongoose.Schema({
+        name: String,
+        author: String,
+        price: Number,
+        is_hot: Boolean,
+        tags: Array,
+        pub_time: Date,
+        test: mongoose.Schema.Types.Mixed,
+        kk: mongoose.Schema.Types.ObjectId
+    });
+
+    // 创建模型对象，对文档操作的封装对象
+    const BookModel = mongoose.model('books', BookSchema);
+
+    // 使用 async/await 新增数据
+    try {
+        const data = await BookModel.create({
+            name: '西游记',
+            author: '吴承恩',
+            price: 19.9,
+            is_hot: true,
+            tags: ['鬼怪', '励志', '社会'],
+            pub_time: new Date(),
+            test: 'abc',
+            kk: new mongoose.Types.ObjectId()
+        });
+        console.log('插入成功:', data);
+    } catch (err) {
+        console.log('插入失败:', err);
+    } finally {
+        // 操作完成后关闭数据库连接（推荐）
+        mongoose.connection.close();
+    }
+});
+
+
+//设置连接失败的回调
+mongoose.connection.once('error', () => {
+    console.log('连接失败');
+
+})
+
+//设置连接关闭的回调
+mongoose.connection.once('close', () => {
+    console.log('连接关闭');
+})
+```
+
+#### 4. 字段类型
+
+文档结构可选的常用字段类型列表
+
+| 类型       | 描述                                                       |
+| ---------- | ---------------------------------------------------------- |
+| String     | 字符串                                                     |
+| Number     | 数字                                                       |
+| Boolean    | 布尔值                                                     |
+| Array      | 数组，也可以使用[]来标识                                   |
+| Date       | 日期                                                       |
+| Buffer     | Buffer对象                                                 |
+| Mixed      | 任意类型，需要使用mongoose.Schema.Types.Mixed 指定         |
+| ObjectId   | 对象 ID，需要使用 mongoose.Schema.Types.ObjectId 指定      |
+| Decimal128 | 高精度数字，需要使用 mongoose.Schema.Types.Decimal128 指定 |
+
+#### 5. 字段验证
+
+Mongoose 有一些内建验证器，可以对字段值进行验证
+
+##### (1) 必填项
+
+```javascript
+title: {
+type: String,
+required: true // 设置必填项
+}
+```
+
+##### (2) 默认值
+
+```javascript
+author: {
+type: String,
+default: '匿名' //默认值
+},
+```
+
+##### (3) 枚举值
+
+```javascript
+gender: {
+type: String,
+enum: ['男','女'] //设置的值必须是数组中的
+},
+```
+
+##### (4) 唯一值
+
+```javascript
+username: {
+type: String,
+unique: true
+},
+```
+
+>unique 需要 重建集合 才能有效果
+>
+>永远不要相信用户的输入
+
+#### 6. 文档增删改查
+
+##### (1) 增加
+
+增加1条
+
+```javascript
+    try {
+        const data = await BookModel.create({ name: '西游记', author: '吴承恩', price: 19.9 });
+        console.log('插入成功:', data);
+    } catch (err) {
+        console.log('插入失败:', err);
+    } finally {
+        // 操作完成后关闭数据库连接（推荐）
+        mongoose.connection.close();    //关闭当前连接实例
+        // mongoose.disconnect();    //关闭所有连接实例
+    }
+```
+
+增加多条
+
+```javascript
+//1. 安装 mongoose
+//2. 导入 mongoose
+const mongoose = require('mongoose');
+
+//设置 strictQuery 为 true
+mongoose.set('strictQuery', true);
+
+//3. 连接 mongodb 服务                        数据库的名称
+mongoose.connect('mongodb://127.0.0.1:27017/bilibili');
+
+//4. 设置回调
+// 设置连接成功的回调  once 一次   事件回调函数只执行一次
+mongoose.connection.once('open', async () => {
+  console.log('数据库连接成功');
+
+  //5. 创建文档的结构对象
+  let BookSchema = new mongoose.Schema({
+    name: String,
+    author: String,
+    price: Number,
+    is_hot: Boolean
+  });
+
+  //6. 创建模型对象  对文档操作的封装对象
+  let BookModel = mongoose.model('novel', BookSchema);
+
+  //7. 使用 async/await 新增数据
+  try {
+    const data = await BookModel.insertMany([
+      { name: '西游记', author: '吴承恩', price: 19.9, is_hot: true },
+      { name: '红楼梦', author: '曹雪芹', price: 29.9, is_hot: true },
+      { name: '三国演义', author: '罗贯中', price: 25.9, is_hot: true },
+      { name: '水浒传', author: '施耐庵', price: 20.9, is_hot: true },
+      { name: '活着', author: '余华', price: 19.9, is_hot: true },
+      { name: '狂飙', author: '徐纪周', price: 68, is_hot: true },
+      { name: '大魏能臣', author: '黑男爵', price: 9.9, is_hot: false },
+      { name: '知北游', author: '洛水', price: 59, is_hot: false },
+      { name: '道君', author: '跃千愁', price: 59, is_hot: false },
+      { name: '七煞碑', author: '游泳的猫', price: 29, is_hot: false },
+      { name: '独游', author: '酒精过敏', price: 15, is_hot: false },
+      { name: '大泼猴', author: '甲鱼不是龟', price: 26, is_hot: false },
+      { name: '黑暗王者', author: '古羲', price: 39, is_hot: false },
+      { name: '不二大道', author: '文刀手予', price: 89, is_hot: false },
+      { name: '大泼猴', author: '甲鱼不是龟', price: 59, is_hot: false },
+      { name: '长安的荔枝', author: '马伯庸', price: 45, is_hot: true },
+      { name: '命运', author: '蔡崇达', price: 59.8, is_hot: true },
+      { name: '如雪如山', author: '张天翼', price: 58, is_hot: true },
+      { name: '三体', author: '刘慈欣', price: 23, is_hot: true },
+      { name: '秋园', author: '杨本芬', price: 38, is_hot: true },
+      { name: '百年孤独', author: '范晔', price: 39.5, is_hot: true },
+      { name: '在细雨中呼喊', author: '余华', price: 25, is_hot: true },
+    ]);
+    console.log('数据插入成功:', data);
+  } catch (error) {
+    console.log('数据插入失败:', error);
+  } finally {
+    //8. 关闭数据库连接
+    mongoose.disconnect();
+  }
+});
+
+// 设置连接失败的回调
+mongoose.connection.on('error', (err) => {
+  console.log('连接失败:', err);
+});
+
+// 设置连接关闭的回调
+mongoose.connection.on('close', () => {
+  console.log('连接关闭');
+});
+```
+
+##### (2) 删除
+
+删除1条
+
+```javascript
+   try {
+        const result = await BookModel.deleteOne({ name: '西游记' });
+        console.log('删除结果:', result);
+    } catch (error) {
+        console.log('删除失败:', error);
+    } finally {
+        // 7. 操作完成后关闭数据库连接
+        mongoose.disconnect();
+    }
+```
+
+删除多条
+
+```javascript
+    try {
+        const result = await BookModel.deleteMany({ is_hot: false });
+        console.log('删除结果:', result);
+    } catch (error) {
+        console.log('删除失败:', error);
+    } finally {
+        // 7. 操作完成后关闭数据库连接
+        mongoose.disconnect();
+    }
+```
+
+##### (3) 更新
+
+更新1条
+
+```javascript
+    更新1条
+    try {
+        const result = await BookModel.updateOne({ name: '红楼梦' }, { price: 9.9 });
+        console.log('更新成功', result);
+    } catch (err) {
+        console.log('更新失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+更新多条
+
+```javascript
+    try {
+        const result = await BookModel.updateMany({ author: '余华' }, { $set: { is_hot: false } });
+        console.log('更新成功', result);
+    } catch (err) {
+        console.log('更新失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+##### (4) 读取
+
+读取1条
+
+```javascript
+    try {
+        const result = await BookModel.findOne({ name: '狂飙' });
+        console.log('读取成功', result);
+    } catch (err) {
+        console.log('读取失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+读取多条
+
+```javascript
+    try {
+        const result = await BookModel.find({ author: '余华' });
+        console.log('读取成功', result);
+    } catch (err) {
+        console.log('读取失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+按照id读取
+
+```javascript
+    try {
+        const result = await BookModel.findById('682605ef1ebb772ebe569633');
+        console.log('读取成功', result);
+    } catch (err) {
+        console.log('读取失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+读取全部
+
+```javascript
+    try {
+        const result = await BookModel.find();
+        console.log('读取成功', result);
+    } catch (err) {
+        console.log('读取失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+#### 7. 条件控制
+
+##### (1) 运算符
+
+在 mongodb 不能 > < >= <= !== 等运算符，需要使用替代符号
+
+- \> 使用 $gt
+
+- < 使用 $lt
+
+- = 使用 $gte
+
+- <= 使用 $lte
+
+- !== 使用 $ne
+
+```javascript
+    try {
+        const books = await BookModel.find({ price: { $lt: 20 } });
+        console.log('查询成功', books);
+    } catch (err) {
+        console.log('查询失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+##### (2) 逻辑运算
+
+逻辑或的情况
+
+```javascript
+    try {
+        const books = await BookModel.find({ author: { $in: ['曹雪芹', '余华'] } });
+        console.log('查询成功', books);
+    } catch (err) {
+        console.log('查询失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+逻辑与的情况
+
+```javascript
+    try {
+        const books = await BookModel.find({ price: { $gte: 30, $lt: 70 } });
+        console.log('查询成功', books);
+    } catch (err) {
+        console.log('查询失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+##### (3) 正则匹配
+
+```javascript
+    try {
+        const books = await BookModel.find({ name: { $regex: /三/ } });
+        console.log('查询成功', books);
+    } catch (err) {
+        console.log('查询失败', err);
+    } finally {
+        mongoose.connection.close();
+    }
+```
+
+#### 8. 个性化读取
+
+##### (1) 字段筛选
+
+```javascript
+    try {
+        const data = await BookModel.find().select({ name: 1, author: 1, _id: 0 }).exec();
+        console.log('查询结果:', data);
+    } catch (error) {
+        console.log('查询失败:', error);
+    } finally {
+        //8. 操作完成后关闭数据库连接
+        mongoose.disconnect();
+    }
+```
+
+##### (2) 数据升序
+
+```javascript
+    try {
+        const data = await BookModel.find().select({ name: 1, price: 1, _id: 0 }).sort({ price: 1 }).exec();
+        console.log('查询结果:', data);
+    } catch (error) {
+        console.log('查询失败:', error);
+    } finally {
+        //8. 操作完成后关闭数据库连接
+        mongoose.disconnect();
+    }
+```
+
+##### (3) 数据截取
+
+```javascript
+    try {
+        const data = await BookModel.find().select({ name: 1, price: 1, _id: 0 }).sort({price: -1}).limit(3).skip(3).exec();
+        console.log('查询结果:', data);
+    } catch (error) {
+        console.log('查询失败:', error);
+    } finally {
+        // 8. 操作完成后关闭数据库连接
+        mongoose.disconnect();
+    }
+```
+
+#### 9. 图形化管理工具
+
+mongodb官方工具Compass：https://www.mongodb.com/try/download/shell
+
+## 十、api接口
+
+### 10.1 简介
+
+#### 1. 接口是什么
+
+接口是 前后端通信的桥梁
+
+简单理解：一个接口就是 服务中的一个路由规则 ，根据请求响应结果
+
+接口的英文单词是 API (Application Program Interface)，所以有时也称之为 API 接口
+
+这里的接口指的是『数据接口』， 与编程语言（Java，Go 等）中的接口语法不同
+
+#### 2. 接口的作用
+
+实现 前后端通信
+
+![](./images/21.png)
+
+#### 3. 接口的开发与调用
+
+大多数接口都是由 后端工程师 开发的， 开发语言不限
+
+一般情况下接口都是由 前端工程师 调用的，但有时 后端工程师也会调用接口 ，比如短信接口，支付接口等
+
+#### 4. 接口的组成
+
+一个接口一般由如下几个部分组成
+
+- 请求方法
+
+- 接口地址（URL）
+
+- 请求参数
+
+- 响应结果
+
+一个接口示例 https://www.free-api.com/doc/325
+
+![](./images/22.png)
+
+> 体验一下： https://api.asilu.com/idcard/?id=371522199111299668
+
+### 10.2 RESTful API
+
+RESTful API 是一种特殊风格的接口，主要特点有如下几个：
+
+- URL 中的路径表示 资源 ，路径中不能有 动词 ，例如 create , delete , update 等这些都不能有
+
+- 操作资源要与 HTTP 请求方法 对应
+
+- 操作结果要与 HTTP 响应状态码 对应
+
+规则示例：
+
+| 操作         | 请求类型 | URL      | 返回                 |
+| ------------ | -------- | -------- | -------------------- |
+| 新增歌曲     | POST     | /song    | 返回新生成的歌曲信息 |
+| 删除歌曲     | DELETE   | /song/10 | 返回一个空文档       |
+| 修改歌曲     | PUT      | /song/10 | 返回更新后的歌曲信息 |
+| 修改歌曲     | PATCH    | /song/10 | 返回更新后的歌曲信息 |
+| 获取所有歌曲 | GET      | /song    | 返回歌曲列表数组     |
+| 获取单个歌曲 | GET      | /song/10 | 返回单个歌曲信息     |
+
+> 扩展阅读： https://www.ruanyifeng.com/blog/2014/05/restful_api.html
+
+### 10.3 json-server
+
+json-server 本身是一个 JS 编写的工具包，可以快速搭建 RESTful API 服务
+
+官方地址: https://github.com/typicode/json-server
+
+操作步骤：
+
+#### 1. 全局安装json-server
+
+```
+npm i -g json-server
+```
+
+#### 2. 创建 JSON 文件（db.json）
+
+编写基本结构
+
+```json
+{
+"song": [
+{ "id": 1, "name": "干杯", "singer": "五月天" },
+{ "id": 2, "name": "当", "singer": "动力火车" },
+{ "id": 3, "name": "不能说的秘密", "singer": "周杰伦" }
+]
+}
+```
+
+#### 3. 创建api服务
+
+以 JSON 文件所在文件夹作为工作目录 ，执行如下命令
+
+```
+json-server --watch db.json
+```
+
+### 10.4 接口测试工具
+
+介绍几个接口测试工具
+
+- apipost https://www.apipost.cn/ (中文)
+
+- apifox https://www.apifox.cn/ (中文)
+
+- postman https://www.postman.com/ (英文)
+
+## 十一、会话控制
+
+### 11.1 介绍
+
+所谓会话控制就是 对会话进行控制
+
+HTTP 是一种无状态的协议，它没有办法区分多次的请求是否来自于同一个客户端， 无法区分用户
+
+而产品中又大量存在的这样的需求，所以我们需要通过 会话控制 来解决该问题
+
+常见的会话控制技术有三种：
+
+- cookie
+
+- session
+
+- token
+
+### 11.2 cookie
+
+#### 1. cookie是什么
+
+cookie 是 HTTP 服务器发送到用户浏览器并保存在本地的一小块数据
+
+cookie 是保存在浏览器端的一小块数据
+
+cookie 是按照域名划分保存的
+
+简单示例：
+
+| 域名                     | cookie                        |
+| ------------------------ | ----------------------------- |
+| http://www.baidu.com/    | a=100; b=200                  |
+| http://www.bilibili.com/ | xid=1020abce121; hm=112411213 |
+| jd.com                   | x=100; ocw=12414cce           |
+
+#### 2. cookie 的特点
+
+浏览器向服务器发送请求时，会自动将 当前域名下 可用的 cookie 设置在请求头中，然后传递给服务器
+
+![](./images/23.png)
+
+这个请求头的名字也叫 cookie ，所以将 cookie 理解为一个 HTTP 的请求头也是可以的
+
+#### 3.  cookie 的运行流程
+
+填写账号和密码校验身份，校验通过后下发 cookie
+
+![](./images/24.png)
+
+有了 cookie 之后，后续向服务器发送请求时，就会自动携带 cookie
+
+![](./images/25.png)
+
+#### 4. 浏览器操作 cookie
+
+浏览器操作 cookie 的操作，使用相对较少，大家了解即可
+1. 禁用所有 cookie
+2. 删除 cookie
+3. 查看 cookie
+
+#### 5. cookie 的代码操作
+
+express 中可以使用 cookie-parser 进行处理
+
+```javascript
+//导入express模块
+const express = require('express')
+
+//导入cookie-parser中间件
+const cookieParser = require('cookie-parser')
+const { log } = require('console')
+
+//创建app应用
+const app = express()
+
+//使用中间件
+app.use(cookieParser())
+
+//创建路由规则
+app.get('/set-cookie', (req, res) => {
+    // res.cookie('name', 'zhangsan')  //会在浏览器关闭时销毁
+
+    res.cookie('name', 'lisi', { maxAge: 1000 * 60 })  //设置过期时间为1分钟
+    res.cookie('theme', 'blue')
+    res.send('home')
+})
+
+//删除cookie
+app.get('/remove-cookie', (req, res) => {
+    //调用方法删除cookie
+    res.clearCookie('name')
+    res.send('删除成功')
+
+})
+
+//获取cookie
+app.get('/get-cookie', (req, res) => {
+    //获取cookie
+    console.log(req.cookies);
+    res.send(`欢迎您 ${req.cookies.name}`)
+    
+})
+
+//启动服务
+app.listen(3000)
+```
+
+> 不同浏览器中的 cookie 是相互独立的，不共享
+
+### 11.3 session
+
+#### 1. session 是什么
+
+session 是保存在 服务器端的一块儿数据 ，保存当前访问用户的相关信息
+
+#### 2. session 的作用
+
+实现会话控制，可以识别用户的身份，快速获取当前用户的相关信息
+
+#### 3. session 运行流程
+
+填写账号和密码校验身份，校验通过后创建 session 信息 ，然后将 session_id 的值通过响应头返回给浏览器
+
+![](./images/26.png)
+
+有了 cookie，下次发送请求时会自动携带 cookie，服务器通过 cookie 中的 session_id 的值确定用户的身份
+
+![](./images/27.png)
+
+#### 4. session 的代码操作
+
+express 中可以使用 express-session 对 session 进行操作
+
+```javascript
+//导入express模块
+const express = require('express')
+
+//导入session-express模块和connect-mongo模块
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
+
+//创建app应用
+const app = express()
+
+//3. 设置 session 的中间件
+app.use(session({
+    name: 'sid', //设置cookie的name，默认值是：connect.sid
+    secret: 'atguigu', //参与加密的字符串（又称签名） 加盐
+    saveUninitialized: false, //是否为每次请求都设置一个cookie用来存储session的id
+    resave: true, //是否在每次请求时重新保存session
+    store: MongoStore.create({
+        mongoUrl: 'mongodb://127.0.0.1:27017/bilibili' //数据库的连接配置
+    }),
+    cookie: {
+        httpOnly: true, // 开启后前端无法通过 JS 操作
+        maxAge: 1000 * 60 * 5 // 这一条 是控制 sessionID 的过期时间的！！！
+    },
+}))
+
+//创建路由规则
+app.get('/', (req, res) => {
+    res.send('home')
+})
+
+//登陆
+app.get('/login', (req, res) => {
+    //传递用户名和密码 username=admin&password=admin
+    if (req.query.username === 'admin' && req.query.password === 'admin') {
+        //设置session
+        req.session.username = 'admin'
+        req.session.uid = '258aefccc'
+        // 成功响应
+        res.send('登陆成功')
+    } else {
+        res.send('登陆失败')
+    }
+})
+
+//读取session
+app.get('/cart', (req, res) => {
+    //检测session是否存在用户数据
+    if (req.session.username) {
+        res.send(`欢迎 ${req.session.username} 光临购物车`)
+    } else {
+        res.send('您还没有登陆')
+    }
+})
+
+//session销毁
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        res.send('退出成功')
+    })
+
+})
+
+//启动服务
+app.listen(3000)
+```
+
+### 11.4 session 和 cookie 的区别
+
+cookie 和 session 的区别主要有如下几点：
+
+1. **存在的位置**
+
+   - cookie：浏览器端
+
+   - session：服务端
+
+2. **安全性**
+
+   - cookie 是以明文的方式存放在客户端的，安全性相对较低
+
+   - session 存放于服务器中，所以安全性 **相对** 较好
+
+3. **网络传输量**
+- cookie 设置内容过多会增大报文体积，会影响传输效率
+  
+- session 数据存储在服务器，只是通过 cookie 传递 id，所以不影响传输效率
+  
+4. **存储限制**
+
+   - 浏览器限制单个 cookie 保存的数据不能超过 **4K**，且单个域名下的存储数量也有限制
+
+   - session 数据存储在服务器中，所以没有这些限制
+
+### 11.5 token
+
+#### 1. token 是什么
+
+token 是服务端生成并返回给 HTTP 客户端的一串加密字符串， token 中保存着 用户信息
+
+#### 2. token 的作用
+
+实现会话控制，可以识别用户的身份，主要用于移动端 APP
+
+#### 3. token 的工作流程
+
+填写账号和密码校验身份，校验通过后响应 token，token 一般是在响应体中返回给客户端的
+
+![](./images/28.png)
+
+后续发送请求时，需要手动将 token 添加在请求报文中，一般是放在请求头中
+
+![](./images/29.png)
+
+#### 4. token 的特点
+
+- 服务端压力更小
+
+   - 数据存储在客户端
+
+- 相对更安全
+
+   - 数据加密
+
+- 可以避免 CSRF（跨站请求伪造）
+
+   - 扩展性更强
+
+- 服务间可以共享
+
+   - 增加服务节点更简单
+
+#### 5. JWT
+
+JWT（JSON Web Token ）是目前最流行的跨域认证解决方案，可用于基于 token 的身份验证 |
+
+JWT 使 token 的生成与校验更规范
+
+我们可以使用 jsonwebtoken 包 来操作 token
+
+```javascript
+//导入jwt模块
+const { log } = require('console');
+const jwt = require('jsonwebtoken');
+
+//生成token
+// let token = jwt.sign(用户数据,加密字符串,配置对象)
+// let token = jwt.sign({
+//     name: 'zhangsan',
+// }, 'atguigu', {
+//     expiresIn: 600  //单位是秒
+// })
+
+
+// console.log(token)
+
+let t = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiemhhbmdzYW4iLCJpYXQiOjE3NDc3NjAyMDYsImV4cCI6MTc0Nzc2MDgwNn0.Oj4I_t3mDQ7IltA2NatJp1QR4SnSN95_ZOQZZB0z-Pk'
+
+//验证token
+jwt.verify(t, 'atguigu', (err, data) => {
+    if (err) {
+        console.log('token验证失败');
+        return
+    }
+    console.log(data);
+
+})
+```
+
+> 扩展阅读： https://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html
+
+### 11.6 附录
+
+#### 1. 本地域名
+
+所谓本地域名就是 只能在本机使用的域名 ，一般在开发阶段使用
+
+#### 2. 操作流程
+
+##### (1) 操作流程
+
+编辑文件 C:\Windows\System32\drivers\etc\hosts
+
+```
+127.0.0.1 www.baidu.com
+```
+
+如果修改失败， 可以修改该文件的权限
+
+![](./images/30.png)
+
+##### (2) 原理
+
+在地址栏输入 域名 之后，浏览器会先进行 DNS（Domain Name System） 查询，获取该域名对应的 IP 地址
+
+请求会发送到 DNS 服务器，可以 根据域名返回 IP 地址
+
+可以通过 ipconfig /all 查看本机的 DNS 服务器
+
+hosts 文件也可以设置域名与 IP 的映射关系，在发送请求前，可以通过该文件获取域名的 IP地址
 
