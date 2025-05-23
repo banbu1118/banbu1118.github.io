@@ -15,3 +15,5 @@
 * [Proxmox api调试](/dev/Proxmox-api调试/Proxmox-api调试.md)
 
 * [NodeJS学习](/dev/NodeJS学习/NodeJS学习.md)
+
+* [TypeScript快速上手](/dev/TypeScript快速上手.md)
