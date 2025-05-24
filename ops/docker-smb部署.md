@@ -8,7 +8,7 @@ samba是smb协议的实现，利用docker可以快速部署
 
 dockurr.yaml配置文件内容
 
-```shell
+```yaml
 services:
   samba:
     image: dockurr/samba
