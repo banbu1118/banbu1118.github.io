@@ -723,7 +723,7 @@ wfreerdp.exe是下载的程序
 
 这是rdp_connect.bat连接脚本的内容
 
-```
+```bat
 @echo off
 set CURRENT_DIR=%~dp0
 cd /d "%CURRENT_DIR%"
