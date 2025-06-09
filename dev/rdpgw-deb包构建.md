@@ -1,5 +1,7 @@
 # rdpgw-deb包构建
 
+构建好的镜像，国内可下载：[https://share.weiyun.com/lNWxpZ2a](https://share.weiyun.com/lNWxpZ2a)
+
 ## 一、构建环境
 
 Debian12
