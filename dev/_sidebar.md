@@ -12,6 +12,8 @@
 
 * [rdpgw开源网关教程](/dev/rdpgw开源网关教程.md)
 
+* [rdpgw-deb包构建](/dev/rdpgw-deb包构建.md)
+
 * [Proxmox api调试](/dev/Proxmox-api调试/Proxmox-api调试.md)
 
 * [NodeJS学习](/dev/NodeJS学习/NodeJS学习.md)
