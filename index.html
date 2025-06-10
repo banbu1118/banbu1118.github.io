@@ -34,6 +34,21 @@
   box-sizing: border-box; /* 包含 padding 在宽度内，防止溢出 */
 }
 
+  /* 调整侧边栏宽度 */
+  .sidebar {
+    width: 160px; /* 根据需求调整宽度 */
+  }
+
+  /* 主内容区域的左侧距离也需要随之调整 */
+  .content {
+    left: 160px; /* 应与.sidebar宽度一致 */
+  }
+
+  /* 顶部导航栏宽度调整 */
+  .app-nav {
+    left: 160px; /* 与.sidebar宽度一致 */
+  }
+
 </style>
 </head>
 <body>
