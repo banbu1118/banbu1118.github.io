@@ -12,39 +12,38 @@
   .markdown-section pre>code{
     padding: 0.8em 1px;
   }
+.container {
+  display: flex; /* 使用 Flexbox 布局 */
+  flex-direction: row;
+}
 
-/* 侧边栏整体设置，合并定义并使用自适应字体大小 */
+/* 侧边栏自动宽度，但有最大最小限制 */
 .sidebar {
-  width: auto;
   min-width: 100px;
   max-width: 200px;
   overflow-y: auto;
-  font-size: clamp(12px, 1.2vw, 18px); /* 字体自动调整，最小12px，最大18px */
+  font-size: clamp(12px, 1.2vw, 18px);
 }
 
-/* 侧边栏标题字体大小自适应 */
-.sidebar h1,
-.sidebar h2 {
-  font-size: clamp(18px, 2vw, 24px); /* 标题字体大小自适应 */
-  text-align: center;
-  margin-bottom: 10px;
+/* 主内容区域占据剩余空间 */
+.main-content {
+  flex-grow: 1; /* 自动填满剩余空间 */
+  display: flex;
+  flex-direction: column;
 }
 
-/* 侧边栏链接字体大小自适应 */
-.sidebar ul li a {
-  font-size: clamp(12px, 1.2vw, 18px); /* 同侧边栏字体大小 */
-  line-height: 2.8;
-  text-align: center;
-  display: block;
-  padding-right: 20px;
-  box-sizing: border-box;
-}
-
-/* 主内容区域和顶部导航栏自适应侧边栏实际宽度 */
-.content,
+/* 顶部导航栏 */
 .app-nav {
-  margin-left: 200px; /* 为避免复杂布局问题，保持固定值，确保不会被覆盖 */
+  height: 60px; /* 根据需要设置 */
+  flex-shrink: 0; /* 防止导航栏收缩 */
 }
+
+/* 内容区域 */
+.content {
+  flex-grow: 1; /* 内容区域自动填满剩余空间 */
+  padding: 15px; /* 根据需要设置内边距 */
+}
+
 
 </style>
 </head>
