@@ -13,26 +13,26 @@
     padding: 0.8em 1px;
   }
 
-/* 侧边栏整体字体大小自适应 */
+/* 侧边栏整体设置，合并定义并使用自适应字体大小 */
 .sidebar {
-  font-size: clamp(8px, 1.2vw, 18px); /* 最小12px，最大18px，根据视窗宽度调整 */
-  width: auto; /* 侧边栏宽度自动适应内容 */
+  width: auto;
   min-width: 100px;
-  max-width: 300px;
+  max-width: 200px;
   overflow-y: auto;
+  font-size: clamp(12px, 1.2vw, 18px); /* 字体自动调整，最小12px，最大18px */
 }
 
 /* 侧边栏标题字体大小自适应 */
 .sidebar h1,
 .sidebar h2 {
-  font-size: clamp(8px, 1.8vw, 24px); /* 最小16px，最大24px */
+  font-size: clamp(18px, 2vw, 24px); /* 标题字体大小自适应 */
   text-align: center;
   margin-bottom: 10px;
 }
 
 /* 侧边栏链接字体大小自适应 */
 .sidebar ul li a {
-  font-size: clamp(8px, 1.2vw, 18px); /* 与侧边栏整体字体一致 */
+  font-size: clamp(12px, 1.2vw, 18px); /* 同侧边栏字体大小 */
   line-height: 2.8;
   text-align: center;
   display: block;
@@ -40,17 +40,11 @@
   box-sizing: border-box;
 }
 
-/* 主内容区域调整 */
-.content {
-  margin-left: 300px; /* 保证不被侧边栏覆盖 */
-}
-
-/* 顶部导航栏的调整 */
+/* 主内容区域和顶部导航栏自适应侧边栏实际宽度 */
+.content,
 .app-nav {
-  left: auto;
-  margin-left: 300px;
+  margin-left: 200px; /* 为避免复杂布局问题，保持固定值，确保不会被覆盖 */
 }
-
 
 </style>
 </head>
