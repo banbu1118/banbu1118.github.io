@@ -12,36 +12,17 @@
   .markdown-section pre>code{
     padding: 0.8em 1px;
   }
-.container {
-  display: flex; /* 使用 Flexbox 布局 */
-  flex-direction: row;
-}
 
-/* 侧边栏自动宽度，但有最大最小限制 */
-.sidebar {
-  min-width: 100px;
-  max-width: 200px;
-  overflow-y: auto;
+  .sidebar {
+  width: 200px;                /* 固定宽度 */
+  overflow-y: auto;            /* 可滚动内容 */
   font-size: clamp(12px, 1.2vw, 18px);
 }
 
-/* 主内容区域占据剩余空间 */
-.main-content {
-  flex-grow: 1; /* 自动填满剩余空间 */
-  display: flex;
-  flex-direction: column;
-}
-
-/* 顶部导航栏 */
+/* 主内容和导航栏保持一致左边距 */
+.content,
 .app-nav {
-  height: 60px; /* 根据需要设置 */
-  flex-shrink: 0; /* 防止导航栏收缩 */
-}
-
-/* 内容区域 */
-.content {
-  flex-grow: 1; /* 内容区域自动填满剩余空间 */
-  padding: 15px; /* 根据需要设置内边距 */
+  margin-left: 200px;          /* 与侧边栏宽度相同 */
 }
 
 
