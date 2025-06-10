@@ -34,20 +34,25 @@
   box-sizing: border-box; /* 包含 padding 在宽度内，防止溢出 */
 }
 
-  /* 调整侧边栏宽度 */
-  .sidebar {
-    width: 160px; /* 根据需求调整宽度 */
-  }
+/* 侧边栏根据内容自动调整宽度 */
+.sidebar {
+  width: auto; /* 内容宽度自动 */
+  min-width: 160px; /* 最小宽度 */
+  max-width: 300px; /* 最大宽度，避免过宽 */
+  overflow-y: auto;
+}
 
-  /* 主内容区域的左侧距离也需要随之调整 */
-  .content {
-    left: 160px; /* 应与.sidebar宽度一致 */
-  }
+/* 主内容区域自动适应 */
+.content {
+  margin-left: 300px; /* 设置稍大于侧边栏最大宽度，确保内容不被侧边栏覆盖 */
+}
 
-  /* 顶部导航栏宽度调整 */
-  .app-nav {
-    left: 160px; /* 与.sidebar宽度一致 */
-  }
+/* 顶部导航栏 */
+.app-nav {
+  left: auto;
+  margin-left: 300px; /* 与content保持一致 */
+}
+
 
 </style>
 </head>
