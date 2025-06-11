@@ -798,3 +798,79 @@ Security:
   VerifyClientIp: "true"
 root@debian:~/appdata/opt/rdpgw#
 ```
+#### 5.14 域用户登陆配置
+
+ad域和samba ad域通用
+
+rdp文件
+
+```
+screen mode id:i:1
+use multimon:i:0
+desktopwidth:i:1920
+desktopheight:i:1080
+session bpp:i:32
+winposstr:s:0,3,0,0,800,600
+compression:i:0
+keyboardhook:i:2
+audiocapturemode:i:1
+videoplaybackmode:i:0
+connection type:i:6
+displayconnectionbar:i:1
+disable wallpaper:i:0
+allow font smoothing:i:1
+allow desktop composition:i:1
+disable full window drag:i:1
+disable menu anims:i:1
+disable themes:i:0
+disable cursor setting:i:0
+bitmapcachepersistenable:i:1
+full address:s:192.168.1.62
+server port:i:3389
+audiomode:i:0
+redirectprinters:i:1
+redirectcomports:i:0
+redirectsmartcards:i:0
+redirectclipboard:i:1
+redirectposdevices:i:0
+redirectdirectx:i:1
+autoreconnection enabled:i:1
+authentication level:i:2
+prompt for credentials:i:0
+remoteapplicationmode:i:0
+alternate shell:s:
+shell working directory:s:
+gatewayhostname:s:192.168.1.60:9443
+gatewayusagemethod:i:1
+gatewaycredentialssource:i:4
+gatewayprofileusagemethod:i:1
+promptcredentialonce:i:1
+use redirection server name:i:0
+rdgiskdcproxy:i:0
+kdcproxyname:s:
+drivestoredirect:s:
+usbdevicestoredirect:s:*;USB\VID_ffff&PID_ffff;-USB\VID_2dd6&PID_2781
+username:s:vdi\user01
+password:s:
+gatewayusername:s:user01
+gatewaypassword:s:
+gatewaydomain:s:vdi
+use gfx:i:0
+multi touch:i:0
+gdi rendering:i:0
+servertoclientclipboard:i:1
+clienttoserverclipboard:i:1
+networkautodetect:i:1
+bandwidthautodetect:i:1
+enableworkspacereconnect:i:0
+redirectwebauthn:i:1
+negotiate security layer:i:1
+gatewaybrokeringtype:i:0
+enablerdsaadauth:i:0
+```
+
+wfreerdp连接命令
+
+```
+.\wfreerdp.exe .\rdpgw.rdp /u:user02 /d:vdi /p:abc@2021 /cert:ignore /sound:latency:200 /gfx +compression /v:192.168.1.65 /w:1280 /h:720
+```
