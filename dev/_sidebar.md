@@ -12,6 +12,10 @@
 
 * [rdpgw开源网关教程](/dev/rdpgw开源网关教程.md)
 
+* [Dokcer搭建samba-ad-dc](/dev/Dokcer搭建samba-ad-dc.md)
+
+* [搭建samba-ad-dc](/dev/搭建samba-ad-dc.md)
+
 * [rdpgw-deb包构建](/dev/rdpgw-deb包构建.md)
 
 * [Proxmox api调试](/dev/Proxmox-api调试/Proxmox-api调试.md)
