@@ -26,4 +26,4 @@
 
 * [装饰器](/dev/装饰器.md)
 
-* [Vue互动教程](/dev/Vue互动教程.md)
+* [Vue互动教程](/dev/Vue互动教程/Vue互动教程.md)
