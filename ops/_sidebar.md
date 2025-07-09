@@ -107,3 +107,5 @@
 * [Docker使用http加速](/ops/Docker使用http加速.md)
 
 * [sing-box翻墙vpn](/ops/sing-box翻墙vpn.md)
+
+* [Docker测试cups共享打印机](/ops/Docker测试cups共享打印机.md)
