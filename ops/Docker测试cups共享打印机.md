@@ -6,7 +6,7 @@
 
 - 创建配置文件
 
-```bash
+```shell
 nano kk.yaml
 ```
 
@@ -33,14 +33,14 @@ services:
 
 - 禁用系统默认的cups服务
 
-```bash
+```shell
 systemctl stop cups
 systemctl disable cups
 ```
 
 - 运行
 
-```bash
+```shell
 docker compose -f kk.yaml up -d
 ```
 
