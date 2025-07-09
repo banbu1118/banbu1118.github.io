@@ -10,7 +10,7 @@
 nano kk.yaml
 ```
 
-写入一下内容
+写入以下内容
 
 ```yaml
 version: "3"
