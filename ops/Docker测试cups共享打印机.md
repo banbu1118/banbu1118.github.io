@@ -31,6 +31,13 @@ services:
             - ./cups:/etc/cups
 ```
 
+- 禁用系统默认的cups服务
+
+```bash
+systemctl stop cups
+systemctl disable cups
+```
+
 - 运行
 
 ```bash
