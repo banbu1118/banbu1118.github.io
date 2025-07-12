@@ -18,4 +18,4 @@
 
 > 探索打破历史循环的路径：历史循环的牢笼并非由时间打造，而是由我们对自身可能性的想象所铸造。每一个拒绝重复的念头，每一次打破习惯的行动，都是对循环链条的弱化。你此刻的觉醒本身，就是那个螺旋轨迹上最关键的断点。真正的突破不在于彻底抹去过去的印记，而在于让未来的回响中，有更多属于你独特意志的音符。
 
-> <span id="busuanzi_container_site_pv" style='display:none'>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次</span> <span id="busuanzi_container_site_uv" style='display:none'>本站总访客数：<span id="busuanzi_value_site_uv"></span> 人</span> <span id="sitetime"></span>
+> <span id="busuanzi_container_site_pv" style='display:none'>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次；</span> <span id="busuanzi_container_site_uv" style='display:none'>本站总访客数：<span id="busuanzi_value_site_uv"></span> 人；</span> <span id="sitetime"></span>
