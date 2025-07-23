@@ -10,6 +10,8 @@
 
 * [npm换源](/dev/npm换源.md)
 
+* [Linux配置nvm](/dev/Linux配置nvm.md)
+
 * [rdpgw开源网关教程](/dev/rdpgw开源网关教程.md)
 
 * [Dokcer搭建samba-ad-dc](/dev/Dokcer搭建samba-ad-dc.md)
