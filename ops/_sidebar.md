@@ -109,3 +109,5 @@
 * [sing-box翻墙vpn](/ops/sing-box翻墙vpn.md)
 
 * [Docker测试cups共享打印机](/ops/Docker测试cups共享打印机.md)
+
+* [SFTP搭建教程](/ops/SFTP搭建教程.md)
