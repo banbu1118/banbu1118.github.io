@@ -111,3 +111,5 @@
 * [Docker测试cups共享打印机](/ops/Docker测试cups共享打印机.md)
 
 * [SFTP搭建教程](/ops/SFTP搭建教程.md)
+
+* [web-ssh项目](/ops/web-ssh项目.md)
