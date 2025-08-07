@@ -371,6 +371,12 @@ js文件请提前下载好，这是下载链接
     <title>Document</title>
 </head>
 
+<style>
+    .textColor {
+        color: blue;
+    }
+</style>
+
 <body>
     <div id="app">
         <!-- :value -->
@@ -4309,4 +4315,5 @@ const url = ref('dengruicode.com')
 
 <style scoped></style>
 ```
+
 
