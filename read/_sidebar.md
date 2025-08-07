@@ -21,3 +21,5 @@
 * [从码农到老板](/read/从码农到老板.md)
 
 * [如何辨别邪教](/read/如何辨别邪教.md)
+
+* [labuladong的算法笔记](/read/labuladong的算法笔记.md)
