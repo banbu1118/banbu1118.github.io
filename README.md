@@ -2,7 +2,7 @@
 
 > 欢迎大家访问我的博客，这是一个简单的博客，记录了日常工作学习的总结
 
-> 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX)
+> 春风不语,勾栏听曲：[盛夏的果实](https://www.bilibili.com/video/BV1KA411G7Kx) [泪桥](https://www.bilibili.com/video/BV17Q4y1t7VZ) [一生所爱](https://www.bilibili.com/video/BV1nV411E7RX) [青花](https://www.bilibili.com/video/BV1R94y1e7jK)
 
 > 真正的大师永远都怀着一颗学徒的心
 
