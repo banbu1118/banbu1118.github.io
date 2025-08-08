@@ -42,6 +42,8 @@
 
 * [制作Debian12.5模板](/ops/制作Debian12模板.md)
 
+* [pve导入cloud-image创建虚拟机](/ops/pve导入cloud-image创建虚拟机.md)
+
 * [Linux更新源](/ops/Linux更新源.md)
 
 * [云桌面用户资产分离方案](/ops/云桌面用户资产分离方案/云桌面用户资产分离方案.md)
