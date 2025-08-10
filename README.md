@@ -6,6 +6,16 @@
 
 > [光在前方，路却尽于深渊](https://www.youtube.com/watch?v=21BDAPg403M)
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000;">
+  <video 
+    src="/duty.mp4" 
+    controls 
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+    preload="metadata">
+  </video>
+</div>
+
+
 <style>
 .link-card {
   padding: 12px;
