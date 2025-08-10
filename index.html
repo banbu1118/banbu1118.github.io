@@ -1,121 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Blog</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="icon" href="logo.png" type="image/x-icon" />  
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-  <style>
-  .markdown-section pre>code{
-    padding: 0.8em 1px;
-  }
-
-</style>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/x-icon" />
+    <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"> -->
+    <link rel="stylesheet" href="./scripts/vue.css">
+    <style>
+        .markdown-section pre>code {
+            padding: 0.8em 1px;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="app">加载中，请稍等</div>
-  <script>
-    window.$docsify = {
-      name: 'Blog',
-      repo: 'https://github.com/banbu1118',
-      loadSidebar: true,
-      subMaxLevel: 4,
-      loadNavbar: true,
-      search: {
-          paths: 'auto',
-          placeholder: ' Search',
-          noData: '找不到相关内容',
-          // Headline depth, 1 - 6
-          depth: 6,
-          maxAge: 86400000, // 过期时间，单位毫秒，默认一天
-      },//添加搜索框
-      copyCode: {
-        buttonText: '一键复制',
-        errorText: '复制失败',
-        successText: '复制成功'
-      },
-      count:{
-          countable:true,
-          fontsize:'0.9em',
-          color:'rgb(90,90,90)',
-          language:'chinese'
-      },
-      timeUpdater: {
-          text: ">最后更新时间: {docsify-updated}",
-          formatUpdated: "{YYYY}/{MM}/{DD}",
-          whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
-      },
-      progress: {
-          position: "top",
-          color: "var(--theme-color,#42b983)",
-          height: "3px",
-      },
-    }
-  </script>
-  <!-- Docsify v4 -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script> -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-batch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/Sumsung524/docsify-backTop/dist/docsify-backTop.min.js"></script>
+    <div id="app">加载中，请稍等</div>
+    <script>
+        window.$docsify = {
+            name: 'Blog',
+            repo: 'https://github.com/banbu1118',
+            loadSidebar: true,
+            subMaxLevel: 4,
+            loadNavbar: true,
+            search: {
+                paths: 'auto',
+                placeholder: ' Search',
+                noData: '找不到相关内容',
+                // Headline depth, 1 - 6
+                depth: 6,
+                maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+            },//添加搜索框
+            copyCode: {
+                buttonText: '一键复制',
+                errorText: '复制失败',
+                successText: '复制成功'
+            },
+            count: {
+                countable: true,
+                fontsize: '0.9em',
+                color: 'rgb(90,90,90)',
+                language: 'chinese'
+            },
+            timeUpdater: {
+                text: ">最后更新时间: {docsify-updated}",
+                formatUpdated: "{YYYY}/{MM}/{DD}",
+                whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
+            },
+            progress: {
+                position: "top",
+                color: "var(--theme-color,#42b983)",
+                height: "3px",
+            },
+        }
+    </script>
+    <!-- Docsify v4 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"> -->
+    <link rel="stylesheet" href="./scripts/style.min.css">
 
-<!--   <script src="//unpkg.com/docsify-count/dist/countable.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/index.min.js">
 
-  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script>
-  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/docsify-copy-code.min.js">
 
-  <script>
-      var docsifyBackTop = {
-          size: 32,
-          bottom: 15,
-          right: 15,
-          logo: '<svg t="1662288563130" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3633" width="200" height="200"><path d="M513 103.7c-226.1 0-409.4 183.3-409.4 409.4S286.9 922.6 513 922.6s409.4-183.3 409.4-409.4S739.1 103.7 513 103.7z m153.5 364.7c-5.2 5.3-12.1 7.9-19 7.9s-13.8-2.6-19-7.9L545.1 385c0 0.4 0.1 0.7 0.1 1.1V705c0 11.1-5.7 20.9-14.4 26.6-4.7 4.2-10.9 6.7-17.7 6.7-6.8 0-13-2.5-17.7-6.7-8.7-5.7-14.4-15.5-14.4-26.6V386.1c0-0.4 0-0.7 0.1-1.1l-83.4 83.4c-10.5 10.5-27.5 10.5-38 0s-10.5-27.5 0-38L494 295.9c10.5-10.5 27.5-10.5 38 0l134.5 134.5c10.5 10.4 10.5 27.5 0 38z" fill="#2096ff" p-id="3634"></path></svg>',
-          bgColor: ''
-      };
-</script>
-<!-- 访问量统计 -->
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/docsify.min.js">
 
-<!-- 运行时间统计 -->
-<script type="text/javascript">
-  function siteTime() {
-    window.setTimeout("siteTime()", 1000);
-    var today = new Date();
-    var startDate = new Date(Date.UTC(2023, 10, 18, 5, 20, 0)); // 注意月份是0-11
-    var diff = today - startDate;
+    <!-- <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-bash.min.js">
 
-    var seconds = 1000;
-    var minutes = seconds * 60;
-    var hours = minutes * 60;
-    var days = hours * 24;
-    var years = days * 365.25; // 考虑到闰年
+    <!-- <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-python.min.js">
 
-    var diffYears = Math.floor(diff / years);
-    var diffDays = Math.floor((diff % years) / days);
-    var diffHours = Math.floor((diff % days) / hours);
-    var diffMinutes = Math.floor((diff % hours) / minutes);
-    var diffSeconds = Math.floor((diff % minutes) / seconds);
+    <!-- <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-powershell.min.js">
 
-    document.getElementById("sitetime").innerHTML = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
-  }
+    <!-- <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-json.min.js">
 
-  siteTime();
-</script>
+    <!-- <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-typescript.min.js">
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-yaml.min.js">
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-batch.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/prism-batch.min.js">
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/search.min.js">
+
+    <script src="https://cdn.jsdelivr.net/gh/Sumsung524/docsify-backTop/dist/docsify-backTop.min.js"></script>
+    <link rel="stylesheet" href="./scripts/docsify-backTop.min.js">
+
+    <!--   <script src="//unpkg.com/docsify-count/dist/countable.js"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/time-updater.min.js">
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-progress@latest/dist/progress.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/progress.min.js">
+
+    <!-- <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/docsify-pagination.min.js">
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script> -->
+    <link rel="stylesheet" href="./scripts/mermaid.min.js">
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/docsify-mermaid@latest/dist/docsify-mermaid.js"></script> -->
+    <link rel="stylesheet" href="./scripts/docsify-mermaid.js">
+
+    <script>
+        var docsifyBackTop = {
+            size: 32,
+            bottom: 15,
+            right: 15,
+            logo: '<svg t="1662288563130" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3633" width="200" height="200"><path d="M513 103.7c-226.1 0-409.4 183.3-409.4 409.4S286.9 922.6 513 922.6s409.4-183.3 409.4-409.4S739.1 103.7 513 103.7z m153.5 364.7c-5.2 5.3-12.1 7.9-19 7.9s-13.8-2.6-19-7.9L545.1 385c0 0.4 0.1 0.7 0.1 1.1V705c0 11.1-5.7 20.9-14.4 26.6-4.7 4.2-10.9 6.7-17.7 6.7-6.8 0-13-2.5-17.7-6.7-8.7-5.7-14.4-15.5-14.4-26.6V386.1c0-0.4 0-0.7 0.1-1.1l-83.4 83.4c-10.5 10.5-27.5 10.5-38 0s-10.5-27.5 0-38L494 295.9c10.5-10.5 27.5-10.5 38 0l134.5 134.5c10.5 10.4 10.5 27.5 0 38z" fill="#2096ff" p-id="3634"></path></svg>',
+            bgColor: ''
+        };
+    </script>
+
+    <!-- 访问量统计 -->
+    <!-- <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+    <link rel="stylesheet" href="./scripts/busuanzi.pure.mini.js">
+
+    <!-- 运行时间统计 -->
+    <script type="text/javascript">
+        function siteTime() {
+            window.setTimeout("siteTime()", 1000);
+            var today = new Date();
+            var startDate = new Date(Date.UTC(2023, 10, 18, 5, 20, 0)); // 注意月份是0-11
+            var diff = today - startDate;
+
+            var seconds = 1000;
+            var minutes = seconds * 60;
+            var hours = minutes * 60;
+            var days = hours * 24;
+            var years = days * 365.25; // 考虑到闰年
+
+            var diffYears = Math.floor(diff / years);
+            var diffDays = Math.floor((diff % years) / days);
+            var diffHours = Math.floor((diff % days) / hours);
+            var diffMinutes = Math.floor((diff % hours) / minutes);
+            var diffSeconds = Math.floor((diff % minutes) / seconds);
+
+            document.getElementById("sitetime").innerHTML = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
+        }
+
+        siteTime();
+    </script>
 
 </body>
+
 </html>
