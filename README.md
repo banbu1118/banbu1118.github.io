@@ -4,6 +4,8 @@
 
 > <span id="busuanzi_container_site_pv" style='display:none'>本站总访问量：<span id="busuanzi_value_site_pv"></span> 次；</span> <span id="busuanzi_container_site_uv" style='display:none'>本站总访客数：<span id="busuanzi_value_site_uv"></span> 人；</span> <span id="sitetime"></span>
 
+> [光在前方，路却尽于深渊](https://www.youtube.com/watch?v=21BDAPg403M)
+
 <style>
 .link-card {
   padding: 12px;
