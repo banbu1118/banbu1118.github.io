@@ -131,31 +131,59 @@
   <script async src="./scripts/busuanzi.pure.mini.js"></script>
 
   <!-- 运行时间统计 -->
-  <script type="text/javascript">
-    function siteTime() {
-      window.setTimeout("siteTime()", 1000);
-      var today = new Date();
-      var startDate = new Date(Date.UTC(2023, 10, 18, 5, 20, 0)); // 注意月份是0-11
-      var diff = today - startDate;
+  <script>
+    (function () {
+      var timer = null; // 保存定时器ID，避免重复
 
-      var seconds = 1000;
-      var minutes = seconds * 60;
-      var hours = minutes * 60;
-      var days = hours * 24;
-      var years = days * 365.25; // 考虑到闰年
+      function siteTime() {
+        var el = document.getElementById("sitetime");
+        if (!el) return; // 没有元素就不执行
 
-      var diffYears = Math.floor(diff / years);
-      var diffDays = Math.floor((diff % years) / days);
-      var diffHours = Math.floor((diff % days) / hours);
-      var diffMinutes = Math.floor((diff % hours) / minutes);
-      var diffSeconds = Math.floor((diff % minutes) / seconds);
+        var today = new Date();
+        var startDate = new Date(Date.UTC(2023, 10, 18, 5, 20, 0)); // 月份是0-11
+        var diff = today - startDate;
 
-      document.getElementById("sitetime").innerHTML = " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
-    }
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365.25;
 
-    siteTime();
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff % years) / days);
+        var diffHours = Math.floor((diff % days) / hours);
+        var diffMinutes = Math.floor((diff % hours) / minutes);
+        var diffSeconds = Math.floor((diff % minutes) / seconds);
+
+        el.innerHTML =
+          " 本网站已运行 " + diffYears + " 年 " + diffDays + " 天 " +
+          diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒 ";
+      }
+
+      function startCounter() {
+        if (timer) clearInterval(timer); // 清除旧定时器
+        siteTime(); // 先执行一次
+        timer = setInterval(siteTime, 1000); // 每秒更新
+      }
+
+      // docsify hook
+      if (window.$docsify) {
+        var plugin = function (hook, vm) {
+          hook.doneEach(function () {
+            startCounter();
+          });
+        };
+        window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins || []);
+      } else {
+        // 如果不是docsify环境，则普通模式运行
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", startCounter);
+        } else {
+          startCounter();
+        }
+      }
+    })();
   </script>
-
 </body>
 
 </html>
