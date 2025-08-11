@@ -3888,7 +3888,7 @@ demo\src\App.vue
     </el-form-item>
 
     <el-form-item label="文本域">
-      <el-input type="textarea" v-model="data.textarea" rows="2" placeholder="请填写内容" />
+      <el-input type="textarea" v-model="data.textarea" :rows="2" placeholder="请填写内容" />
     </el-form-item>
 
     <el-form-item>
@@ -4315,5 +4315,6 @@ const url = ref('dengruicode.com')
 
 <style scoped></style>
 ```
+
 
 
