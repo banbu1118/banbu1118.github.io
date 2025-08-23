@@ -2,7 +2,7 @@
 
 > 欢迎大家访问我的博客，这是一个简单的博客，记录了日常工作学习的总结，</span> <span id="sitetime"></span>
 
-> [光在前方，路却尽于深渊](https://www.youtube.com/watch?v=21BDAPg403M)
+<!-- > [光在前方，路却尽于深渊](https://www.youtube.com/watch?v=21BDAPg403M) -->
 
 <style>
 .link-card {
