@@ -4,6 +4,8 @@
 
 <!-- > [光在前方，路却尽于深渊](https://www.youtube.com/watch?v=21BDAPg403M) -->
 
+<!-- > [We Choose To Go To The Moon](https://www.bilibili.com/video/BV1dx41147hb) -->
+
 <style>
 .link-card {
   padding: 12px;
