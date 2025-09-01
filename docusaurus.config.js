@@ -100,6 +100,7 @@ const config = {
             position: 'left',
             label: '生活',
           },
+          { to: '/', label: '主页', position: 'right' },
           { to: '/about', label: '关于', position: 'right' },
           {
             href: 'https://github.com/banbu1118',
