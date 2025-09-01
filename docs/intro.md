@@ -1,6 +1,7 @@
 ---
 slug: /
 hide_table_of_contents: true
+layout: null
 ---
 
 # Banbu1118's Blog
