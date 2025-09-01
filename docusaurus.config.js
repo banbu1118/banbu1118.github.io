@@ -78,15 +78,15 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'dev',
-            position: 'left',
-            label: '开发',
-          },
-          {
-            type: 'docSidebar',
             sidebarId: 'ops',
             position: 'left',
             label: '运维',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'dev',
+            position: 'left',
+            label: '开发',
           },
           {
             type: 'docSidebar',
