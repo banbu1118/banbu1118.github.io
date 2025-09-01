@@ -28,3 +28,9 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* 调整桌面端和移动端 TOC 的根元素字体 */
+.table-of-contents,
+.theme-doc-toc-mobile {
+  font-size: 16px !important; /* 使用 !important 确保覆盖默认样式 */
+}
