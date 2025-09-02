@@ -23,12 +23,12 @@ const config = {
   url: 'https://banbu1118.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/blog/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'banbu1118', // Usually your GitHub org/user name.
-  projectName: 'blog', // Usually your repo name.
+  projectName: 'banbu11118.github.io', // Usually your repo name.
   trailingSlash: false,
   deploymentBranch: 'gh-pages',
 
