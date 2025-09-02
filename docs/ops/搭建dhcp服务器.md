@@ -137,7 +137,7 @@ rm /var/lib/dhcpd/dhcpd.leases
 systemctl restart isc-dhcp-server
 ```
 
-## 客户机windows系统释放ip
+### 客户机windows系统释放ip
 
 1.cmd执行
 
