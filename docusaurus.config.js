@@ -125,7 +125,7 @@ const config = {
         },
       },
       algolia: {
-        apiKey: '4799b51908f0478adc5063ec318c4ca2',
+        apiKey: '8a4253be833c82f2ff52018acefbefec',
         indexName: 'blog',
         appId: '7S722ATUMY',
         contextualSearch: true,
