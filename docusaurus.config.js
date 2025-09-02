@@ -100,6 +100,10 @@ const config = {
             position: 'left',
             label: '生活',
           },
+          {
+            type: 'search',   // 表示这是搜索框
+            position: 'right' // 位置，默认在右边
+          },
           { to: '/', label: '主页', position: 'right' },
           { to: '/about', label: '关于', position: 'right' },
           {
