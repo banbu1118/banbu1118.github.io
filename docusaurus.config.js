@@ -116,6 +116,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['bash','diff', 'json','python', 'yaml','powershell','docker','nginx','toml','go','css',], // 确保包含需要的语言
       },
       docs: {
         sidebar: {
