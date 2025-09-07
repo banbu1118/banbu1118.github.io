@@ -128,6 +128,10 @@ const config = {
           autoCollapseCategories: true,
         },
       },
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 6,
+      },
       algolia: {
         apiKey: '8a4253be833c82f2ff52018acefbefec',
         indexName: 'blog',
