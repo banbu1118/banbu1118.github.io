@@ -1,9 +1,9 @@
 # markdown语法教程
 
-> [!NOTE]
->
-> 此教程是对[菜鸟markdown教程](https://www.runoob.com/markdown/md-tutorial.html)的精简，非常感谢菜鸟教程的分享
->
+::: tip
+此教程是对[菜鸟markdown教程](https://www.runoob.com/markdown/md-tutorial.html)的精简，非常感谢菜鸟教程的分享
+:::
+
 
 Markdown 是一种轻量级的标记语言
 
