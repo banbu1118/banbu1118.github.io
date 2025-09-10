@@ -298,12 +298,10 @@ LaTeX 是一个强大的排版系统，特别适用于包含复杂数学公式�
 
 ```markdown
 $$
-    \begin{aligned}
-    f(x) &= ax^2 + bx + c \\
+f(x) &= ax^2 + bx + c \\
     f'(x)  &= 2ax + b \\
     f''(x)  &= 2a
-    \end{aligned}
-    $$
+$$
 ```
 
 - 效果
@@ -311,11 +309,9 @@ $$
 ---
 
 $$
-\begin{aligned}
-    f(x) &= ax^2 + bx + c \\
+f(x) &= ax^2 + bx + c \\
     f'(x)  &= 2ax + b \\
     f''(x)  &= 2a
-    \end{aligned}
 $$
 
 ---
@@ -403,6 +399,5 @@ flowchart TD
 ---
 
 <img src="./images/k1.jpeg" alt="图片描述" width="1000" />
-
 
 ---
