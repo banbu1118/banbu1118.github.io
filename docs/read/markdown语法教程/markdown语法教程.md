@@ -32,7 +32,7 @@ Markdown 是一种轻量级的标记语言
 
 ---
 
-<img src="./images/1.png" alt="图片描述"  width="300" />
+![](./images/1.png)
 
 ---
 
@@ -54,7 +54,7 @@ Markdown 段落没有特殊的格式，直接编写文字就好，段落的换�
 
 ---
 
-<img src="./images/2.png" alt="图片描述" width="150" />
+![](./images/2.png)
 
 ---
 
