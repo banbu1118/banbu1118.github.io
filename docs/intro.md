@@ -75,7 +75,7 @@ import WebsiteRuntime from '@site/src/components/WebsiteRuntime';
   ⚠️ 时代警醒
   <div style={{ width: '100%', padding: '24px', borderRadius: '8px', boxShadow: 'inset 0 0 0 1px rgba(255,193,7,0.3)', marginBottom: '24px' }}>
     <p style={{ margin: 0, fontSize: '1.1em', lineHeight: 1.8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      {"警惕将灵魂装进算法的牢笼，当所有选择都变成数据推导的最优解时，人性的光辉将比任何服务器熄灭得更加彻底"}
+      {"警惕将灵魂装进算法的牢笼，当所有选择都变成数据推导的最优解时，人性的光辉将比任何服务器熄灭得更加彻底。"}
     </p>
   </div>
 
@@ -85,7 +85,7 @@ import WebsiteRuntime from '@site/src/components/WebsiteRuntime';
   ❤️ 爱的哲学
   <div style={{ width: '100%', padding: '24px', borderRadius: '8px', boxShadow: 'inset 0 0 0 1px rgba(156,39,176,0.3)', marginBottom: '24px' }}>
     <p style={{ margin: 0, fontSize: '1.1em', lineHeight: 1.8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      {"你有没有想过，爱一个人不一定要有结果。不追求结果就不会有尽头的一天，这种不追求结果的爱才是无限的"}
+      {"你有没有想过，爱一个人不一定要有结果。不追求结果就不会有尽头的一天，这种不追求结果的爱才是无限的。"}
     </p>
   </div>
 
