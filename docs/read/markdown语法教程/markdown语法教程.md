@@ -218,7 +218,7 @@ print("ok")
 - 语法
 
 ```markdown
-![](./images/9.png)
+![](./images/3.png)
 ```
 
 - 效果
@@ -403,5 +403,6 @@ flowchart TD
 ---
 
 <img src="./images/k1.jpeg" alt="图片描述" align="left" width="1000">
+
 
 ---
