@@ -45,6 +45,12 @@ const config = {
     locales: ['en'],
   },
 
+  // ✅ 添加 Mermaid 配置
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   presets: [
     [
       'classic',
@@ -143,6 +149,10 @@ const config = {
         indexName: 'blog',
         appId: '7S722ATUMY',
         contextualSearch: true,
+      },
+      // ✅ Mermaid 主题配置，可选
+      mermaid: {
+        theme: { light: 'default', dark: 'dark' },
       },
     }),
   stylesheets: [
