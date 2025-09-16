@@ -167,7 +167,7 @@ const config = {
 
   stylesheets: [
     {
-      href: 'katex.min.css', // 对应 static 文件夹的路径
+      href: '/css/katex.min.css', // 对应 static 文件夹的路径
       type: 'text/css',
     },
   ],
