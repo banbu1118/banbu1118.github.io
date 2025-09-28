@@ -1823,7 +1823,7 @@ DB_NAME=postgres
 
 将数据同步到数据库当中
 
-注意sync({ force: true }) 会删除原表重建，适合开发/测试环境，生产环境慎用
+注意`sync({ force: true }) `会删除原表重建，适合开发/测试环境，生产环境慎用
 
 seed.js
 
@@ -5968,3 +5968,4 @@ Drizzle 是一个 现代化的 TypeScript ORM（对象关系映射工具），�
 Drizzle项目官网：https://orm.drizzle.team/
 
 ### 7.6 短链接项目迁移实战
+
