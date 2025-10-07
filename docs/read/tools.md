@@ -73,3 +73,9 @@ https://www.iconfont.cn/
 #emoji图片在线搜索网站
 https://www.emojiall.com/zh-hans
 ```
+
+* 磁力种子搜索网站
+
+```
+https://skrbtoe.top
+```
