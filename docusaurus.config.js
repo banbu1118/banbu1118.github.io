@@ -52,15 +52,12 @@ const config = {
   themes: ['@docusaurus/theme-mermaid'],
 
 
-    headTags: [
+  metadata: [
     {
-      tagName: 'meta',
-      attributes: {
-        name: 'algolia-site-verification',
-        content: 'E671CAA718966562'
-      },
+      name: 'algolia-site-verification',
+      content: 'E671CAA718966562'
     },
-  ]
+  ],
 
   presets: [
     [
