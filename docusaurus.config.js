@@ -149,8 +149,7 @@ const config = {
         apiKey: '8a4253be833c82f2ff52018acefbefec',
         indexName: 'blog',
         appId: '7S722ATUMY',
-        contextualSearch: true,
-        externalUrlRegex: 'banbu1118.github.io'
+        contextualSearch: true
       },
       // ✅ Mermaid 主题配置，可选
       mermaid: {
