@@ -150,6 +150,7 @@ const config = {
         indexName: 'blog',
         appId: '7S722ATUMY',
         contextualSearch: true,
+        externalUrlRegex: 'banbu1118.github.io'
       },
       // ✅ Mermaid 主题配置，可选
       mermaid: {
