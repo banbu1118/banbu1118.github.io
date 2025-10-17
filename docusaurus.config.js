@@ -52,13 +52,6 @@ const config = {
   themes: ['@docusaurus/theme-mermaid'],
 
 
-  metadata: [
-    {
-      name: 'algolia-site-verification',
-      content: 'E671CAA718966562'
-    },
-  ],
-
   presets: [
     [
       'classic',
