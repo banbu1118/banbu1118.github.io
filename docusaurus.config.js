@@ -51,6 +51,17 @@ const config = {
   },
   themes: ['@docusaurus/theme-mermaid'],
 
+
+    headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'algolia-site-verification',
+        content: 'E671CAA718966562', // <-- 替换成 Algolia 提供的 code
+      },
+    },
+  ]
+
   presets: [
     [
       'classic',
