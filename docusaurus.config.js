@@ -57,7 +57,7 @@ const config = {
       tagName: 'meta',
       attributes: {
         name: 'algolia-site-verification',
-        content: 'E671CAA718966562', // <-- 替换成 Algolia 提供的 code
+        content: 'E671CAA718966562'
       },
     },
   ]
