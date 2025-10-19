@@ -87,7 +87,7 @@ cd /noVNC-1.6.0
 # 生存ssl证书
 openssl req -x509 -nodes -days 365 -newkey rsa:2048   -keyout /root/self.key   -out /root/self.crt   -subj "/CN=192.168.1.169"
 
-./utils/novnc_proxy --vnc 192.168.1.121:5901./noVNC-1.6.0/utils/novnc_proxy  --vnc 192.168.1.121:5901 --listen 8443 --cert /root/self.crt --key /root/self.key
+./noVNC-1.6.0/utils/novnc_proxy --cert /root/self.crt --key /root/self.key --vnc 192.168.1.121:5901 --listen 8443
 ```
 
 访问方式：https://ip:8443
