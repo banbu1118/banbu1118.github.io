@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 // 设置网站上线时间
-const LAUNCH_DATE = new Date('2023-10-18T05:20:00');
+const LAUNCH_DATE = new Date('2023-11-18T05:20:00');
 
 // 计算精确年/月/日/时/分/秒差
 function formatDuration(startDate, endDate) {
