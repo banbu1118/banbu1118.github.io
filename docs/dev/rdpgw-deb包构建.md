@@ -138,7 +138,7 @@ Security:
   PAATokenSigningKey: thisisasessionkeyreplacethisjetzt
   UserTokenEncryptionKey: thisisasessionkeyreplacethisjetzt
   EnableUserToken: false
-  VerifyClientIp: trufalsee
+  VerifyClientIp: false
 ```
 
 - 创建默认用户配置
