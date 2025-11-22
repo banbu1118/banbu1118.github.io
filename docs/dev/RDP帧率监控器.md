@@ -269,7 +269,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         if (inF < 15) SetTextColor(hdc, RGB(220, 20, 60));
         else if (inF < 25) SetTextColor(hdc, RGB(255, 140, 0));
         else SetTextColor(hdc, RGB(0, 128, 0));
-        swprintf(buf, L"当前输入帧率： %.1f FPS", inF);
+        swprintf(buf, L"当前输入帧率：%.1f", inF);
         DrawTextW(hdc, buf, -1, &r2, DT_LEFT);
 
         top += lineHeight + marginBetween;
@@ -279,7 +279,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         if (outF < 15) SetTextColor(hdc, RGB(220, 20, 60));
         else if (outF < 25) SetTextColor(hdc, RGB(255, 140, 0));
         else SetTextColor(hdc, RGB(30, 80, 180));
-        swprintf(buf, L"当前输出帧率： %.1f FPS", outF);
+        swprintf(buf, L"当前输出帧率：%.1f", outF);
         DrawTextW(hdc, buf, -1, &r3, DT_LEFT);
 
         top += lineHeight + marginBetween;
@@ -287,7 +287,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         // 平均输入
         RECT r4 = { 20, top, rcClient.right - 20, top + lineHeight };
         SetTextColor(hdc, RGB(0, 100, 0));
-        swprintf(buf, L"平均输入 (60s)： %.1f FPS", avgIn);
+        swprintf(buf, L"60s平均输入：%.1f", avgIn);
         DrawTextW(hdc, buf, -1, &r4, DT_LEFT);
 
         top += lineHeight + marginBetween;
@@ -295,7 +295,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         // 平均输出
         RECT r5 = { 20, top, rcClient.right - 20, top + lineHeight };
         SetTextColor(hdc, RGB(0, 0, 100));
-        swprintf(buf, L"平均输出 (60s)： %.1f FPS", avgOut);
+        swprintf(buf, L"60s平均输出：%.1f", avgOut);
         DrawTextW(hdc, buf, -1, &r5, DT_LEFT);
 
         top += lineHeight + marginBetween;
@@ -345,7 +345,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nShowCmd) {
         wc.lpszClassName, L"RDP 帧率监控器",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME, // 关闭按钮可用，禁止最小化最大化，可调整大小
         CW_USEDEFAULT, CW_USEDEFAULT,
-        260, windowHeight,
+        220, windowHeight,
         NULL, NULL, hInstance, NULL
     );
 
@@ -359,7 +359,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nShowCmd) {
     }
     return 0;
 }
-
 ```
 
 ## 打包
@@ -371,5 +370,6 @@ g++ -O2 -s -static rdp_monitor.cpp -lpdh -luser32 -lgdi32 -o rdp_monitor.exe -mw
 ## 下载
 
 GitHub仓库有编译好的版本，可直接下载
+
 
 [https://banbu1118.github.io/rdp_monitor.exe](https://banbu1118.github.io/rdp_monitor.exe)
