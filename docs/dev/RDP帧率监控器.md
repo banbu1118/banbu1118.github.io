@@ -371,5 +371,11 @@ g++ -O2 -s -static rdp_monitor.cpp -lpdh -luser32 -lgdi32 -o rdp_monitor.exe -mw
 
 GitHub仓库有编译好的版本，可直接下载
 
+rdp帧率监控
 
 [https://banbu1118.github.io/rdp_monitor.exe](https://banbu1118.github.io/rdp_monitor.exe)
+
+rdp帧率监控 + 带宽监控
+
+[https://banbu1118.github.io/rdp_monitor_v2.exe](https://banbu1118.github.io/rdp_monitor_v2.exe)
+
