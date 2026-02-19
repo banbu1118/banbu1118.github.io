@@ -79,3 +79,10 @@ https://www.emojiall.com/zh-hans
 ```
 https://skrbtoe.top
 ```
+
+* debian.club
+
+```
+#Debian 初学者完全指南
+https://www.debian.club/
+```
