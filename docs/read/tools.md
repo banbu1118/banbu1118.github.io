@@ -86,3 +86,10 @@ https://skrbtoe.top
 #Debian 初学者完全指南
 https://www.debian.club/
 ```
+
+* 小说下载网站
+
+```
+#txt小说免费下载
+https://zxcs.zip/
+```
