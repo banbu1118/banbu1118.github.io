@@ -93,3 +93,10 @@ https://www.debian.club/
 #txt小说免费下载
 https://zxcs.zip/
 ```
+
+* 开源阅读源
+
+```
+#导入书源
+https://github.com/aoaostar/legado/
+```
