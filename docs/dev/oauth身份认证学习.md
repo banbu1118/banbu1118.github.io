@@ -335,7 +335,7 @@ app.listen(4000, () => {
 
 ### 访问
 
-访问http://localhost:4000，输入账户admin和密码admin获得授权
+访问[http://localhost:4000](http://localhost:4000)，输入账户admin和密码admin获得授权
 
 ## 二、优化
 
