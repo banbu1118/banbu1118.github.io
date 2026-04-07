@@ -1,5 +1,7 @@
 # rdpgw-oidc-deb构建
 
+构建好的镜像，国内可下载：[https://share.weiyun.com/z0UQgB9t](https://share.weiyun.com/z0UQgB9t)
+
 ## 一、构建环境
 
 Debian13
