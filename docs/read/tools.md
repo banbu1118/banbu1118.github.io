@@ -80,6 +80,12 @@ https://www.emojiall.com/zh-hans
 https://skrbtoe.top
 ```
 
+* pornhubfans
+
+```
+https://pornhubfans.com/
+```
+
 * debian.club
 
 ```
