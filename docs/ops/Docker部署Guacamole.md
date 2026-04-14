@@ -20,8 +20,6 @@ services:
     image: guacamole/guacamole:latest
     container_name: guacamole-web
     restart: unless-stopped
-    extra_hosts:
-      - host.docker.internal:host-gateway
     environment:
       GUACD_HOSTNAME: guacd
       MYSQL_HOSTNAME: mysql
@@ -42,8 +40,6 @@ services:
     image: guacamole/guacd:latest
     container_name: guacamole-guacd
     restart: unless-stopped
-    extra_hosts:
-      - host.docker.internal:host-gateway
     networks:
       - guacamole-network
 
@@ -51,8 +47,6 @@ services:
     image: mysql:8.0
     container_name: guacamole-mysql
     restart: unless-stopped
-    extra_hosts:
-      - host.docker.internal:host-gateway
     environment:
       MYSQL_ROOT_PASSWORD: your_root_password_here
       MYSQL_DATABASE: guacamole_db
