@@ -112,3 +112,9 @@ https://zxcs.zip
 #导入书源
 https://github.com/aoaostar/legado
 ```
+
+* 在线时钟
+
+```
+https://clockhub.app/zh-CN/digital-clock
+```
