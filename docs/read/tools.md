@@ -118,3 +118,9 @@ https://github.com/aoaostar/legado
 ```
 https://clockhub.app/zh-CN/digital-clock
 ```
+
+* linux包在线搜索网站
+
+```
+https://pkgs.org/
+```
