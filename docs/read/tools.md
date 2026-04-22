@@ -136,3 +136,9 @@ https://dockerproxy.net
 ```
 https://frontpilot.cn/flyGuide
 ```
+
+* Gopeed下载器
+
+```
+https://gopeed.com
+```
