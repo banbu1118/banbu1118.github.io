@@ -18,6 +18,7 @@ import WebsiteRuntime from '@site/src/components/WebsiteRuntime';
       { emoji: '🌉', text: '泪桥', href: 'https://www.bilibili.com/video/BV17Q4y1t7VZ' },
       { emoji: '🌙', text: '一生所爱', href: 'https://www.bilibili.com/video/BV1nV411E7RX' },
       { emoji: '🏺', text: '青花', href: 'https://www.bilibili.com/video/BV1R94y1e7jK' },
+      { emoji: '🔔', text: '风居住的街道', href: 'https://www.bilibili.com/video/BV1Dg4y1g7zz' },
     ].map((item, idx) => (
       <a
         key={idx}
