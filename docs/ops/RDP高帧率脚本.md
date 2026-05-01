@@ -120,7 +120,7 @@ Set-RegValue -Path $rfxPath -Name "fEnableRemoteFXAdvancedRemoteApp" -Value 1
 Set-RegValue -Path $rfxPath -Name "VisualExperiencePolicy" -Value 1
 
 # Set image quality to highest
-Set-RegValue -Path $rfxPath -Name "ImageQuality" -Value 1  # 1=Low, 2=Medium, 3=High
+Set-RegValue -Path $rfxPath -Name "ImageQuality" -Value 3  # 1=Low, 2=Medium, 3=High
 
 # ── Audio ──
 Write-Host "`n--- Configuring audio ---" -ForegroundColor Yellow
