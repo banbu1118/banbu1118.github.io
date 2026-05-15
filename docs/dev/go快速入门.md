@@ -614,3 +614,977 @@ func main() {
 }
 ```
 
+## 六、判断语句
+
+### if语句
+
+以年龄为例，输入的年龄在某一个区间，就输出对应的提示信息
+
+```go
+<=0     未出生
+1-18    未成年
+18-35   青年
+>=35    中年
+```
+
+很明显，这是一个多选一的情况
+
+我们有很多中方式来实现
+
+#### 中断式
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入你的年龄：")
+  var age int
+  fmt.Scan(&age)
+
+  if age <= 0 {
+    fmt.Println("未出生")
+    return
+  }
+  if age <= 18 {
+    fmt.Println("未成年")
+    return
+  }
+  if age <= 35 {
+    fmt.Println("青年")
+    return
+  }
+  fmt.Println("中年")
+
+}
+```
+
+它也有个好听的名字，叫卫语句
+
+#### 嵌套式
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入你的年龄：")
+  var age int
+  fmt.Scan(&age)
+
+  if age <= 18 {
+    if age <= 0 {
+      fmt.Println("未出生")
+    } else {
+      fmt.Println("未成年")
+    }
+  } else {
+    if age <= 35 {
+      fmt.Println("青年")
+    } else {
+      fmt.Println("中年")
+    }
+  }
+}
+```
+
+#### 多条件式
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入你的年龄：")
+  var age int
+  fmt.Scan(&age)
+
+  if age <= 0 {
+    fmt.Println("未出生")
+  }
+  if age > 0 && age <= 18 {
+    fmt.Println("未成年")
+  }
+  if age > 18 && age <= 35 {
+    fmt.Println("青年")
+  }
+  if age > 35 {
+    fmt.Println("中年")
+  }
+}
+```
+
+### switch语句
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入你的年龄：")
+  var age int
+  fmt.Scan(&age)
+
+  switch {
+  case age <= 0:
+    fmt.Println("未出生")
+  case age <= 18:
+    fmt.Println("未成年")
+  case age <= 35:
+    fmt.Println("青年")
+  default:
+    fmt.Println("中年")
+  }
+}
+```
+
+除了这样的写法，还有枚举所有的可能值
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入星期数字：")
+  var week int
+  fmt.Scan(&week)
+
+  switch week {
+  case 1:
+    fmt.Println("周一")
+  case 2:
+    fmt.Println("周二")
+  case 3:
+    fmt.Println("周三")
+  case 4:
+    fmt.Println("周四")
+  case 5:
+    fmt.Println("周五")
+  case 6, 7:
+    fmt.Println("周末")
+  default:
+    fmt.Println("错误")
+  }
+}
+```
+
+使用 fallthrough 继续下个判断
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入你的年龄：")
+  var age int
+  fmt.Scan(&age)
+
+  switch {
+  case age <= 0:
+    fmt.Println("未出生")
+    fallthrough
+  case age <= 18:
+    fmt.Println("未成年")
+    fallthrough
+  case age <= 35:
+    fmt.Println("青年")
+  default:
+    fmt.Println("中年")
+  }
+}
+```
+
+## 七、for循环
+
+任何编程语言，都会有for循环，它的一般写法是
+
+```go
+for 初始化;条件;操作{
+}
+```
+
+例如求1+2+...+100的和
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  var sum = 0
+  for i := 0; i <= 100; i++ {
+    sum += i
+  }
+  fmt.Println(sum)
+}
+```
+
+### for循环的五种变体
+
+#### 传统for循环
+
+如上
+
+#### 死循环
+
+每隔1秒打印当前的时间
+
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func main() {
+
+  for {
+    time.Sleep(1 * time.Second)
+    fmt.Println(time.Now().Format("2006-01-02 15:04:05")) // 年月日时分秒的固定格式
+  }
+}
+```
+
+#### while模式
+
+由于golang没有while循环，如果需要，则是由for循环稍微变化得来
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  i := 0
+  sum := 0
+  for i <= 100 {
+    sum += i
+    i++
+  }
+  fmt.Println(sum)
+}
+```
+
+#### do-while模式
+
+do-while模式就是先执行一次循环体，再判断
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  i := 0
+  sum := 0
+  for {
+    sum += i
+    i++
+    if i == 101 {
+      break
+    }
+  }
+  fmt.Println(sum)
+}
+```
+
+#### 遍历切片
+
+第一个参数是索引，第二个参数是值
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  s := []string{"枫枫", "知道"}
+  for index, s2 := range s {
+    fmt.Println(index, s2)
+  }
+}
+```
+
+#### 遍历map
+
+第一个参数就是key，第二个就是value
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  s := map[string]int{
+    "age":   24,
+    "price": 1000,
+  }
+  for key, val := range s {
+    fmt.Println(key, val)
+  }
+}
+```
+
+### break，continue
+
+break用于跳出当前循环
+
+continue用于跳过本轮循环
+
+例如打印九九乘法表
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  for i := 1; i <= 9; i++ {
+    for j := 1; j <= i; j++ {
+      fmt.Printf("%d * %d = %d\t", i, j, i*j)
+    }
+    fmt.Println()
+  }
+}
+```
+
+除了这样写，还能这样写
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+
+  for i := 1; i <= 9; i++ {
+    for j := 1; j <= 9; j++ {
+      if j > i {
+        // 去掉 列比行大的数据
+        continue
+      }
+      fmt.Printf("%d * %d = %d\t", i, j, i*j)
+    }
+    fmt.Println()
+  }
+}
+```
+
+## 八、函数
+
+函数是一段封装了特定功能的可重用代码块，用于执行特定的任务或计算
+
+函数接受输入（参数）并产生输出（返回值）
+
+### 函数定义
+
+```go
+package main
+
+import "fmt"
+
+// 使用func关键字定义一个函数
+func sayHello() {
+  fmt.Println("hello")
+}
+
+func main() {
+  // 函数()调用函数
+  sayHello()
+}
+```
+
+### 函数参数
+
+```go
+package main
+
+import "fmt"
+
+func add(n1 int, n2 int) {
+  fmt.Println(n1, n2)
+}
+
+// 参数类型一样，可以合并在一起
+func add1(n1, n2 int) {
+  fmt.Println(n1, n2)
+}
+
+// 多个参数
+func add2(numList ...int) {
+  fmt.Println(numList)
+}
+
+func main() {
+  add(1, 2)
+  add1(1, 2)
+  add2(1, 2)
+  add2(1, 2, 3, 4)
+}
+```
+
+### 函数返回值
+
+```go
+package main
+
+import "errors"
+
+// 无返回值
+func fun1() {
+  return // 也可以不写
+}
+
+// 单返回值
+func fun2() int {
+  return 1
+}
+
+// 多返回值
+func fun3() (int, error) {
+  return 0, errors.New("错误")
+}
+
+// 命名返回值
+func fun4() (res string) {
+  return // 相当于先定义再赋值
+  //return "abc"
+}
+
+func main() {
+
+}
+```
+
+### 匿名函数
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  var add = func(a, b int) int {
+    return a + b
+  }
+  fmt.Println(add(1, 2))
+}
+```
+
+### 高阶函数
+
+根据用户输入的不同，执行不同的操作
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("请输入要执行的操作：")
+  fmt.Println(`1：登录
+2：个人中心
+3：注销`)
+  var num int
+  fmt.Scan(&num)
+  var funcMap = map[int]func(){
+    1: func() {
+      fmt.Println("登录")
+    },
+    2: func() {
+      fmt.Println("个人中心")
+    },
+    3: func() {
+      fmt.Println("注销")
+    },
+  }
+  funcMap[num]()
+}
+```
+
+提取出来
+
+```go
+package main
+
+import "fmt"
+
+func login() {
+  fmt.Println("登录")
+}
+
+func userCenter() {
+  fmt.Println("个人中心")
+}
+
+func logout() {
+  fmt.Println("注销")
+}
+
+func main() {
+  fmt.Println("请输入要执行的操作：")
+  fmt.Println(`1：登录
+2：个人中心
+3：注销`)
+  var num int
+  fmt.Scan(&num)
+  var funcMap = map[int]func(){
+    1: login,
+    2: userCenter,
+    3: logout,
+  }
+  funcMap[num]()
+}
+```
+
+### 闭包
+
+设计一个函数，先传一个参数表示延时，后面再次传参数就是将参数求和
+
+```go
+fun(2)(1,2,3) // 延时2秒求1+2+3
+```
+
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func awaitAdd(t int) func(...int) int {
+  time.Sleep(time.Duration(t) * time.Second)
+  return func(numList ...int) int {
+    var sum int
+    for _, i2 := range numList {
+      sum += i2
+    }
+    return sum
+  }
+}
+
+func main() {
+  fmt.Println(awaitAdd(2)(1, 2, 3))
+}
+```
+
+### 值传递和引用传递
+
+稍微了解过编程的都应该知道，计算机上显示的所有的数据都是在内存里面的
+
+也就是说，我们定义的一个变量，它也在内存里面有一块地
+
+正常情况下来说，函数的参数是将之前那块地复制了一份出来
+
+如何证明呢
+
+```go
+package main
+
+import "fmt"
+
+func add(num int) {
+  fmt.Println(&num) // 可以看到，这个n的内存地址和外面num的内存地址是明显不一样的
+  num = 2           // 这里的修改不会影响外面的num
+}
+
+func main() {
+  num := 20
+  fmt.Println(&num)
+  add(num)
+  fmt.Println(num) // 20
+}
+```
+
+也就是说，在函数里面不管怎么修改这个参数，都不会影响原来的那个值
+
+但是，如果我需要在函数体内修改变量的值呢？
+
+这就需要用到引用传递了
+
+我们直接将变量的内存地址传递进去
+
+```go
+package main
+
+import "fmt"
+
+func add(num *int) {
+  fmt.Println(num) // 内存值是一样的
+  *num = 2         // 这里的修改会影响外面的num
+}
+
+func main() {
+  num := 20
+  fmt.Println(&num)
+  add(&num)
+  fmt.Println(num) // 成功修改 2
+}
+```
+
+### 指针
+
+上面那个案例搞清楚之后，指针也就不难了
+
+我们只需要知道
+
+&是取地址，*是解引用，去这个地址指向的值
+
+### init函数
+
+`init()`函数是一个特殊的函数，存在以下特性：
+
+1. 不能被其他函数调用，而是在main函数执行之前，自动被调用
+2. init函数不能作为参数传入
+3. 不能有传入参数和返回值
+
+一个go文件可以有多个init函数，谁在前面谁就先执行
+
+```go
+package main
+
+import "fmt"
+
+func init() {
+  fmt.Println("init1")
+}
+func init() {
+  fmt.Println("init2")
+}
+func init() {
+  fmt.Println("init3")
+}
+
+func main() {
+  fmt.Println("main")
+}
+```
+
+执行顺序
+
+```go
+init1
+init2
+init3
+main
+```
+
+### defer函数
+
+1. 关键字 defer 用于注册延迟调用
+2. 这些调用直到 return 前才被执。因此，可以用来做资源清理
+3. 多个defer语句，按先进后出的方式执行，谁离return近谁先执行
+4. defer语句中的变量，在defer声明时就决定了
+
+```go
+package main
+
+import "fmt"
+
+func Func() {
+  defer fmt.Println("defer2")
+  fmt.Println("func")
+  defer fmt.Println("defer1")
+}
+
+func main() {
+  defer fmt.Println("defer4")
+  Func()
+  defer fmt.Println("defer3")
+}
+```
+
+执行顺序
+
+```go
+func
+defer1
+defer2
+defer3
+defer4
+```
+
+## 九、结构体
+
+### 结构体定义
+
+```go
+type 结构体名称 struct{
+    名称 类型//成员或属性
+}
+```
+
+```go
+package main
+
+import "fmt"
+
+// Student 定义结构体
+type Student struct {
+  Name string
+  Age  int
+}
+
+// PrintInfo 给机构体绑定一个方法
+func (s Student) PrintInfo() {
+  fmt.Printf("name:%s age:%d\n", s.Name, s.Age)
+}
+
+func main() {
+  s := Student{
+    Name: "枫枫",
+    Age:  21,
+  }
+  s.Name = "枫枫知道" // 修改值
+  s.PrintInfo()
+}
+```
+
+### 继承
+
+```go
+package main
+
+import "fmt"
+
+type People struct {
+  Time string
+}
+
+func (p People) Info() {
+  fmt.Println("people ", p.Time)
+}
+
+// Student 定义结构体
+type Student struct {
+  People
+  Name string
+  Age  int
+}
+
+// PrintInfo 给机构体绑定一个方法
+func (s Student) PrintInfo() {
+  fmt.Printf("name:%s age:%d\n", s.Name, s.Age)
+}
+
+func main() {
+  p := People{
+    Time: "2023-11-15 14:51",
+  }
+  s := Student{
+    People: p,
+    Name:   "枫枫",
+    Age:    21,
+  }
+  s.Name = "枫枫知道" // 修改值
+  s.PrintInfo()
+  s.Info()                   // 可以调用父结构体的方法
+  fmt.Println(s.People.Time) // 调用父结构体的属性
+  fmt.Println(s.Time)        // 也可以这样
+}
+```
+
+### 结构体指针
+
+之前我们了解了值传递和引用传递，如果我想在函数里面或者方法里面修改结构体里面的属性
+
+只能使用结构体指针或者指针方法
+
+```go
+package main
+
+import "fmt"
+
+type Student struct {
+  Name string
+  Age  int
+}
+
+func SetAge(info Student, age int) {
+  info.Age = age
+}
+
+func SetAge1(info *Student, age int) {
+  info.Age = age
+}
+
+func main() {
+  s := Student{
+    Name: "枫枫",
+    Age:  21,
+  }
+  fmt.Println(s.Age)
+  SetAge(s, 18)
+  fmt.Println(s.Age)
+  SetAge1(&s, 17)
+  fmt.Println(s.Age)
+}
+```
+
+```go
+package main
+
+import "fmt"
+
+type Student struct {
+  Name string
+  Age  int
+}
+
+func (s Student) SetAge(age int) {
+  s.Age = age
+}
+func (s *Student) SetAge1(age int) {
+  s.Age = age
+}
+
+func main() {
+  s := Student{
+    Name: "枫枫",
+    Age:  21,
+  }
+  s.SetAge(18)
+  fmt.Println(s.Age)
+  s.SetAge1(18)
+  fmt.Println(s.Age)
+}
+```
+
+### 结构体tag
+
+```go
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+)
+
+type Student struct {
+  Name string `json:"name"`
+  Age  int    `json:"age"`
+}
+
+func main() {
+  s := Student{
+    Name: "枫枫",
+    Age:  21,
+  }
+  byteData, _ := json.Marshal(s)
+  fmt.Println(string(byteData))
+}
+```
+
+#### json tag
+
+1. 这个不写json标签转换为json的话，字段名就是属性的名字
+2. 小写的属性也不会转换
+
+空
+
+如果再转json的时候，我不希望某个字段被转出来，我可以写一个 -
+
+```go
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+)
+
+type Student struct {
+  Name     string `json:"name"`
+  Age      int    `json:"age"`
+  Password string `json:"-"`
+}
+
+func main() {
+  s := Student{
+    Name:     "枫枫",
+    Age:      21,
+    Password: "123456",
+  }
+  byteData, _ := json.Marshal(s)
+  fmt.Println(string(byteData)) // {"name":"枫枫","age":21}
+}
+```
+
+omitempty
+
+空值省略
+
+```go
+package main
+
+import (
+  "encoding/json"
+  "fmt"
+)
+
+type Student struct {
+  Name string `json:"name"`
+  Age  int    `json:"age,omitempty"`
+}
+
+func main() {
+  s := Student{
+    Name: "枫枫",
+    Age:  0, // 空值会被省略
+  }
+  byteData, _ := json.Marshal(s)
+  fmt.Println(string(byteData)) // {"name":"枫枫"}
+}
+```
+
+## 十、自定义数据类型与类型别名
+
+在 Go 语言中，自定义类型指的是使用 type 关键字定义的新类型，它可以是基本类型的别名，也可以是结构体、函数等组合而成的新类型。自定义类型可以帮助我们更好地抽象和封装数据，让代码更加易读、易懂、易维护
+
+### 自定义类型
+
+结构体就是自定义类型中的一种
+
+除此之外我们使用自定义类型，还可以让代码组合更加规范
+
+例如，响应给客户端的想要码，我给他一个自定义类型
+
+```go
+package main
+
+import "fmt"
+
+type Code int
+
+const (
+  SuccessCode    Code = 0
+  ValidCode      Code = 7 // 校验失败的错误
+  ServiceErrCode Code = 8 // 服务错误
+)
+
+func (c Code) GetMsg() string {
+  // 可能会有更加响应码返回不同消息内容的要求，我们在这个函数里面去实现即可
+  // 可能还会有国际化操作
+  return "成功"
+}
+
+func main() {
+  fmt.Println(SuccessCode.GetMsg())
+  var i int
+  fmt.Println(int(SuccessCode) == i) // 必须要转成原始类型才能判断
+}
+```
+
