@@ -644,3 +644,750 @@ func main() {
 }
 ```
 
+- Go 语言中浮点数默认是 float64
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	num := 1.1
+	fmt.Printf("值：%v--类型:%T", num, num)
+	//值：1.1--类型:float64
+}
+```
+
+- Golang 中 float 精度丢失问题
+
+几乎所有的编程语言都有精度丢失这个问题，这是典型的二进制浮点数精度损失问题，在定长条件下，二进制小数和十进制小数互转可能有精度丢失。
+
+```go
+d := 1129.6
+fmt.Println((d * 100)) 
+//输出：112959.99999999999
+```
+
+```go
+var d float64 = 1129.6
+fmt.Println((d * 100)) 
+//输出：112959.99999999999
+```
+
+```go
+m1 := 8.2
+m2 := 3.8
+fmt.Println(m1 - m2) 
+// 期望是 4.4，结果打印出了 4.399999999999999
+```
+
+- Golang 科学计数法表示浮点类型
+
+```go
+num8 := 5.1234e2 // ? 5.1234 * 10 的 2 次方
+num9 := 5.1234E2 // ? 5.1234 * 10 的 2 次方 shift+alt+向下的箭头num10 := 5.1234E-2 // ? 5.1234 / 10 的 2 次方 0.051234
+fmt.Println("num8=", num8, "num9=", num9, "num10=", num10)
+```
+
+### 布尔值
+
+Go 语言中以 bool 类型进行声明布尔型数据，布尔型数据只有 true（真）和false（假）两个值。
+
+注意：
+
+1. 布尔类型变量的默认值为 false。
+2. Go 语言中不允许将整型强制转换为布尔型.
+3. 布尔型无法参与数值运算，也无法与其他类型进行转换。
+
+```go
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
+
+func main() {
+	var b = true
+	fmt.Println(b, "占用字节：", unsafe.Sizeof(b))
+}
+
+```
+
+### 字符串
+
+Go 语言中的字符串以原生数据类型出现，使用字符串就像使用其他原生数据类型（int、bool、float32、float64 等）一样。 Go 语言里的字符串的内部实现使用 UTF-8 编码。字符串的值为双引号(")中的内容，可以在 Go 语言的源码中直接添加非 ASCII 码字符，例如：
+
+```go
+s1 := "hello"
+s2 := "你好"
+```
+
+- 字符串转义符
+
+Go 语言的字符串常见转义符包含回车、换行、单双引号、制表符等，如下表所示。
+
+| 转义符 | 含义                               |
+| ------ | ---------------------------------- |
+| \r     | 回车符（返回行首）                 |
+| \n     | 换行符（直接跳到下一行的同列位置） |
+| \t     | 制表符                             |
+| \\'    | 单引号                             |
+| \\"    | 双引号                             |
+| \\\    | 反斜杠                             |
+
+举个例子，我们要打印一个 Windows 平台下的一个文件路径：
+
+```go
+package main
+import ( "fmt"
+)
+func main() {
+fmt.Println("str := \"c:\\Code\\demo\\go.exe\"")
+}
+```
+
+- 多行字符串
+
+```go
+Go 语言中要定义一个多行字符串时，就必须使用反引号字符：
+s1 := `第一行
+第二行
+第三行
+`fmt.Println(s1)
+反引号间换行将被作为字符串中的换行，但是所有的转义字符均无效，文本将会原样输出
+```
+
+- 字符串的常用操作
+
+| 方法                                 | 介绍           |
+| ------------------------------------ | -------------- |
+| len(str)                             | 求长度         |
+| + 或 fmt.Sprintf                     | 拼接字符串     |
+| strings.Split                        | 分割           |
+| strings.contains                     | 判断是否包含   |
+| strings.HasPrefix, strings.HasSuffix | 前缀/后缀判断  |
+| strings.Index(), strings.LastIndex() | 子串出现的位置 |
+| strings.Join(a[]string, sep string)  | join 操作      |
+
+len(str)求字符串的长度
+
+```go
+var str = "this is str"
+fmt.Println(len(str))
+```
+
+拼接字符串
+
+```go
+var str1 = "你好" 
+var str2 = "golang"
+fmt.Println(str1 + str2)
+var str3 = fmt.Sprintf("%v %v", str1, str2)
+fmt.Println(str3)
+```
+
+strings.Split 分割字符串
+
+```go
+var str = "123-456-789"
+var arr = strings.Split(str, "-")
+fmt.Println(arr)
+```
+
+判断是包含字符串
+
+```go
+var str = "this is golang"
+var flag = strings.Contains(str, "golang")
+fmt.Println(flag)
+```
+
+判断首字符尾字母是否包含指定字符
+
+```go
+var str = "this is golang" 
+var flag = strings.HasPrefix(str, "this")
+fmt.Println(flag)
+
+var str = "this is golang" 
+var flag = strings.HasSuffix(str, "go")
+fmt.Println(flag)
+```
+
+判断字符串出现的位置
+
+判断位置参考的是字符所占的字节位置，中文是每个字符3个字节
+
+```go
+var str = "this is golang" 
+var index = strings.Index(str, "is") //从前往后
+fmt.Println(index)
+
+var str = "this is golang" 
+var index = strings.LastIndex(str, "is") //从后网前
+fmt.Println(index)
+```
+
+Join 拼接字符串
+
+```go
+var str = "123-456-789" 
+var arr = strings.Split(str, "-")
+var str2 = strings.Join(arr, "*")
+fmt.Println(str2)
+```
+
+### byte 和 rune 类型
+
+组成每个字符串的元素叫做“字符”，可以通过遍历字符串元素获得字符。字符用单引号（’）包裹起来，如：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	a := 'a'
+	b := '0'
+	//当我们直接输出 byte（字符）的时候输出的是这个字符对应的码值
+	fmt.Println(a)
+	fmt.Println(b)
+
+	//如果我们要输出这个字符，需要格式化输出
+	fmt.Printf("%c--%c", a, b) //%c 相应 Unicode 码点所表示的字符
+}
+```
+
+字节（byte）：是计算机中 数据处理 的基本单位，习惯上用大写 B 来表示,1B（byte,字节）= 8bit（位） 
+
+字符：是指计算机中使用的字母、数字、字和符号
+
+一个汉子占用 3 个字节 一个字母占用一个字节
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	a := "m"
+	fmt.Println(len(a)) //1
+	b := "张"
+	fmt.Println(len(b)) //3
+}
+```
+
+- Go 语言的字符有以下两种
+
+1. uint8 类型，或者叫 byte 型，代表了 ASCII 码的一个字符。
+2. rune 类型，代表一个 UTF-8 字符。
+
+当需要处理中文、日文或者其他复合字符时，则需要用到 rune 类型。rune 类型实际是一个int32。
+
+Go 使用了特殊的 rune 类型来处理 Unicode，让基于 Unicode 的文本处理更为方便，也可以使用 byte 型进行默认字符串处理，性能和扩展性都有照顾。
+
+```go
+// 遍历字符串
+package main
+
+import "fmt"
+
+func main() {
+	s := "hello 张三"
+	for i := 0; i < len(s); i++ { //byte
+		fmt.Printf("%v(%c) ", s[i], s[i])
+	}
+	fmt.Println()
+	for _, r := range s { //rune
+		fmt.Printf("%v(%c) ", r, r)
+	}
+	fmt.Println()
+}
+```
+
+输出： 
+
+```cmd
+104(h) 101(e) 108(l) 108(l) 111(o) 32( ) 229(å) 188(¼) 160( ) 228(ä) 184(¸) 137() 
+104(h) 101(e) 108(l) 108(l) 111(o) 32( ) 24352(张) 19977(三) 
+```
+
+因为 UTF8 编码下一个中文汉字由 3 个字节组成，所以我们不能简单的按照字节去遍历一个包含中文的字符串，否则就会出现上面输出中第一行的结果。
+
+字符串底层是一个 byte 数组，所以可以和[]byte 类型相互转换。字符串是不能修改的字符串是由 byte 字节组成，所以字符串的长度是 byte 字节的长度。 rune 类型用来表示utf8 字符，一个 rune 字符由一个或多个 byte 组成。
+
+rune 类型实际是一个 int32
+
+```go
+// 遍历字符串
+package main
+
+import "fmt"
+
+func main() {
+	c3 := "营"
+	c4 := '营'
+	fmt.Printf("C3 的类型%T--C4 的类型%T", c3, c4) //C3 的类型 string--C4 的类型int32
+}
+```
+
+- 修改字符串
+
+要修改字符串，需要先将其转换成[]rune 或[]byte，完成后再转换为string。无论哪种转换，都会重新分配内存，并复制字节数组。
+
+```go
+// 遍历字符串
+package main
+
+import "fmt"
+
+func main() {
+	changeString()
+}
+
+func changeString() {
+	s1 := "big"
+	// 强制类型转换
+	byteS1 := []byte(s1)
+	byteS1[0] = 'p'
+	fmt.Println(string(byteS1))
+	s2 := "白萝卜"
+	runeS2 := []rune(s2)
+	runeS2[0] = '红'
+	fmt.Println(string(runeS2))
+}
+```
+
+## 六、基本数据类型之间的转换
+
+Go 语言中只有强制类型转换，没有隐式类型转换。
+
+### 数值类型之间的相互转换
+
+数值类型包括：整形和浮点型
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var a int8 = 20
+	var b int16 = 40
+	var c = int16(a) + b           //要转换成相同类型才能运行
+	fmt.Printf("值：%v--类型%T", c, c) //值：60--类型 int16
+}
+```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var a float32 = 3.2
+	var b int16 = 6
+	var c = a + float32(b)
+	fmt.Printf("值：%v--类型%T", c, c) //值：9.2--类型 float32
+}
+```
+
+转换的时候建议从低位转换成高位，高位转换成低位的时候如果转换不成功就会溢出，和我们想的结果不一样。
+
+```go
+package main
+
+func main() {
+	var a int16 = 129
+	var b = int8(a)  // 范围 -128 到 127
+	println("b=", b) //b= -127 //错误
+}
+```
+
+比如计算直角三角形的斜边长时使用 math 包的 Sqrt()函数，该函数接收的是float64 类型的参数，而变量 a 和 b 都是 int 类型的，这个时候就需要将 a 和 b 强制类型转换为float64 类型。
+
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var a, b = 3, 4
+	var c int
+	// math.Sqrt()接收的参数是 float64 类型，需要强制转换
+	c = int(math.Sqrt(float64(a*a + b*b)))
+	fmt.Println(c)
+}
+```
+
+### 其他类型转换成 String 类型
+
+- sprintf 把其他类型转换成 string 类型
+
+注意：sprintf 使用中需要注意转换的格式 int 为%d float 为%f bool 为%t byte 为%c
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var i int = 20
+	var f float64 = 12.456
+	var t bool = true
+	var b byte = 'a'
+	var strs string
+	strs = fmt.Sprintf("%d", i)
+	fmt.Printf("str type %T ,strs=%v \n", strs, strs)
+	strs = fmt.Sprintf("%f", f)
+	fmt.Printf("str type %T ,strs=%v \n", strs, strs)
+	strs = fmt.Sprintf("%t", t)
+	fmt.Printf("str type %T ,strs=%v \n", strs, strs)
+	strs = fmt.Sprintf("%c", b)
+	fmt.Printf("str type %T ,strs=%v \n", strs, strs)
+}
+```
+
+输出
+
+```cmd
+str type string ,strs=20 
+str type string ,strs=12.456000 
+str type string ,strs=true 
+str type string ,strs=a
+```
+
+- 使用 strconv 包里面的几种转换方法进行转换
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	//1、int 转换成 string
+	var num1 int = 20
+	s1 := strconv.Itoa(num1)
+	fmt.Printf("str type %T ,strs=%v \n", s1, s1)
+	// 2、float 转 string
+	var num2 float64 = 20.113123
+	/* 参数 1：要转换的值
+	   参数 2：格式化类型
+	   'f'（-ddd.dddd）、
+	   'b'（-ddddp±ddd，指数为二进制）、
+	   'e'（-d.dddde±dd，十进制指数）、
+	   'E'（-d.ddddE±dd，十进制指数）、
+	   'g'（指数很大时用'e'格式，否则'f'格式）、
+	   'G'（指数很大时用'E'格式，否则'f'格式）。
+	   参数 3: 保留的小数点 -1（不对小数点格式化）
+	   参数 4：格式化的类型
+	*/
+	s2 := strconv.FormatFloat(num2, 'f', 2, 64)
+	fmt.Printf("str type %T ,strs=%v \n", s2, s2)
+	// 3、bool 转 string
+	s3 := strconv.FormatBool(true)
+	fmt.Printf("str type %T ,strs=%v \n", s3, s3)
+	//4、int64 转 string
+	var num3 int64 = 20
+	/*第二个参数为 进制
+	 */
+	s4 := strconv.FormatInt(num3, 10)
+	fmt.Printf("类型 %T ,strs=%v \n", s4, s4)
+}
+```
+
+### String 类型转换成数值类型
+
+- string 类型转换成 int 类型
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	var s = "1234"
+	i64, _ := strconv.ParseInt(s, 10, 64)
+	fmt.Printf("值：%v 类型：%T", i64, i64)
+}
+```
+
+- string 类型转换成 float 类型
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	str := "3.1415926535"
+	v1, _ := strconv.ParseFloat(str, 32)
+	v2, _ := strconv.ParseFloat(str, 64)
+	fmt.Printf("值：%v 类型：%T\n", v1, v1)
+	fmt.Printf("值：%v 类型：%T", v2, v2)
+}
+```
+
+- string 类型转换成 bool 类型（意义不大）
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	b, _ := strconv.ParseBool("true") // string 转 bool
+	fmt.Printf("值：%v 类型：%T", b, b)
+}
+```
+
+- string 转字符
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	s := "hello 张三"
+	for _, r := range s { //rune
+		fmt.Printf("%v(%c) ", r, r)
+	}
+	fmt.Println()
+}
+```
+
+### 数值类型没法和 bool 类型进行转换
+
+注意：在 go 语言中数值类型没法直接转换成 bool 类型 bool 类型也没法直接转换成数值类型
+
+## 七、运算符
+
+### Golang 内置的运算符
+
+1. 算术运算符 
+2. 关系运算符 
+3. 逻辑运算符 
+4. 位运算符 
+5. 赋值运算 
+
+### 算数运算符
+
+| 运算符 | 描述                                   |
+| ------ | -------------------------------------- |
+| +      | 相加                                   |
+| -      | 相减                                   |
+| *      | 相乘                                   |
+| /      | 相除                                   |
+| %      | 求余 = 被除数 - (被除数 / 除数) * 除数 |
+
+注意： ++（自增）和--（自减）在 Go 语言中是单独的语句，并不是运算符。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	fmt.Println("10+3=", 10+3) // =13
+	fmt.Println("10-3=", 10-3) // =7
+	fmt.Println("10*3=", 10*3) // =30
+	//除法注意：如果运算的数都是整数，那么除后，去掉小数部分，保留整数部分fmt.Println("10/3=", 10/3) //3
+	fmt.Println("10.0/3=", 10.0/3) //3.3333333333333335
+	// 取余注意 余数=被除数-（被除数/除数）*除数
+	fmt.Println("10%3=", 10%3)     // =1
+	fmt.Println("-10%3=", -10%3)   // -1
+	fmt.Println("10%-3=", 10%-3)   // =1
+	fmt.Println("-10%-3=", -10%-3) // =-1
+}
+```
+
+注意：在 golang 中，++ 和 -- 只能独立使用 错误写法如下：
+
+```go
+var i int = 8
+var a int
+a = i++ //错误，i++只能独立使用
+a = i-- //错误, i--只能独立使用
+```
+
+注意：在 golang 中没有前++ 错误写法如下：
+
+```go
+var i int = 1
+++i // 错误，在 golang 没有 前++
+--i // 错误，在 golang 没有 前--
+fmt.Println("i=", i)
+```
+
+++ --正确写法：
+
+```go
+var i int = 1
+i++
+fmt.Println("i=", i)
+```
+
+### 关系运算符
+
+| 运算符 | 描述                                                         |
+| ------ | ------------------------------------------------------------ |
+| ==     | 检查两个值是否相等，如果相等返回 True 否则返回 False。       |
+| !=     | 检查两个值是否不相等，如果不相等返回 True 否则返回 False。   |
+| >      | 检查左边值是否大于右边值，如果是返回 True 否则返回 False。   |
+| >=     | 检查左边值是否大于等于右边值，如果是返回 True 否则返回 False。 |
+| <      | 检查左边值是否小于右边值，如果是返回 True 否则返回 False。   |
+| <=     | 检查左边值是否小于等于右边值，如果是返回 True 否则返回 False。 |
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	//演示关系运算符的使用
+	var n1 int = 9
+	var n2 int = 8
+	fmt.Println(n1 == n2) //false
+	fmt.Println(n1 != n2) //true
+	fmt.Println(n1 > n2)  //true
+	fmt.Println(n1 >= n2) //true
+	fmt.Println(n1 < n2)  //flase
+	fmt.Println(n1 <= n2) //flase
+	flag := n1 > n2
+	fmt.Println("flag=", flag)
+}
+```
+
+### 逻辑运算符
+
+| 运算符 | 描述                                                         |
+| ------ | ------------------------------------------------------------ |
+| &&     | 逻辑 AND 运算符。如果两边的操作数都是 True，则为 True，否则为 False。 |
+| \|\|   | 逻辑 OR 运算符。如果两边的操作数有一个 True，则为 True，否则为 False。 |
+| !      | 逻辑 NOT 运算符。如果条件为 True，则为 False，否则为 True。  |
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	//演示逻辑运算符的使用 &&
+	var age int = 40
+	if age > 30 && age < 50 {
+		fmt.Println("ok1")
+	}
+	if age > 30 && age < 40 {
+		fmt.Println("ok2")
+	}
+	//演示逻辑运算符的使用 ||
+	if age > 30 || age < 50 {
+		fmt.Println("ok3")
+	}
+	if age > 30 || age < 40 {
+		fmt.Println("ok4")
+	}
+	//演示逻辑运算符的使用 !
+	if age > 30 {
+		fmt.Println("ok5")
+	}
+	if !(age > 30) {
+		fmt.Println("ok6")
+	}
+}
+```
+
+逻辑运算符短路演示
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func test() bool {
+	fmt.Println("test...")
+	return true
+}
+func main() {
+	var i int = 10
+	if i < 9 && test() {
+		fmt.Println("ok...")
+	}
+	if i > 9 || test() {
+		fmt.Println("hello...")
+	}
+}
+```
+
+### 赋值运算符
+
+| 运算符 | 描述                                           |
+| ------ | ---------------------------------------------- |
+| =      | 简单的赋值运算符，将一个表达式的值赋给一个左值 |
+| +=     | 相加后再赋值                                   |
+| -=     | 相减后再赋值                                   |
+| *=     | 相乘后再赋值                                   |
+| /=     | 相除后再赋值                                   |
+| %=     | 求余后再赋值                                   |
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	d := 8 + 2*8 // 赋值运算从右向左
+	fmt.Println(d)
+	x := 10
+	x += 5 //x=x+5
+	fmt.Println("x += 5 的值:", x)
+}
+```
+
+```go
+x := 10
+x -= 5 //x=x-5
+fmt.Println("x -= 5 的值:", x)
+x := 10
+x *= 5 //x=x*5
+fmt.Println("x *= 5 的值:", x)
+x := 10.0
+x /= 5
+fmt.Println("x /= 5 的值:", x)
+x := 10
+x %= 3
+fmt.Println("x %= 3 的值:", x)
+```
+
+### 运算符练习
+
+练习 1：有两个变量，a 和 b，要求将其进行交换，最终打印结果
