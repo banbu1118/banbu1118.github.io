@@ -2825,38 +2825,6 @@ fmt.Println(s3)
 
 ### 切片的扩容策略（了解）
 
-可以通过查看$GOROOT/src/runtime/slice.go 源码，其中扩容相关代码如下：
-
-```go
-newcap := old.cap
-doublecap := newcap + newcap
-if cap > doublecap {
-newcap = cap
-} else {
-if old.len < 1024 {
-newcap = doublecap
-} else {
-// Check 0 < newcap to detect overflow
-// and prevent an infinite loop. for 0 < newcap && newcap < cap {
-newcap += newcap / 4
-}
-// Set newcap to the requested cap when
-// the newcap calculation overflowed.
-if newcap <= 0 {
-newcap = cap
-}
-}
-}
-```
-
-从上面的代码可以看出以下内容：
-
-1. 首先判断，如果新申请容量（cap）大于 2 倍的旧容量（old.cap），最终容量（newcap）就是新申请的容量（cap）。
-2. 否则判断，如果旧切片的长度小于 1024，则最终容量(newcap)就是旧容量(old.cap)的两倍，即（newcap=doublecap）
-3. 否则判断，如果旧切片长度大于等于 1024，则最终容量（newcap）从旧容量（old.cap）开始循环增加原来的 1/4，即（newcap=old.cap,for {newcap += newcap/4}）直到最终容量（newcap）大于等于新申请的容量(cap)，即（newcap >= cap）
-4. 如果最终容量（cap）计算值溢出，则最终容量（cap）就是新申请容量（cap）
-
-需要注意的是，切片扩容还会根据切片中元素的类型不同而做不同的处理，比如int 和string类型的处理方式就不一样。
 
 ### 使用 copy()函数复制切片
 
