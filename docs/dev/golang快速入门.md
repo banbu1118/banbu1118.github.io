@@ -3080,7 +3080,7 @@ func main() {
 
 map 是一种无序的基于 key-value 的数据结构，Go 语言中的 map 是引用类型，必须初始化才能使用。
 
-Go 语言中 map 的定义语法如下：
+###  map 的定义
 
 ```go
 map[KeyType]ValueType
@@ -3102,3 +3102,148 @@ make(map[KeyType]ValueType, [cap])
 其中 cap 表示 map 的容量，该参数虽然不是必须的。
 
 注意：获取 map 的容量不能使用 cap, cap 返回的是数组切片分配的空间大小, 根本不能用于map。要获取 map 的容量，可以用 len 函数。
+
+### map 基本使用
+
+map 中的数据都是成对出现的，map 的基本使用示例代码如下：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	scoreMap := make(map[string]int, 8)
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	fmt.Println(scoreMap)
+	fmt.Println(scoreMap["小明"])
+	fmt.Printf("type of a:%T\n", scoreMap)
+}
+```
+
+输出：
+
+```cmd
+map[小明:100 张三:90]
+100
+type of a:map[string]int
+```
+
+map 也支持在声明的时候填充元素，例如：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	userInfo := map[string]string{
+		"username": "IT 营小王子",
+		"password": "123456",
+	}
+	fmt.Println(userInfo)
+}
+```
+
+### 判断某个键是否存在
+
+Go 语言中有个判断 map 中键是否存在的特殊写法，格式如下：
+
+```go
+value, ok := map 对象[key]
+```
+
+举个例子：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	scoreMap := make(map[string]int)
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	// 如果 key 存在 ok 为 true,v 为对应的值；不存在 ok 为 false,v 为值类型的零值
+	v, ok := scoreMap["张三"]
+	if ok {
+		fmt.Println(v)
+	} else {
+		fmt.Println("查无此人")
+	}
+```
+
+### map 的遍历
+
+Go 语言中使用 for range 遍历 map。
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	scoreMap := make(map[string]int)
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	scoreMap["娜扎"] = 60
+	for k, v := range scoreMap {
+		fmt.Println(k, v)
+	}
+}
+```
+
+但我们只想遍历 key 的时候，可以按下面的写法：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	scoreMap := make(map[string]int)
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	scoreMap["娜扎"] = 60
+	for k := range scoreMap {
+		fmt.Println(k)
+	}
+}
+```
+
+注意： 遍历 map 时的元素顺序与添加键值对的顺序无关。
+
+### 使用 delete()函数删除键值对
+
+使用 delete()内建函数从 map 中删除一组键值对，delete()函数的格式如下：
+
+```go
+delete(map 对象, key)
+```
+
+其中：
+
+1. map 对象:表示要删除键值对的 map 对象
+2. key:表示要删除的键值对的键
+
+示例代码如下：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	scoreMap := make(map[string]int)
+	scoreMap["张三"] = 90
+	scoreMap["小明"] = 100
+	scoreMap["娜扎"] = 60
+	delete(scoreMap, "小明") //将小明:100 从 map 中删除
+	for k, v := range scoreMap {
+		fmt.Println(k, v)
+	}
+}
+```
+
+### 按照指定顺序遍历map
