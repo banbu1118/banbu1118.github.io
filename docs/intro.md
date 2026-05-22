@@ -11,7 +11,7 @@ import WebsiteRuntime from '@site/src/components/WebsiteRuntime';
 欢迎大家访问我的博客，这是一个简单的博客，记录了日常工作学习的总结，本网站已经运行：<WebsiteRuntime />
 
   🚀 你想要什么样的未来
-  <div style={{ width: '100%', padding: '24px', borderRadius: '8px', boxShadow: 'inset 0 0 0 1px rgba(255,193,7,0.3)', marginBottom: '24px' }}>
+  <div style={{ width: '100%', padding: '24px', borderRadius: '8px', boxShadow: 'inset 0 0 0 1px rgba(59,130,246,0.3)', marginBottom: '24px' }}>
     <p style={{ margin: 0, fontSize: '1.1em', lineHeight: 1.8, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       {"When something is important enough, you do it even if the odds are not in your favor - Elon Musk"}
     </p>
