@@ -5757,5 +5757,232 @@ type 接口名 interface{
 演示：定义一个 Usber 接口让 Phone 和 Camera 结构体实现这个接口
 
 ```go
+package main
+
+import "fmt"
+
+type Usber interface {
+	Start()
+	Stop()
+}
+type Phone struct {
+	Name string
+}
+
+func (p Phone) Start() {
+	fmt.Println(p.Name, "开始工作")
+}
+func (p Phone) Stop() {
+	fmt.Println("phone 停止")
+}
+
+type Camera struct {
+}
+
+func (c Camera) Start() {
+	fmt.Println("相机 开始工作")
+}
+func (c Camera) Stop() {
+	fmt.Println("相机 停止工作")
+}
+func main() {
+	phone := Phone{
+		Name: "小米手机"}
+	var p Usber = phone //phone 实现了 Usber 接口
+	p.Start()
+	camera := Camera{}
+	var c Usber = camera //camera 实现了 Usber 接口
+	c.Start()
+}
+```
+
+演示：Computer 结构体中的 Work 方法必须传入一个 Usb 的接口
+
+```go
+package main
+
+import "fmt"
+
+type Usber interface {
+	Start()
+	Stop()
+}
+type Phone struct {
+	Name string
+}
+
+func (p Phone) Start() {
+	fmt.Println(p.Name, "开始工作")
+}
+func (p Phone) Stop() {
+	fmt.Println("phone 停止")
+}
+
+type Camera struct {
+}
+
+func (c Camera) Start() {
+	fmt.Println("相机 开始工作")
+}
+func (c Camera) Stop() {
+	fmt.Println("相机 停止工作")
+}
+
+// 电脑的结构体
+type Computer struct {
+	Name string
+}
+
+// 电脑的 Work 方法要求必须传入 Usber 接口类型数据
+func (c Computer) Work(usb Usber) {
+	usb.Start()
+	usb.Stop()
+}
+func main() {
+	phone := Phone{
+		Name: "小米手机"}
+	camera := Camera{}
+	computer := Computer{}
+	// 把手机插入电脑的 Usber 接口开始工作
+	computer.Work(phone)
+	// 把相机插入电脑的 Usber 接口开始工作
+	computer.Work(camera)
+}
+```
+
+### 空接口
+
+Golang 中的接口可以不定义任何方法，没有定义任何方法的接口就是空接口。空接口表示没有任何约束，因此任何类型变量都可以实现空接口。
+
+空接口在实际项目中用的是非常多的，用空接口可以表示任意数据类型。
+
+案例：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	// 定义一个空接口 x, x 变量可以接收任意的数据类型
+	var x interface{}
+	s := "你好 golang"
+	x = s
+	fmt.Printf("type:%T value:%v\n", x, x)
+	i := 100
+	x = i
+	fmt.Printf("type:%T value:%v\n", x, x)
+	b := true
+	x = b
+	fmt.Printf("type:%T value:%v\n", x, x)
+}
+```
+
+- 空接口作为函数的参数
+
+使用空接口实现可以接收任意类型的函数参数。
+
+```go
+// 空接口作为函数参数
+func show(a interface{}) {
+fmt.Printf("type:%T value:%v\n", a, a)
+}
+```
+
+- map 的值实现空接口
+
+使用空接口实现可以保存任意值的字典。
+
+```go
+// 空接口作为 map 值
+var studentInfo = make(map[string]interface{})
+studentInfo["name"] = "张三"
+studentInfo["age"] = 18
+studentInfo["married"] = false
+fmt.Println(studentInfo)
+```
+
+- 切片实现空接口
+
+```go
+var slice = []interface{}{"张三", 20, true, 32.2}
+fmt.Println(slice)
+```
+
+### 类型断言
+
+一个接口的值（简称接口值）是由一个具体类型和具体类型的值两部分组成的。这两部分分别称为接口的动态类型和动态值。
+
+如果我们想要判断空接口中值的类型，那么这个时候就可以使用类型断言，其语法格式：
+
+```go
+x.(T)
+```
+
+其中：
+
+1. x : 表示类型为 interface{}的变量
+2. T : 表示断言 x 可能是的类型
+
+该语法返回两个参数，第一个参数是 x 转化为 T 类型后的变量，第二个值是一个布尔值，若 为 true 则表示断言成功，为 false 则表示断言失败。
+
+举个例子：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var x interface{}
+	x = "Hello golnag"
+	v, ok := x.(string)
+	if ok {
+		fmt.Println(v)
+	} else {
+		fmt.Println("类型断言失败")
+	}
+}
+```
+
+上面的示例中如果要断言多次就需要写多个 if 判断，这个时候我们可以使用switch 语句来实现：
+
+注意：类型.(type)只能结合 switch 语句使用
+
+```go
+package main
+
+import "fmt"
+
+func justifyType(x interface{}) {
+	switch v := x.(type) {
+	case string:
+		fmt.Printf("x is a string，value is %v\n", v)
+	case int:
+		fmt.Printf("x is a int is %v\n", v)
+	case bool:
+		fmt.Printf("x is a bool is %v\n", v)
+	default:
+		fmt.Println("unsupport type！")
+	}
+}
+
+func main() {
+	var x interface{}
+	x = "Hello golnag"
+	justifyType(x)
+```
+
+因为空接口可以存储任意类型值的特点，所以空接口在 Go 语言中的使用十分广泛。
+
+关于接口需要注意的是：只有当有两个或两个以上的具体类型必须以相同的方式进行处理时才需要定义接口。不要为了接口而写接口，那样只会增加不必要的抽象，导致不必要的运行时损耗。
+
+### 结构体值接收者和指针接收者实现接口的区别
+
+值接收者：
+
+如果结构体中的方法是值接收者，那么实例化后的结构体值类型和结构体指针类型都可以赋值给接口变量
+
+```go
 ```
 
