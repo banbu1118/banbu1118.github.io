@@ -5984,5 +5984,164 @@ func main() {
 如果结构体中的方法是值接收者，那么实例化后的结构体值类型和结构体指针类型都可以赋值给接口变量
 
 ```go
+package main
+
+import "fmt"
+
+type Usb interface {
+	Start()
+	Stop()
+}
+type Phone struct {
+	Name string
+}
+
+func (p Phone) Start() {
+	fmt.Println(p.Name, "开始工作")
+}
+func (p Phone) Stop() {
+	fmt.Println("phone 停止")
+}
+func main() {
+	phone1 := Phone{
+		Name: "小米手机"}
+	var p1 Usb = phone1 //phone1 实现了 Usb 接口 phone1 是 Phone 类型
+	p1.Start()          //小米手机 开始工作
+	phone2 := &Phone{
+		Name: "苹果手机"}
+	var p2 Usb = phone2 //phone2 实现了 Usb 接口 phone2 是 *Phone 类型
+	p2.Start()          //苹果手机 开始工作
+}
 ```
 
+指针接收者：
+
+如果结构体中的方法是指针接收者，那么实例化后结构体指针类型都可以赋值给接口变量，结构体值类型没法赋值给接口变量。
+
+```go
+package main
+
+import "fmt"
+
+type Usb interface {
+	Start()
+	Stop()
+}
+type Phone struct {
+	Name string
+}
+
+func (p *Phone) Start() {
+	fmt.Println(p.Name, "开始工作")
+}
+func (p *Phone) Stop() {
+	fmt.Println("phone 停止")
+}
+func main() {
+	/* 错误写法
+	   phone1 := Phone{
+	   Name: "小米手机", }
+	   var p1 Usb = phone1
+	   p1.Start() */
+	//正确写法
+	phone2 := &Phone{
+		Name: "苹果手机"}
+	var p2 Usb = phone2 //phone2 实现了 Usb 接口 phone2 是 *Phone 类型
+	p2.Start()          //苹果手机 开始工作
+```
+
+### 一个结构体实现多个接口
+
+Golang 中一个结构体也可以实现多个接口
+
+```go
+package main
+
+import "fmt"
+
+type AInterface interface {
+	GetInfo() string
+}
+type BInterface interface {
+	SetInfo(string, int)
+}
+type People struct {
+	Name string
+	Age  int
+}
+
+func (p People) GetInfo() string {
+	return fmt.Sprintf("姓名:%v 年龄:%d", p.Name, p.Age)
+}
+func (p *People) SetInfo(name string, age int) {
+	p.Name = name
+	p.Age = age
+}
+func main() {
+	var people = &People{
+		Name: "张三", Age: 20}
+	// people 实现了 AInterface 和 BInterface
+	var p1 AInterface = people
+	var p2 BInterface = people
+	fmt.Println(p1.GetInfo())
+	p2.SetInfo("李四", 30)
+	fmt.Println(p1.GetInfo())
+}
+```
+
+### 接口嵌套
+
+接口与接口间可以通过嵌套创造出新的接口。
+
+```go
+package main
+
+import "fmt"
+
+type SayInterface interface {
+	say()
+}
+type MoveInterface interface {
+	move()
+}
+
+// 接口嵌套
+type Animal interface {
+	SayInterface
+	MoveInterface
+}
+type Cat struct {
+	name string
+}
+
+func (c Cat) say() {
+	fmt.Println("喵喵喵")
+}
+func (c Cat) move() {
+	fmt.Println("猫会动")
+}
+func main() {
+	var x Animal
+	x = Cat{name: "花花"}
+	x.move()
+	x.say()
+}
+```
+
+## 二十、goroutine channel 实现并发和并行
+
+### 为什么要使用 goroutine
+
+需求：要统计 1-10000000 的数字中那些是素数，并打印这些素数？
+
+素数：就是除了 1 和它本身不能被其他数整除的数
+
+实现方法：
+
+1. 传统方法，通过一个 for 循环判断各个数是不是素数
+2. 使用并发或者并行的方式，将统计素数的任务分配给多个 goroutine 去完成，这个时候就用到了 goroutine
+3. goroutine 结合 channel
+
+### 进程、线程以及并行、并发
+
+- 关于进程和线程
