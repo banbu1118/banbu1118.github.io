@@ -6700,3 +6700,739 @@ func main() {
 ### 单向管道
 
 有的时候我们会将管道作为参数在多个任务函数间传递，很多时候我们在不同的任务函数中使用管道都会对其进行限制，比如限制管道在函数中只能发送或只能接收。
+
+例如：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	//1. 在默认情况下下，管道是双向
+	//var chan1 chan int //可读可写
+	//2 声明为只写
+	var chan2 chan<- int
+	chan2 = make(chan int, 3)
+	chan2 <- 20
+	// num := <-chan2 //error
+	fmt.Println("chan2=", chan2)
+	// 3. 声明为只读
+	var chan3 <-chan int
+	// num2 := <-chan3 //err
+	// chan3<- 30 //err
+	// fmt.Println("num2", num2)
+}
+```
+
+### select 多路复用
+
+在某些场景下我们需要同时从多个通道接收数据。这个时候就可以用到golang 中给我们提供的 select 多路复用。
+
+通常情况通道在接收数据时，如果没有数据可以接收将会发生阻塞。
+
+比如说下面代码来实现从多个通道接受数据的时候就会发生阻塞：
+
+```go
+for{
+// 尝试从 ch1 接收值
+data, ok := <-ch1
+// 尝试从 ch2 接收值
+data, ok := <-ch2 …
+}
+```
+
+这种方式虽然可以实现从多个管道接收值的需求，但是运行性能会差很多。为了应对这种场景，Go 内置了 select 关键字，可以同时响应多个管道的操作。
+
+select 的使用类似于 switch 语句，它有一系列 case 分支和一个默认的分支。每个case 会对应一个管道的通信（接收或发送）过程。select 会一直等待，直到某个case 的通信操作完成时，就会执行 case 分支对应的语句。具体格式如下：
+
+```go
+select{
+	case <-ch1:
+		...
+	case data := <-ch2:
+		...
+	case ch3<-data:
+		...
+	default:
+		默认操作
+	}
+```
+
+举个小例子来演示下 select 的使用：
+
+```go
+ackage main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	//1.定义一个管道 10 个数据 int
+	intChan := make(chan int, 10)
+	for i := 0; i < 10; i++ {
+		intChan <- i
+	}
+	// 2.定义一个管道 5 个数据 string
+	stringChan := make(chan string, 5)
+	for i := 0; i < 5; i++ {
+		stringChan <- "hello" + fmt.Sprintf("%d", i)
+	}
+	for {
+		select {
+		case v := <-intChan:
+			fmt.Printf("从 intChan 读取的数据%d\n", v)
+		case v := <-stringChan:
+			fmt.Printf("从 stringChan 读取的数据%s\n", v)
+		default:
+			fmt.Printf("都取不到了，不玩了, 程序员可以加入逻辑\n")
+			time.Sleep(time.Second)
+			return
+		}
+	}
+}
+```
+
+### Golang 并发安全和锁
+
+- 互斥锁
+
+互斥锁是传统并发编程中对共享资源进行访问控制的主要手段，它由标准库sync 中的Mutex 结构体类型表示。sync.Mutex 类型只有两个公开的指针方法，Lock 和Unlock。Lock 锁定当前的共享资源，Unlock 进行解锁
+
+有问题代码：
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+var count = 0
+
+func test() {
+	count++
+	fmt.Println("the count is : ", count)
+	time.Sleep(time.Millisecond)
+}
+func main() {
+	for r := 0; r < 100; r++ {
+		go test()
+	}
+	time.Sleep(time.Second)
+}
+```
+
+go build -race main.go 然后我们运行 main.exe 就知道到底哪里存在互斥
+
+互斥锁解决这个问题：
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+var count = 0
+
+func test() {
+	count++
+	fmt.Println("the count is : ", count)
+	time.Sleep(time.Millisecond)
+}
+func main() {
+	for r := 0; r < 100; r++ {
+		go test()
+	}
+	time.Sleep(time.Second)
+}
+```
+
+使用互斥锁能够保证同一时间有且只有一个 goroutine 进入临界区，其他的goroutine 则在等待锁；当互斥锁释放后，等待的 goroutine 才可以获取锁进入临界区，多个goroutine 同时等待一个锁时，唤醒的策略是随机的。
+
+虽然使用互斥锁能解决资源争夺问题，但是并不完美，通过全局变量加锁同步来实现通讯，并不利于多个协程对全局变量的读写操作。这个时候我们也可以通过另一种方式来实现上面的功能管道(Channel)。
+
+- 读写互斥锁
+
+互斥锁的本质是当一个 goroutine 访问的时候，其他 goroutine 都不能访问。这样在资源同步，避免竞争的同时也降低了程序的并发性能。程序由原来的并行执行变成了串行执行。
+
+其实，当我们对一个不会变化的数据只做“读”操作的话，是不存在资源竞争的问题的。因为数据是不变的，不管怎么读取，多少 goroutine 同时读取，都是可以的。
+
+所以问题不是出在“读”上，主要是修改，也就是“写”。修改的数据要同步，这样其他goroutine 才可以感知到。所以真正的互斥应该是读取和修改、修改和修改之间，读和读是没有互斥操作的必要的。
+
+因此，衍生出另外一种锁，叫做读写锁。
+
+读写锁可以让多个读操作并发，同时读取，但是对于写操作是完全互斥的。也就是说，当一个 goroutine 进行写操作的时候，其他 goroutine 既不能进行读操作，也不能进行写操作。
+
+GO 中的读写锁由结构体类型 sync.RWMutex 表示。此类型的方法集合中包含两对方法：
+
+一组是对写操作的锁定和解锁，简称“写锁定”和“写解锁”：
+
+```go
+func (*RWMutex)Lock()
+func (*RWMutex)Unlock()
+```
+
+另一组表示对读操作的锁定和解锁，简称为“读锁定”与“读解锁”：
+
+```go
+func (*RWMutex)RLock()
+func (*RWMutex)RUnlock()读写锁示例：
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var count int
+var mutex sync.RWMutex
+var wg sync.WaitGroup
+
+// 写的方法
+func write() {
+	mutex.Lock()
+	fmt.Println("执行写操作")
+	time.Sleep(time.Second * 3)
+	mutex.Unlock()
+	wg.Done()
+}
+
+// 读的方法
+func read() {
+	mutex.RLock()
+	fmt.Println("执行读操作")
+	time.Sleep(time.Second * 3)
+	mutex.RUnlock()
+	wg.Done()
+}
+func main() {
+	// 开启 10 个协程执行写操作
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go read()
+	}
+	// 开启 10 个协程执行读操作
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go write()
+	}
+	wg.Wait()
+}
+```
+
+### Goroutine Recover 解决协程中出现的Panic
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+// 函数
+func sayHello() {
+	for i := 0; i < 10; i++ {
+		time.Sleep(time.Second)
+		fmt.Println("hello,world")
+	}
+}
+
+// 函数
+func test() {
+	// 这里我们可以使用 defer + recover
+	defer func() {
+		// 捕获 test 抛出的 panic
+		if err := recover(); err != nil {
+			fmt.Println("test() 发生错误", err)
+		}
+	}()
+	// 定义了一个 map
+	var myMap map[int]string
+	myMap[0] = "golang" //error
+}
+func main() {
+	go sayHello()
+	go test()
+	for i := 0; i < 10; i++ {
+		fmt.Println("main() ok=", i)
+		time.Sleep(time.Second)
+	}
+}
+```
+
+## 二十一、反射
+
+### 反射的引子
+
+有时我们需要写一个函数，这个函数有能力统一处理各种值类型，而这些类型可能无法共享同一个接口，也可能布局未知，也有可能这个类型在我们设计函数时还不存在，这个时候我们就可以用到反射。
+
+1、空接口可以存储任意类型的变量，那我们如何知道这个空接口保存数据的类型是什么？值是什么呢 一、反射的引子 ？
+
+1. 可以使用类型断言
+2. 可以使用反射实现，也就是在程序运行时动态的获取一个变量的类型信息和值信息。
+
+2、把结构体序列化成 json 字符串，自定义结构体 Tag 标签的时候就用到了反射
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type Student struct {
+	ID     int    `json:"id"`
+	Gender string `json:"gender"`
+	Name   string `json:"name"`
+	Sno    string `json:"sno"`
+}
+
+func main() {
+	var s1 = Student{
+		ID: 1, Gender: "男",
+		Name: "李四",
+		Sno:  "s0001"}
+	var s, _ = json.Marshal(s1)
+	jsonStr := string(s)
+	fmt.Println(jsonStr)
+}
+
+```
+
+3、后期我们会给大家讲 ORM 框架，这个 ORM 框架就用到了反射技术
+
+ORM:对象关系映射（Object Relational Mapping，简称 ORM）是通过使用描述对象和数据库之间映射的元数据，将面向对象语言程序中的对象自动持久化到关系数据库中。
+
+### 反射的基本介绍
+
+反射是指在程序运行期间对程序本身进行访问和修改的能力。正常情况程序在编译时，变量被转换为内存地址，变量名不会被编译器写入到可执行部分。在运行程序时，程序无法获取自身的信息。支持反射的语言可以在程序编译期将变量的反射信息，如字段名称、类型信息、结构体信息等整合到可执行文件中，并给程序提供接口访问反射信息，这样就可以在程序运行期获取类型的反射信息，并且有能力修改它们。
+
+Golang 中反射可以实现以下功能：
+
+1. 反射可以在程序运行期间动态的获取变量的各种信息，比如变量的类型类别
+2. 如果是结构体，通过反射还可以获取结构体本身的信息，比如结构体的字段、结构体的方法、结构体的 tag。
+3. 通过反射，可以修改变量的值，可以调用关联的方法
+
+Go 语言中的变量是分为两部分的:
+
+1. 类型信息：预先定义好的元信息。
+2. 值信息：程序运行过程中可动态变化的
+
+在 GoLang 的反射机制中，任何接口值都由是一个具体类型和具体类型的值两部分组成的。
+
+在 GoLang 中，反射的相关功能由内置的 reflect 包提供，任意接口值在反射中都可以理解为由 reflect.Type 和 reflect.Value 两 部 分 组 成 ， 并 且 reflect 包 提供了reflect.TypeOf 和reflect.ValueOf 两个重要函数来获取任意对象的 Value 和 Type。
+
+### reflect.TypeOf()获取任意值的类型对象
+
+在 Go 语言中，使用 reflect.TypeOf()函数可以接受任意 interface{}参数，可以获得任意值的类型对象（reflect.Type），程序通过类型对象可以访问任意值的类型信息。
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func reflectType(x interface{}) {
+	v := reflect.TypeOf(x)
+	fmt.Printf("type:%v\n", v)
+}
+func main() {
+	var a float32 = 12.5
+	reflectType(a) // type:float32
+	var b int64 = 100
+	reflectType(b) // type:int64
+}
+```
+
+- type Name 和 type Kind
+
+在反射中关于类型还划分为两种：类型（Type）和种类（Kind）。因为在Go 语言中我们可以使用 type 关键字构造很多自定义类型，而种类（Kind）就是指底层的类型，但在反射中，当需要区分指针、结构体等大品种的类型时，就会用到种类（Kind）。举个例子，我们定义了两个指针类型和两个结构体类型，通过反射查看它们的类型和种类。
+
+Go 语言的反射中像数组、切片、Map、指针等类型的变量，它们的.Name()都是返回空。
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func reflectType(x interface{}) {
+	t := reflect.TypeOf(x)
+	fmt.Printf("TypeOf:%v Name:%v Kind:%v\n", t, t.Name(), t.Kind())
+}
+
+type myInt int64
+type Person struct {
+	Name string
+	Age  int
+}
+type Animal struct {
+	Name string
+}
+
+func main() {
+	var a *float32 // 指针
+	var b myInt    // 自定义类型
+	var c rune     // 类型别名
+	reflectType(a) // type: kind:ptr
+	reflectType(b) // type:myInt kind:int64
+	reflectType(c) // type:int32 kind:int32
+	var d = Person{
+		Name: "itying", Age: 18}
+	var e = Animal{Name: "小花"}
+	reflectType(d) // type:Person kind:struct
+	reflectType(e) // type:Animal kind:struct
+	var f = []int{1, 2, 3, 4, 5}
+	reflectType(f) //TypeOf:[]int Name: Kind:slice
+}
+```
+
+- 在 reflect 包中定义的 Kind 类型如下：
+
+```go
+type Kind uint
+const (
+Invalid Kind = iota // 非法类型
+Bool // 布尔型
+Int // 有符号整型
+Int8 // 有符号 8 位整型
+Int16 // 有符号 16 位整型
+Int32 // 有符号 32 位整型
+Int64 // 有符号 64 位整型
+Uint // 无符号整型
+Uint8 // 无符号 8 位整型
+Uint16 // 无符号 16 位整型
+Uint32 // 无符号 32 位整型
+Uint64 // 无符号 64 位整型
+Uintptr // 指针
+Float32 // 单精度浮点数
+Float64 // 双精度浮点数
+Complex64 // 64 位复数类型
+Complex128 // 128 位复数类型
+Array // 数组
+Chan // 通道
+Func // 函数
+Interface // 接口
+Map // 映射
+Ptr // 指针
+Slice // 切片
+String // 字符串
+Struct // 结构体
+UnsafePointer // 底层指针
+)
+```
+
+### reflect.ValueOf()
+
+reflect.ValueOf()返回的是 reflect.Value 类型，其中包含了原始值的值信息。reflect.Value 与原始值之间可以互相转换。
+
+reflect.Value 类型提供的获取原始值的方法如下：
+
+| 方法        | 说明                                                         |
+| :---------- | :----------------------------------------------------------- |
+| Interface() | 将值以 interface() 类型返回，可以通过类型断言转换为指定类型  |
+| Int()       | 将值以 int 类型返回，所有有符号整型均可以此方式返回          |
+| Uint()      | 将值以 uint 类型返回，所有无符号整型均可以此方式返回         |
+| Float()     | 将值以双精度（float64）类型返回，所有浮点数（float32、float64）均可以此方式返回 |
+| Bool()      | 将值以 bool 类型返回                                         |
+| Bytes()     | 将值以字节数组 []bytes 类型返回                              |
+| String()    | 将值以字符串类型返回                                         |
+| ...         | ...                                                          |
+
+- 通过反射获取原始值演示 1
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func reflectValue(x interface{}) {
+	v := reflect.ValueOf(x)
+	var c = v.Int() + 6 //获取反射的原始值
+	fmt.Println(c)
+}
+func main() {
+	var a int64 = 100
+	reflectValue(a)
+}
+```
+
+- 通过反射获取原始值演示 2
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func reflectValue(x interface{}) {
+	v := reflect.ValueOf(x)
+	k := v.Kind()
+	switch k {
+	case reflect.Int64:
+		// v.Int()从反射中获取整型的原始值
+		fmt.Printf("type is int64, value is %d\n", v.Int())
+	case reflect.Float32:
+		// v.Float()从反射中获取浮点型的原始值
+		fmt.Printf("type is float32, value is %f\n", v.Float())
+	case reflect.Float64:
+		// v.Float()从反射中获取浮点型的原始值
+		fmt.Printf("type is float64, value is %f\n", v.Float())
+	}
+}
+func main() {
+	var a float32 = 3.14
+	var b int64 = 100
+	reflectValue(a) // type is float32, value is 3.140000
+	reflectValue(b) // type is int64, value is 100
+	// 将 int 类型的原始值转换为 reflect.Value 类型
+	c := reflect.ValueOf(10)
+	fmt.Printf("type c :%T\n", c) // type c :reflect.Value
+}
+```
+
+- 通过反射设置变量的值
+
+想要在函数中通过反射修改变量的值，需要注意函数参数传递的是值拷贝，必须传递变量地址才能修改变量值。而反射中使用专有的 Elem()方法来获取指针对应的值。
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+func reflectSetValue1(x interface{}) {
+	v := reflect.ValueOf(x)
+	if v.Kind() == reflect.Int64 {
+		v.SetInt(200) //修改的是副本，reflect 包会引发 panic
+	}
+}
+func reflectSetValue2(x interface{}) {
+	v := reflect.ValueOf(x)
+	// 反射中使用 Elem()方法获取指针对应的值
+	if v.Elem().Kind() == reflect.Int64 {
+		v.Elem().SetInt(200)
+	}
+}
+func main() {
+	var a int64 = 100
+	// reflectSetValue1(a) //panic: reflect: reflect.Value.SetInt using unaddressable value
+	reflectSetValue2(&a)
+	fmt.Println(a)
+}
+```
+
+### 结构体反射
+
+- 与结构体相关的方法
+
+任意值通过 reflect.TypeOf()获得反射对象信息后，如果它的类型是结构体，可以通过反射值对象（reflect.Type）的 NumField()和 Field()方法获得结构体成员的详细信息。
+
+reflect.Type 中与获取结构体成员相关的的方法如下表所示。
+
+| 方法                                                        | 说明                                                         |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| Field(i int) StructField                                    | 根据索引，返回索引对应的结构体字段的信息。                   |
+| NumField() int                                              | 返回结构体成员字段数量。                                     |
+| FieldByName(name string) (StructField, bool)                | 根据给定字符串返回字符串对应的结构体字段的信息。             |
+| FieldByIndex(index []int) StructField                       | 多层成员访问时，根据[]int 提供的每个结构体的字段索引，返回字段的信息。 |
+| FieldByNameFunc(match func(string) bool) (StructField,bool) | 根据传入的匹配函数匹配需要的字段。                           |
+| NumMethod() int                                             | 返回该类型的方法集中方法的数目                               |
+| Method(int) Method                                          | 返回该类型方法集中的第i 个方法                               |
+| MethodByName(string)(Method, bool)                          | 根据方法名返回该类型方法集中的方法                           |
+
+- StructField 类型
+
+StructField 类型用来描述结构体中的一个字段的信息。StructField 的定义如下：
+
+```go
+type StructField struct {
+// 参见 http://golang.org/ref/spec#Uniqueness_of_identifiers
+Name string // Name 是字段的名字
+PkgPath string //PkgPath 是非导出字段的包路径，对导出字段该字段为"" Type Type // 字段的类型
+Tag StructTag // 字段的标签
+Offset uintptr // 字段在结构体中的字节偏移量
+Index []int // 用于 Type.FieldByIndex 时的索引切片
+Anonymous bool // 是否匿名字段
+}
+```
+
+- 结构体反射示例
+
+当我们使用反射得到一个结构体数据之后可以通过索引依次获取其字段信息，也可以通过字段名去获取指定的字段信息。
+
+获取结构体属性，获取执行结构体方法
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+// student 结构体
+type Student struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Score int    `json:"score"`
+}
+
+func (s Student) GetInfo() string {
+	var str = fmt.Sprintf("姓名:%v 年龄:%v 成绩:%v", s.Name, s.Age, s.Score)
+	fmt.Println(str)
+	return str
+}
+func (s *Student) SetInfo(name string, age int, score int) {
+	s.Name = name
+	s.Age = age
+	s.Score = score
+}
+func (s *Student) Print() {
+	fmt.Println("打印方法...")
+}
+
+// 打印字段
+func PrintStructField(s interface{}) {
+	t := reflect.TypeOf(s)
+	// v := reflect.ValueOf(s)
+	// kind := t.Kind()
+	if t.Kind() != reflect.Struct && t.Elem().Kind() != reflect.Struct {
+		fmt.Println("传入的不是结构体")
+		return
+	}
+	// 1、通过类型变量里面的 Field 可以获取结构体的字段
+	field0 := t.Field(0)
+	fmt.Println(field0.Name)
+	fmt.Println(field0.Type)
+	fmt.Println(field0.Tag.Get("json"))
+	// 2、通过类型变量里面的 FieldByName 可以获取结构体的字段
+	field1, _ := t.FieldByName("Age")
+	fmt.Println(field1.Name)
+	fmt.Println(field1.Type)
+	fmt.Println(field1.Tag.Get("json"))
+	// 3、获取到该结构体有几个字段
+	num := t.NumField()
+	fmt.Println("字段数量:", num)
+}
+
+// 方法
+func PrintStructFn(s interface{}) {
+	t := reflect.TypeOf(s)
+	v := reflect.ValueOf(s)
+	if t.Kind() != reflect.Struct && t.Elem().Kind() != reflect.Struct {
+		fmt.Println("传入的不是结构体")
+		return
+	}
+	// 1、通过类型变量里面的 Method 可以获取结构体的方法
+	var tMethod = t.Method(0) //注意
+	fmt.Println(tMethod.Name)
+	fmt.Println(tMethod.Type)
+	// 2、通过类型变量获取这个结构体有多少个方法
+	fmt.Println(t.NumMethod())
+	// 3、执行方法 （注意需要使用值变量，并且要注意参数）
+	// v.Method(0).Call(nil)
+	v.MethodByName("Print").Call(nil)
+	// 4、执行方法传入参数 （注意需要使用值变量，并且要注意参数）
+	var params []reflect.Value //声明了 []reflect.Value
+	params = append(params, reflect.ValueOf("张三"))
+	params = append(params, reflect.ValueOf(22))
+	params = append(params, reflect.ValueOf(100))
+	v.MethodByName("SetInfo").Call(params) //传入的参数是 []reflect.Value, 返回[]reflect.Value
+	// 5、执行方法获取方法的值
+	info := v.MethodByName("GetInfo").Call(nil)
+	fmt.Println(info)
+}
+func main() {
+	stu1 := Student{
+		Name:  "小明",
+		Age:   15,
+		Score: 98}
+	// PrintStructField(stu1)
+	PrintStructFn(&stu1)
+}
+```
+
+修改结构体方法
+
+```go
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+// student 结构体
+type Student struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Score int    `json:"score"`
+}
+
+func (s Student) GetInfo() string {
+	var str = fmt.Sprintf("姓名:%v 年龄:%v 成绩:%v", s.Name, s.Age, s.Score)
+	return str
+}
+
+// 反射修改结构体属性
+func reflectChangeStruct(s interface{}) {
+	t := reflect.TypeOf(s)
+	v := reflect.ValueOf(s)
+	if t.Elem().Kind() != reflect.Struct {
+		fmt.Println("传入的不是结构体指针类型")
+		return
+	}
+	name := v.Elem().FieldByName("Name")
+	name.SetString("李四") // 设置值
+	age := v.Elem().FieldByName("Age")
+	age.SetInt(20) // 设置值
+}
+func main() {
+	stu1 := Student{
+		Name: "小明", Age: 15, Score: 98}
+	// PrintStructField(stu1)
+	reflectChangeStruct(&stu1)
+	fmt.Println(stu1.GetInfo())
+}
+```
+
+### 不要乱用反射
+
+反射是一个强大并富有表现力的工具，能让我们写出更灵活的代码。但是反射不应该被滥用，原因有以下两个。
+
+1. 基于反射的代码是极其脆弱的，反射中的类型错误会在真正运行的时候才会引发panic，那很可能是在代码写完的很长时间之后。
+2. 大量使用反射的代码通常难以理解。
+
+## 二十二、文件目录操作
+
+### 打开和关闭文件
+
+os.Open()函数能够打开一个文件，返回一个*File 和一个 err。操作完成文件对象以后一定要记得关闭文件
+
+```go
+```
+
