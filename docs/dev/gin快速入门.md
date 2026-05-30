@@ -488,8 +488,8 @@ func main() {
 | :--- | :------------------------- |
 | eq   | 如果 arg1 == arg2 则返回真 |
 | ne   | 如果 arg1 != arg2 则返回真 |
-| lt   | 如果 arg1 < arg2 则返回真  |
-| le   | 如果 arg1 <= arg2 则返回真 |
+| lt   | 如果 arg1 &lt;  arg2 则返回真  |
+| le   | 如果 arg1 &lt;= arg2 则返回真 |
 | gt   | 如果 arg1 > arg2 则返回真  |
 | ge   | 如果 arg1 >= arg2 则返回真 |
 
