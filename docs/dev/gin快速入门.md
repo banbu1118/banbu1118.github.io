@@ -927,4 +927,262 @@ func main() {
 [https://gin-gonic.com/zh-cn/docs/routing/grouping-routes/](https://gin-gonic.com/zh-cn/docs/routing/grouping-routes/)
 
 ```go
+package main
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func loginEndpoint(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"action": "login"})
+}
+
+func submitEndpoint(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"action": "submit"})
+}
+
+func readEndpoint(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"action": "read"})
+}
+
+func main() {
+	router := gin.Default()
+
+	// Simple group: v1
+	{
+		v1 := router.Group("/v1")
+		v1.POST("/login", loginEndpoint)
+		v1.POST("/submit", submitEndpoint)
+		v1.POST("/read", readEndpoint)
+	}
+
+	// Simple group: v2
+	{
+		v2 := router.Group("/v2")
+		v2.POST("/login", loginEndpoint)
+		v2.POST("/submit", submitEndpoint)
+		v2.POST("/read", readEndpoint)
+	}
+
+	router.Run(":8080")
+}
 ```
+
+### Gin 路由文件 分组
+
+demo04\main.go
+
+```go
+package main
+
+import (
+	"demo04/routes"
+
+	"github.com/gin-gonic/gin"
+)
+
+type Userinfo struct {
+	Username string `form:"username" json:"user"`
+	Password string `form:"password" json:"password"`
+}
+
+func main() {
+	router := gin.Default()
+	routes.AdminRoutesInit(router)
+	routes.ApiRoutesInit(router)
+	routes.DefaultRoutesInit(router)
+	router.Run(":8080")
+}
+```
+
+demo04\routes\adminRoutes.go
+
+```go
+package routes
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func AdminRoutesInit(router *gin.Engine) {
+	adminRouter := router.Group("/admin")
+	{
+		adminRouter.GET("/user", func(c *gin.Context) {
+			c.String(http.StatusOK, "用户")
+		})
+		adminRouter.GET("/news", func(c *gin.Context) {
+			c.String(http.StatusOK, "news")
+		})
+	}
+}
+```
+
+demo04\routes\apitRoutes.go
+
+```go
+package routes
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func ApiRoutesInit(router *gin.Engine) {
+	apiRoute := router.Group("/api")
+	{
+		apiRoute.GET("/user", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"username": "张三",
+				"age": 20})
+		})
+		apiRoute.GET("/news", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{"title": "这是新闻"})
+		})
+	}
+}
+```
+
+demo04\routes\defaultRoutes.go
+
+```go
+package routes
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func DefaultRoutesInit(router *gin.Engine) {
+	defaultRoute := router.Group("/")
+	{
+		defaultRoute.GET("/", func(c *gin.Context) {
+			c.String(200, "首页")
+		})
+	}
+}
+```
+
+## 八、Gin 中自定义控制器
+
+### 控制器分组
+
+当我们的项目比较大的时候有必要对我们的控制器进行分组
+
+新建demo04\routes\adminRoutes.go
+
+```go
+package routes
+
+import (
+	"demo04/controller/admin"
+
+	"github.com/gin-gonic/gin"
+)
+
+func AdminRoutesInit(router *gin.Engine) {
+	adminRouter := router.Group("/admin")
+	{
+		adminRouter.GET("/user", admin.UserController{}.Index)
+		adminRouter.GET("/user/add", admin.UserController{}.Add)
+		adminRouter.GET("/news", admin.NewsController{}.Index)
+	}
+}
+```
+
+新建demo04\controller\admin\NewsController.go
+
+```go
+package admin
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+type NewsController struct {
+}
+
+func (n NewsController) Index(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "新闻首页")
+}
+```
+
+新建demo04\controller\admin\UserController.go
+
+```go
+package admin
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+type UserController struct {
+}
+
+func (u UserController) Index(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "这是用户首页")
+}
+func (u UserController) Add(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "增加用户")
+}
+```
+
+其他的api控制台和defaults控制器也这样创建
+
+### 控制器的继承
+
+新建demo04\controller\admin\BaseController.go
+
+```go
+package admin
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+type BaseController struct {
+}
+
+func (c BaseController) Success(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "成功")
+}
+func (c BaseController) Error(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "失败")
+}
+```
+
+NewsController 继承 BaseController
+
+继承后就可以调用控制器里面的公共方法了
+
+```go
+package admin
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+type NewsController struct {
+	BaseController
+}
+
+func (n NewsController) Index(ctx *gin.Context) {
+	n.Success(ctx)
+}
+```
+
+## 九、Gin 中间件
+
+Gin 框架允许开发者在处理请求的过程中，加入用户自己的钩子（Hook）函数。这个钩子函数就叫中间件，中间件适合处理一些公共的业务逻辑，比如登录认证、权限校验、数据分页、记录日志、耗时统计等。
+
+通俗的讲：中间件就是匹配路由前和匹配路由完成后执行的一系列操作
+
+### 路由中间件
