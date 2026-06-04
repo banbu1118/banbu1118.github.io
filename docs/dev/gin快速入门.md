@@ -216,7 +216,7 @@ func main() {
 }
 ```
 
-- JSOPN
+- JSONP
 
 早期浏览器有同源策略限制，需要JSONP实现跨域获取数据，现在浏览器支持`Access-Control-Allow-Origin`，基本不用这个了
 
@@ -589,7 +589,7 @@ c.HTML(http.StatusOK, "default/index.html", map[string]interface{}{ "user": user
 | index    | 执行结果为第一个参数以剩下的参数为索引/键指向的值（如 `index x 1 2 3` 返回 `x[1][2][3]`），每个被索引的主体必须是数组、切片或字典 |
 | print    | 即 `fmt.Sprint`                                              |
 | printf   | 即 `fmt.Sprintf`                                             |
-| printfln | 即 `fmt.Sprintfln`                                           |
+| printfln | 即 `fmt.Sprintln`                                            |
 | html     | 返回与其参数的文本表示形式等效的转义 HTML（此函数在 `html/template` 中不可用） |
 | urlquery | 返回以适合嵌入网址查询的形式转义后的参数文本表示（此函数在 `html/template` 中不可用） |
 | js       | 返回与其参数的文本表示形式等效的转义 JavaScript              |
@@ -2969,3 +2969,685 @@ func main() {
 ```
 
 ### 更新
+
+- 更新表中第一条记录
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+type Product struct {
+	gorm.Model
+
+	Code  string
+	Price uint `gorm:"default:88"`
+}
+
+func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		panic(err)
+	}
+
+	// ===== 更新操作 =====
+
+	// 获取 id=1 的记录
+	u := new(Product)
+	db.First(u) //
+
+	// 修改字段
+	u.Code = "java"
+	u.Price = 23
+
+	// 保存到数据库（全量更新）
+	result := db.Save(u)
+
+	// 错误判断
+	if result.Error != nil {
+		fmt.Println("更新失败:", result.Error)
+		return
+	}
+
+	fmt.Println("更新成功")
+
+	// 打印更新后的对象
+	fmt.Printf("%+v\n", *u)
+
+	// 影响行数
+	fmt.Println("数据库中更新的行数:", result.RowsAffected)
+}
+```
+
+- 仅更新单个字段
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+type Product struct {
+	gorm.Model
+
+	Code  string
+	Price uint `gorm:"default:88"`
+}
+
+func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		panic(err)
+	}
+
+	// ===== 更新 id=2 的记录 =====
+	result := db.Model(&Product{}).
+		Where("id = ?", 2).
+		Updates(map[string]interface{}{
+			"code": "golang2",
+		})
+
+	if result.Error != nil {
+		fmt.Println("更新失败:", result.Error)
+		return
+	}
+
+	fmt.Println("更新成功")
+	fmt.Println("受影响行数:", result.RowsAffected)
+}
+```
+
+- 批量更新
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+type Product struct {
+	gorm.Model
+	Code  string
+	Price int `gorm:"default:88"`
+}
+
+func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		panic(err)
+	}
+
+	// ===== 更新所有记录的 price =====
+	result := db.Model(&Product{}).
+		Where("1 = 1").
+		Update("price", 99)
+
+	if result.Error != nil {
+		fmt.Println("更新失败:", result.Error)
+		return
+	}
+
+	fmt.Println("更新成功")
+	fmt.Println("影响行数:", result.RowsAffected)
+}
+```
+
+### 删除
+
+- 软删除
+
+软删除并不删除数据。
+
+只是给数据打一个"已删除"标记。
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+type Product struct {
+	gorm.Model
+	Code  string
+	Price int `gorm:"default:88"`
+}
+
+func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		panic(err)
+	}
+
+	// 删除所有 Code 为 golang 的记录
+	result := db.Where("code = ?", "golang").Delete(&Product{})
+
+	if result.Error != nil {
+		fmt.Println("删除失败:", result.Error)
+		return
+	}
+
+	fmt.Println("删除成功")
+	fmt.Println("影响行数:", result.RowsAffected)
+}
+```
+
+- 硬删除
+
+真正从数据库中删除
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+type Product struct {
+	gorm.Model
+	Code  string
+	Price int `gorm:"default:88"`
+}
+
+func main() {
+	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		panic(err)
+	}
+
+	// 物理删除所有 Code=golang 的记录
+	result := db.Unscoped().
+		Where("code = ?", "golang").
+		Delete(&Product{})
+
+	if result.Error != nil {
+		fmt.Println("删除失败:", result.Error)
+		return
+	}
+
+	fmt.Println("删除成功")
+	fmt.Println("删除行数:", result.RowsAffected)
+}
+```
+
+## 十五、viper
+
+### viper库
+
+Viper 是 Go 语言中用于处理配置文件的库，支持多种格式（如 JSON、YAML、环境变量等）的读取、监听和默认值设置。
+
+### 项目结构
+
+```cmd
+PS C:\Users\kk\Desktop\gin-code\demo09> tree /F
+文件夹 PATH 列表
+卷序列号为 AA59-C1A0
+C:.
+│  config.yaml
+│  go.mod
+│  go.sum
+│  main.go
+│
+└─config
+```
+
+### 项目代码
+
+demo09\main.go
+
+```go
+package main
+
+import (
+	"demo09/config"
+	"fmt"
+
+	"github.com/spf13/viper"
+)
+
+func main() {
+	config.InitConfig()
+
+	fmt.Println("应用名:", config.Cfg.App.Name)
+	fmt.Println("端口:", config.Cfg.App.Port)
+
+	fmt.Println("数据库:", config.Cfg.DB.Host)
+
+	//真实项目常常用直接获取
+	fmt.Println(viper.GetInt("app.port"))
+}
+```
+
+demo09\config.yaml
+
+```yaml
+app:
+  name: my-go-app
+  port: 8080
+
+db:
+  host: 127.0.0.1
+  user: root
+  password: 123456
+```
+
+demo09\config\config.go
+
+```go
+package config
+
+import (
+	"fmt"
+
+	"github.com/spf13/viper"
+)
+
+type Config struct {
+	App AppConfig
+	DB  DBConfig
+}
+
+type AppConfig struct {
+	Name string
+	Port int
+}
+
+type DBConfig struct {
+	Host     string
+	User     string
+	Password string
+}
+
+var Cfg Config
+
+func InitConfig() {
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
+
+	// 读取配置文件
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("读取配置失败: %v", err))
+	}
+
+	// 绑定到结构体
+	err := viper.Unmarshal(&Cfg)
+	if err != nil {
+		panic(fmt.Errorf("解析配置失败: %v", err))
+	}
+}
+```
+
+运行结果：
+
+```cmd
+PS C:\Users\kk\Desktop\gin-code\demo09> go run main.go
+应用名: my-go-app
+端口: 8080
+数据库: 127.0.0.1
+8080
+```
+
+## 十六、Gin项目结构
+
+### 项目结构
+
+```cmd
+PS C:\Users\kk\Desktop\gin-code\demo10> tree /F
+文件夹 PATH 列表
+卷序列号为 AA59-C1A0
+C:.
+│  go.mod
+│  go.sum
+│  main.go
+│  test.db
+│
+├─config
+│      config.go
+│      config.yaml
+│
+├─controller
+│      user_controller.go
+│
+├─dao
+│      user_dao.go
+│
+├─global
+│      global.go
+│
+├─initialize
+│      gorm.go
+│      viper.go
+│
+├─model
+│      user.go
+│
+├─router
+│      router.go
+│
+└─service
+        user_service.go
+```
+
+### 启动入口
+
+demo10\main.go
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"demo10/global"
+	"demo10/initialize"
+	"demo10/router"
+)
+
+func main() {
+	// 1. 初始化配置
+	initialize.InitViper()
+
+	// 2. 初始化数据库
+	initialize.InitGorm()
+
+	// 3. 初始化路由
+	r := router.InitRouter()
+
+	port := global.Config.Server.Port
+	fmt.Printf("Server running at :%d\n", port)
+
+	r.Run(fmt.Sprintf(":%d", port))
+}
+```
+
+### 路由
+
+demo10\router\router.go
+
+```go
+package router
+
+import (
+	"demo10/controller"
+
+	"github.com/gin-gonic/gin"
+)
+
+func InitRouter() *gin.Engine {
+	r := gin.Default()
+
+	api := r.Group("/api")
+	{
+		api.GET("/users", controller.GetUsers)
+		api.POST("/user", controller.CreateUser)
+	}
+
+	return r
+}
+```
+
+### Controller 层
+
+demo10\controller\user_controller.go
+
+```go
+package controller
+
+import (
+	"net/http"
+	"strconv"
+
+	"demo10/service"
+
+	"github.com/gin-gonic/gin"
+)
+
+func CreateUser(c *gin.Context) {
+	name := c.Query("name")
+	age, _ := strconv.Atoi(c.Query("age"))
+
+	err := service.CreateUser(name, age)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"msg": "ok"})
+}
+
+func GetUsers(c *gin.Context) {
+	users, _ := service.GetUsers()
+	c.JSON(http.StatusOK, users)
+}
+```
+
+### Service 层
+
+demo10\service\user_service.go
+
+```go
+package service
+
+import (
+	"demo10/dao"
+	"demo10/model"
+)
+
+func CreateUser(name string, age int) error {
+	return dao.CreateUser(model.User{
+		Name: name,
+		Age:  age,
+	})
+}
+
+func GetUsers() ([]model.User, error) {
+	return dao.GetUsers()
+}
+```
+
+### DAO 层
+
+demo10\dao\user_dao.go
+
+```go
+package dao
+
+import (
+	"demo10/global"
+	"demo10/model"
+)
+
+func CreateUser(user model.User) error {
+	return global.DB.Create(&user).Error
+}
+
+func GetUsers() ([]model.User, error) {
+	var users []model.User
+	err := global.DB.Find(&users).Error
+	return users, err
+}
+```
+
+### 全局变量
+
+demo10\global\global.go
+
+```go
+package global
+
+import (
+	"demo10/config"
+
+	"gorm.io/gorm"
+)
+
+var (
+	Config config.Config
+	DB     *gorm.DB
+)
+```
+
+### 模型层
+
+demo10\model\user.go
+
+```go
+package model
+
+import "gorm.io/gorm"
+
+type User struct {
+	gorm.Model
+	Name string
+	Age  int
+}
+```
+
+### config 结构体
+
+demo10\config\config.go
+
+```go
+package config
+
+type Config struct {
+	Server ServerConfig
+	DB     DBConfig
+}
+
+type ServerConfig struct {
+	Port int
+}
+
+type DBConfig struct {
+	Driver string
+	Source string
+}
+```
+
+### 配置文件
+
+demo10\config\config.yaml
+
+```yaml
+server:
+  port: 8080
+
+db:
+  driver: sqlite
+  source: test.db
+```
+
+### GORM 初始化
+
+demo10\initialize\gorm.go
+
+```go
+package initialize
+
+import (
+	"fmt"
+
+	"demo10/global"
+	"demo10/model"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+)
+
+func InitGorm() {
+	var db *gorm.DB
+	var err error
+
+	switch global.Config.DB.Driver {
+	case "sqlite":
+		db, err = gorm.Open(sqlite.Open(global.Config.DB.Source), &gorm.Config{})
+	default:
+		panic("不支持的数据库类型")
+	}
+
+	if err != nil {
+		panic(fmt.Errorf("数据库连接失败: %v", err))
+	}
+
+	// 自动建表
+	db.AutoMigrate(&model.User{})
+
+	global.DB = db
+}
+```
+
+### Viper 初始化
+
+demo10\initialize\viper.go
+
+```go
+package initialize
+
+import (
+	"fmt"
+
+	"demo10/global"
+
+	"github.com/spf13/viper"
+)
+
+func InitViper() {
+	v := viper.New()
+	v.SetConfigFile("config/config.yaml")
+
+	if err := v.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("读取配置失败: %v", err))
+	}
+
+	if err := v.Unmarshal(&global.Config); err != nil {
+		panic(fmt.Errorf("解析配置失败: %v", err))
+	}
+}
+```
+
