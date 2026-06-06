@@ -142,3 +142,15 @@ https://frontpilot.cn/flyGuide
 ```
 https://gopeed.com
 ```
+
+* go教程
+
+```
+https://www.echo.cool/docs/language/go
+```
+
+* gin教程
+
+```
+https://www.echo.cool/docs/framework/gin
+```
