@@ -11,16 +11,21 @@ C:\Users\kk\Desktop\guacamole-go-web>tree /F
 文件夹 PATH 列表    
 卷序列号为 AA59-C1A0
 C:.
-│  api_ws_guaca.go
+│  api_ws_guaca.go  
 │  go.mod
 │  go.sum
 │  main.go
+│
+├─certs
+│      cert.pem     
+│      key.pem      
 │
 ├─frontend
 │  │  package-lock.json
 │  │  package.json
 │  │
 │  ├─public
+│  │      favicon.ico
 │  │      index.html
 │  │
 │  └─src
@@ -57,6 +62,7 @@ C:.
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
     <title>RDP Client</title>
   </head>
   <body>
@@ -152,6 +158,17 @@ body {
 <template>
   <div ref="viewport" class="viewport">
     <div ref="display" class="display" tabindex="0"/>
+    <button class="fullscreen-btn"
+            :style="{ left: btnPosition.x + 'px', top: btnPosition.y + 'px' }"
+            @mousedown="startDrag"
+            @click="handleBtnClick">
+      <svg v-if="!isFullscreen" viewBox="0 0 24 24" width="20" height="20">
+        <path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+      </svg>
+      <svg v-else viewBox="0 0 24 24" width="20" height="20">
+        <path fill="currentColor" d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+      </svg>
+    </button>
   </div>
 </template>
 
@@ -164,6 +181,10 @@ Guacamole.Mouse = GuacMouse.mouse
 
 const viewport = ref(null)
 const display = ref(null)
+const isFullscreen = ref(false)
+const btnPosition = ref({ x: 12, y: 12 })
+const isDragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
 
 const query = ref({
   guacad_addr: '192.168.1.30:4822',
@@ -182,11 +203,12 @@ let keyboard = null
 let mouse = null
 let displayElm = null
 let resizeObserver = null
+let audioContext = null
+let audioEnabled = false
 
 const wsUrl = computed(() => {
-  const loc = window.location
-  const protocol = loc.protocol === "https:" ? "wss:" : "ws:"
-  return `${protocol}//${loc.host}/ws`
+  // 只使用 wss:// 协议
+  return `wss://${window.location.host}/ws`
 })
 
 function serialize(obj) {
@@ -201,6 +223,7 @@ function serialize(obj) {
 
 function handleMouseState(mouseState) {
   if (!client || !client.getDisplay()) return
+  enableAudio()
   const scaledMouseState = {
     ...mouseState,
     x: mouseState.x / client.getDisplay().getScale(),
@@ -238,6 +261,68 @@ function resize() {
   client.getDisplay().scale(scale)
 }
 
+function toggleFullscreen() {
+  const elm = viewport.value
+  if (!elm) return
+
+  if (!document.fullscreenElement) {
+    elm.requestFullscreen().then(() => {
+      isFullscreen.value = true
+    }).catch(err => {
+      console.error('全屏请求失败:', err)
+    })
+  } else {
+    document.exitFullscreen().then(() => {
+      isFullscreen.value = false
+    }).catch(err => {
+      console.error('退出全屏失败:', err)
+    })
+  }
+}
+
+function handleFullscreenChange() {
+  isFullscreen.value = !!document.fullscreenElement
+}
+
+function startDrag(e) {
+  isDragging.value = false
+  dragStart.value = {
+    x: e.clientX - btnPosition.value.x,
+    y: e.clientY - btnPosition.value.y
+  }
+
+  const onMouseMove = (e) => {
+    isDragging.value = true
+    let newX = e.clientX - dragStart.value.x
+    let newY = e.clientY - dragStart.value.y
+
+    // 边界限制
+    const btnSize = 36
+    const maxX = window.innerWidth - btnSize
+    const maxY = window.innerHeight - btnSize
+    newX = Math.max(0, Math.min(newX, maxX))
+    newY = Math.max(0, Math.min(newY, maxY))
+
+    btnPosition.value = { x: newX, y: newY }
+  }
+
+  const onMouseUp = () => {
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseup', onMouseUp)
+  }
+
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+}
+
+function handleBtnClick(e) {
+  // 如果发生了拖拽，不触发点击
+  if (isDragging.value) {
+    return
+  }
+  toggleFullscreen()
+}
+
 function installKeyboard() {
   keyboard.onkeydown = (keysym) => {
     client.sendKeyEvent(1, keysym)
@@ -251,6 +336,27 @@ function uninstallKeyboard() {
   if (keyboard) {
     keyboard.onkeydown = () => {}
     keyboard.onkeyup = () => {}
+  }
+}
+
+function enableAudio() {
+  if (audioEnabled) return
+
+  // 创建或恢复 AudioContext
+  if (!audioContext) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext
+    audioContext = new AudioContextClass()
+  }
+
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().then(() => {
+      audioEnabled = true
+      console.log('Audio enabled')
+    }).catch(err => {
+      console.error('Failed to enable audio:', err)
+    })
+  } else {
+    audioEnabled = true
   }
 }
 
@@ -304,7 +410,10 @@ function startGuacamole() {
       e.returnValue = false
     })
 
-    displayElm.onclick = () => displayElm.focus()
+    displayElm.onclick = () => {
+      displayElm.focus()
+      enableAudio()
+    }
     displayElm.onfocus = () => displayElm.className = 'focus'
     displayElm.onblur = () => displayElm.className = ''
   }
@@ -354,6 +463,13 @@ function startGuacamole() {
 }
 
 onMounted(() => {
+  // 设置按钮初始位置为右上角
+  const btnSize = 36
+  btnPosition.value = {
+    x: window.innerWidth - btnSize - 12,
+    y: 12
+  }
+
   // 等待DOM渲染后启动连接
   nextTick(() => {
     startGuacamole()
@@ -361,6 +477,9 @@ onMounted(() => {
 
   // 监听窗口大小变化
   window.addEventListener('resize', resize)
+
+  // 监听全屏状态变化
+  document.addEventListener('fullscreenchange', handleFullscreenChange)
 
   // 使用 ResizeObserver 监听容器大小变化
   if (viewport.value) {
@@ -384,6 +503,7 @@ onUnmounted(() => {
     resizeObserver = null
   }
   window.removeEventListener('resize', resize)
+  document.removeEventListener('fullscreenchange', handleFullscreenChange)
 })
 </script>
 
@@ -411,6 +531,31 @@ html, body {
   position: relative;
   width: 100vw;
   height: 100vh;
+}
+.fullscreen-btn {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: #fff;
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, border-color 0.2s;
+  z-index: 1000;
+  user-select: none;
+}
+.fullscreen-btn:active {
+  cursor: grabbing;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.fullscreen-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 </style>
 ```
@@ -1092,7 +1237,7 @@ type Stream struct {
 	timeout      time.Duration
 }
 
-func NewStream(conn net.Conn, timeout time.Duration) (ret *Stream) {
+func NewStream(conn net.Conn, timeout time.Duration) *Stream {
 	buffer := make([]byte, 0, MaxGuacMessage*3)
 	return &Stream{
 		conn:    conn,
@@ -1174,10 +1319,9 @@ func (s *Stream) ReadSome() (instruction []byte, err error) {
 
 		n, err = s.conn.Read(s.buffer[len(s.buffer):cap(s.buffer)])
 		if err != nil && n == 0 {
-			switch err.(type) {
+			switch e := err.(type) {
 			case net.Error:
-				ex := err.(net.Error)
-				if ex.Timeout() {
+				if e.Timeout() {
 					err = ErrUpstreamTimeout.NewError("Connection to guacd timed out.", err.Error())
 				} else {
 					err = ErrConnectionClosed.NewError("Connection to guacd is closed.", err.Error())
@@ -1186,9 +1330,6 @@ func (s *Stream) ReadSome() (instruction []byte, err error) {
 				err = ErrServer.NewError(err.Error())
 			}
 			return
-		}
-		if n == 0 {
-			err = ErrServer.NewError("read 0 bytes")
 		}
 		s.buffer = s.buffer[:len(s.buffer)+n]
 	}
@@ -1391,12 +1532,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"guacamole-go-web/guac"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
-	"net/http"
-	"guacamole-go-web/guac"
 )
 
 type ReqArg struct {
@@ -1555,7 +1697,9 @@ func main() {
 	r.GET("/version", func(c *gin.Context) { c.JSON(200, gin.H{gitHash: buildAt}) })
 	r.Use(feMw("/"))
 	r.GET("/ws", ApiWsGuacamole())
-	r.Run(":9528")
+	// HTTPS
+	logrus.Info("Starting HTTPS server on :9528")
+	logrus.Fatal(r.RunTLS(":9528", "certs/cert.pem", "certs/key.pem"))
 }
 
 //go:embed frontend/dist/*
@@ -1655,8 +1799,8 @@ go build .
 
 ### 五、浏览器访问
 
-http://127.0.0.1:9528/
+https://127.0.0.1:9528
 
-注意：当前demo仅实现声音功能，其他的功能未实现，暂为升级为https和wss
+注意：当前demo仅实现声音功能，自动缩放和全屏按钮，其他的功能未实现
 
 guacamole 配置信息在 api_ws_guaca.go 文件，按需修改
