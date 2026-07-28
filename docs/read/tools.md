@@ -160,3 +160,16 @@ https://www.echo.cool/docs/framework/gin
 ```
 https://gin-gonic.com
 ```
+
+* 摄像头麦克风测试网站
+
+```
+#只测试摄像头
+https://camera-test.com
+
+#只测试麦克风
+https://testmic.online/zh
+
+#摄像头和麦克风都能测试
+https://webcammictest.com/zh
+```
