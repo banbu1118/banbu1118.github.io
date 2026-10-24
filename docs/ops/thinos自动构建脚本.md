@@ -704,7 +704,7 @@ fi
 ### 二、构建 thinos 镜像
 
 ```shell
-bash nano build-thinos.sh
+bash build-thinos.sh
 ```
 
 构建成功示例
