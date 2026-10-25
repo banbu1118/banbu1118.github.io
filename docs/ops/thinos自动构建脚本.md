@@ -410,7 +410,11 @@ mount -t devtmpfs devtmpfs /dev  2>/dev/null
 clear 2>/dev/null
 
 echo "Loading storage drivers ..."
-MODULES="usb-common usbcore xhci-hcd xhci-pci ehci-hcd ehci-pci ohci-hcd ohci-pci uhci-hcd
+# 模块清单由构建脚本用 modprobe --show-depends 生成（已含依赖，按加载顺序排列）
+if [ -f "$MODDIR/modules.list" ]; then
+	MODULES=$(cat "$MODDIR/modules.list")
+else
+	MODULES="usb-common usbcore xhci-hcd xhci-pci ehci-hcd ehci-pci ohci-hcd ohci-pci uhci-hcd
 scsi_common scsi_mod cdrom sr_mod sd_mod
 libata libahci ahci
 ata_piix ata_generic pata_atiixp pata_amd pata_via pata_sis pata_jmicron pata_marvell
@@ -420,15 +424,20 @@ nvme-core nvme
 virtio_blk virtio_scsi vmw_pvscsi
 mptbase mptscsih mptsas mptspi mpt3sas megaraid_sas aacraid hpsa smartpqi
 usb-storage uas
-mmc_core mmc_block
-sdhci sdhci-pci sdhci-acpi
-mmc_core sdhci sdhci-pci mmc_block
+mmc_core mmc_block sdhci sdhci-pci sdhci-acpi
 hid hid-generic usbhid
 isofs"
+fi
+: > /tmp/insmod.log
 pass=0
 while [ $pass -lt 3 ]; do
 	for m in $MODULES; do
-		[ -f "$MODDIR/$m.ko" ] && insmod "$MODDIR/$m.ko" 2>/dev/null
+		[ -f "$MODDIR/$m.ko" ] || continue
+		if [ $pass -eq 0 ]; then
+			insmod "$MODDIR/$m.ko" 2>>/tmp/insmod.log
+		else
+			insmod "$MODDIR/$m.ko" 2>/dev/null
+		fi
 	done
 	pass=$(( pass + 1 ))
 done
@@ -517,6 +526,11 @@ COUNT=$(wc -l < $LIST)
 
 if [ "$COUNT" -eq 0 ]; then
 	echo "ERROR: no target disk large enough (>= ${IMG_MB} MiB)."
+	echo "Block devices seen: $(ls /sys/block 2>/dev/null | tr '\n' ' ')"
+	if [ -s /tmp/insmod.log ]; then
+		echo "Module load errors (first pass):"
+		tail -n 20 /tmp/insmod.log
+	fi
 	echo "Dropping to a shell. Type 'reboot -f' to restart."
 	exec sh
 fi
@@ -621,7 +635,9 @@ for a in $("$BUSYBOX" --list); do
 	ln -sf busybox "$INST/initramfs/bin/$a"
 done
 
-MODULES="usb-common usbcore xhci-hcd xhci-pci ehci-hcd ehci-pci ohci-hcd ohci-pci uhci-hcd
+# 想要的模块；依赖链由 modprobe --show-depends 自动补齐（漏依赖会导致 insmod 静默失败，
+# 例如 sdhci-pci 依赖 cqhci、mptsas 依赖 scsi_transport_sas，缺了就等于看不到 eMMC/SAS 盘）
+WANT_MODULES="usb-common usbcore xhci-hcd xhci-pci ehci-hcd ehci-pci ohci-hcd ohci-pci uhci-hcd
 scsi_common scsi_mod cdrom sr_mod sd_mod
 libata libahci ahci
 ata_piix ata_generic pata_atiixp pata_amd pata_via pata_sis pata_jmicron pata_marvell
@@ -631,19 +647,41 @@ nvme-core nvme
 virtio_blk virtio_scsi vmw_pvscsi
 mptbase mptscsih mptsas mptspi mpt3sas megaraid_sas aacraid hpsa smartpqi
 usb-storage uas
-mmc_core mmc_block
-sdhci sdhci-pci sdhci-acpi
+mmc_core mmc_block sdhci sdhci-pci sdhci-acpi
+intel-lpss intel-lpss-pci intel-lpss-acpi
 hid hid-generic usbhid
 isofs"
-MODSRC=$ROOTFS/lib/modules/$KVER/kernel
-for m in $MODULES; do
-	f=$(find "$MODSRC" -name "$m.ko.xz" | head -n1)
-	if [ -n "$f" ]; then
-		xz -dc "$f" > "$INST/initramfs/lib/modules/$KVER/$m.ko"
-	else
-		echo "WARN: 未找到模块 $m"
+
+MODDST=$INST/initramfs/lib/modules/$KVER
+ORDER_FILE=$INST/modules.order
+: > "$ORDER_FILE"
+for m in $WANT_MODULES; do
+	if ! out=$(modprobe -S "$KVER" -d "$ROOTFS" --show-depends "$m" 2>/dev/null); then
+		echo "WARN: 无法解析模块 $m（内核里没有或被裁剪）"
+		continue
 	fi
+	printf '%s\n' "$out" | while read -r kind path _rest; do
+		[ "$kind" = "insmod" ] && echo "$path"
+	done >> "$ORDER_FILE"
 done
+
+# 去重，保持依赖顺序（先依赖、后被依赖）
+awk '!seen[$0]++' "$ORDER_FILE" > "$ORDER_FILE.uniq"
+: > "$MODDST/modules.list"
+while read -r p; do
+	[ -n "$p" ] || continue
+	name=$(basename "$p"); name=${name%.xz}; name=${name%.ko}
+	case "$p" in
+		*.xz) xz -dc "$p" > "$MODDST/$name.ko" || die "解压模块失败：$p" ;;
+		*)    cp "$p" "$MODDST/$name.ko" ;;
+	esac
+	echo "$name" >> "$MODDST/modules.list"
+done < "$ORDER_FILE.uniq"
+echo "    模块数：$(wc -l < "$MODDST/modules.list")"
+for need in cqhci sdhci-pci mmc_block; do
+	grep -qx "$need" "$MODDST/modules.list" || die "initramfs 缺少关键模块：$need"
+done
+rm -f "$ORDER_FILE" "$ORDER_FILE.uniq"
 
 (cd "$INST/initramfs" && find . | "$BUSYBOX" cpio -o -H newc 2>/dev/null | gzip -9) > "$INST/initrd.img"
 ls -lh "$INST/initrd.img"
@@ -699,6 +737,7 @@ if [ "$ENABLE_WAYVNC" != "1" ]; then
 	printf "  su - %s -c 'XDG_RUNTIME_DIR=/run/user/\$(id -u) systemctl --user enable --now wayvnc.service'\n" "$USER_NAME"
 	printf '关闭：把上面的 enable 换成 disable --now\n'
 fi
+
 ```
 
 ### 二、构建 thinos 镜像
