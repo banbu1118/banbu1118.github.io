@@ -193,3 +193,8 @@ https://learnui.qiaomu.ai
 https://www.xiurenbox.com
 ```
 
+* windows精简系统
+
+```
+https://windowsxlite.com
+```
