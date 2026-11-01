@@ -11,6 +11,7 @@
 ![](./images/1.png)
 
 CD/RVD驱动器要添加好3个，分别：
+
 vir-win-*.iso： 最新稳定版本VirtIO 驱动程序镜像，下载连接：[https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/)
 
 auto-win.iso：包含应答文件的镜像，由下文的应答文件封装得到
