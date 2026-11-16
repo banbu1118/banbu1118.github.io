@@ -193,6 +193,12 @@ https://learnui.qiaomu.ai
 https://www.xiurenbox.com
 ```
 
+* 秀网阁
+
+```
+https://xwang.vip
+```
+
 * windows精简系统
 
 ```
